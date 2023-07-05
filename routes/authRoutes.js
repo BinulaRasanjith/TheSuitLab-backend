@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { Router } from "express"; // for creating router
 import {
     signup,
     login,
     refreshToken,
     getUsers,
-} from "../controllers/authControllers.js";
-import { authJWT } from "../utils/authUser.js";
+} from "../controllers/authControllers.js"; // for routing
+import { authJWT } from "../utils/authUser.js"; // for authenticating user
 
 const router = Router();
 

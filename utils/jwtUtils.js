@@ -23,15 +23,15 @@ export const generateToken = (id, tokenType) => {
 
 export const verifyToken = (token, tokenType) => {
     let secret;
-    switch (tokenType) {
+    switch (tokenType) { // check token type
         case "access":
-            secret = process.env.ACCESS_TOKEN_SECRET;
+            secret = process.env.ACCESS_TOKEN_SECRET; 
             break;
         case "refresh":
-            secret = process.env.REFRESH_TOKEN_SECRET;
+            secret = process.env.REFRESH_TOKEN_SECRET;  
             break;
         default:
             throw new Error("Invalid token type");
     }
-    return jwt.verify(token, secret);
+    return jwt.verify(token, secret); // return decoded token
 }

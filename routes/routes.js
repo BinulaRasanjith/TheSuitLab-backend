@@ -1,9 +1,7 @@
-import {Router} from 'express';
+import {Router} from 'express'; // for creating router
+import authRoutes from './authRoutes.js'; // for routing
+const router = Router(); // for creating router
 
-import authRoutes from './authRoutes.js';
-
-const router = Router();
-
-router.use('/auth', authRoutes);
+router.use('/auth', authRoutes); // for routing
 
 export default router;

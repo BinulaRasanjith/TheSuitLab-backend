@@ -1,37 +1,37 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt'; // import bcrypt for hashing password
 
-import { User, RefreshToken } from '../models/index.js';
-import { generateToken, verifyToken } from '../utils/jwtUtils.js';
+import { User, RefreshToken } from '../models/index.js'; // import User and RefreshToken model
+import { generateToken, verifyToken } from '../utils/jwtUtils.js'; // import jwt utils
 
 export const signup = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = req.body; // get email and password from request body
 
-        const userExist = await User.findOne({ where: { email } });
+        const userExist = await User.findOne({ where: { email } }); // check if user exist
 
-        if (userExist) {
-            return res.status(400).json({ message: 'User already exist' });
+        if (userExist) { // check if user exist
+            return res.status(400).json({ message: 'User already exist' }); // return error
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const hashedPassword = await bcrypt.hash(password, salt);
+        const salt = await bcrypt.genSalt(10); // generate salt for hashing password
+        const hashedPassword = await bcrypt.hash(password, salt); // hash password
 
-        const user = await User.create({
+        const user = await User.create({ // create user
             email,
             password: hashedPassword,
         });
 
-        return res.status(201).json({ user });
+        return res.status(201).json({ user }); // return user
     } catch (error) {
-        return res.status(500).json({ message: error.message });
+        return res.status(500).json({ message: error.message }); // return error
     }
 };
 
 export const login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password } = req.body; // get email and password from request body
 
-        const user = await User.findOne({ where: { email } });
+        const user = await User.findOne({ where: { email } }); // check if user exist
 
         // check if user exist and password is correct
         if (!user || !(await bcrypt.compare(password, user.password))) {
@@ -39,22 +39,24 @@ export const login = async (req, res) => {
         }
 
         // generate tokens
-        const accessToken = generateToken(user.id, 'access');
-        const refreshToken = generateToken(user.id, 'refresh');
+        const accessToken = generateToken(user.id, 'access'); 
+        const refreshToken = generateToken(user.id, 'refresh'); 
 
-        const decodedRefreshToken = verifyToken(refreshToken, 'refresh');
-        const refreshTokenExpiration = new Date(decodedRefreshToken.exp * 1000);
+        const decodedRefreshToken = verifyToken(refreshToken, 'refresh'); // decode refresh token
+        // The decodedRefreshToken.exp property represents the expiration time of the token in UNIX timestamp format. By multiplying it by 1000 and passing it to the Date constructor, we convert it to a Date object representing the expiration date of the refresh token.
+        const refreshTokenExpiration = new Date(decodedRefreshToken.exp * 1000); // get expiration date of refresh token
+
 
         // save refresh token in db
-        await RefreshToken.storeRefreshToken(user.id, refreshToken, refreshTokenExpiration);
+        await RefreshToken.storeRefreshToken(user.id, refreshToken, refreshTokenExpiration); // store refresh token in db
 
-        res.cookie('accessToken', accessToken, {
-            httpOnly: true,
+        res.cookie('accessToken', accessToken, { // send access token to client
+            httpOnly: true,  //The 'httpOnly' option ensures that the cookie is only accessible via HTTP(S) and cannot be accessed or modified by client-side JavaScript.
         });
 
-        res.cookie('refreshToken', refreshToken, {
-            httpOnly: true,
-            path: '/api/auth/refresh-token',
+        res.cookie('refreshToken', refreshToken, { // send refresh token to client
+            httpOnly: true,           // httpOnly: true means that the cookie is not accessible from JavaScript. This is a security measure to prevent cross-site scripting (XSS) attacks.
+            path: '/api/auth/refresh-token', // path: '/api/auth/refresh-token' means that the cookie is only sent to the /api/auth/refresh-token endpoint.
         });
 
         return res.status(200).json({ message: 'Login successful', user });
