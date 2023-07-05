@@ -34,12 +34,12 @@ RefreshToken.isValidToken = async (userId, refreshToken) => {
         const refreshTokenExpiration = new Date(refreshTokenInstance.expiresAt);
 
         if (currentDateTime < refreshTokenExpiration) {
-            return 'valid'; // Refresh token is valid
+            return 'VALID'; // Refresh token is valid
         } else {
-            return 'expired'; // Refresh token has expired
+            return 'EXPIRED'; // Refresh token has expired
         }
     }
-    return 'not-valid'; // Refresh token is invalid or not found
+    return 'INVALID'; // Refresh token is invalid or not found
 };
 
 RefreshToken.storeRefreshToken = async (userId, refreshToken, refreshTokenExpiration) => {

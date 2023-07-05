@@ -6,11 +6,11 @@ dotenv.config();
 export const generateToken = (id, tokenType) => {
     let secret, expiresIn;
     switch (tokenType) {
-        case "access":
+        case "ACCESS":
             secret = process.env.ACCESS_TOKEN_SECRET;
             expiresIn = process.env.JWT_ACCESS_EXPIRE;
             break;
-        case "refresh":
+        case "REFRESH":
             secret = process.env.REFRESH_TOKEN_SECRET;
             expiresIn = process.env.JWT_REFRESH_EXPIRE;
             break;
@@ -24,10 +24,10 @@ export const generateToken = (id, tokenType) => {
 export const verifyToken = (token, tokenType) => {
     let secret;
     switch (tokenType) { // check token type
-        case "access":
+        case "ACCESS":
             secret = process.env.ACCESS_TOKEN_SECRET; 
             break;
-        case "refresh":
+        case "REFRESH":
             secret = process.env.REFRESH_TOKEN_SECRET;  
             break;
         default:

@@ -39,10 +39,10 @@ export const login = async (req, res) => {
         }
 
         // generate tokens
-        const accessToken = generateToken(user.id, 'access'); 
-        const refreshToken = generateToken(user.id, 'refresh'); 
+        const accessToken = generateToken(user.id, 'ACCESS');
+        const refreshToken = generateToken(user.id, 'REFRESH');
 
-        const decodedRefreshToken = verifyToken(refreshToken, 'refresh'); // decode refresh token
+        const decodedRefreshToken = verifyToken(refreshToken, 'REFRESH'); // decode refresh token
         // The decodedRefreshToken.exp property represents the expiration time of the token in UNIX timestamp format. By multiplying it by 1000 and passing it to the Date constructor, we convert it to a Date object representing the expiration date of the refresh token.
         const refreshTokenExpiration = new Date(decodedRefreshToken.exp * 1000); // get expiration date of refresh token
 
@@ -51,11 +51,13 @@ export const login = async (req, res) => {
         await RefreshToken.storeRefreshToken(user.id, refreshToken, refreshTokenExpiration); // store refresh token in db
 
         res.cookie('accessToken', accessToken, { // send access token to client
-            httpOnly: true,  //The 'httpOnly' option ensures that the cookie is only accessible via HTTP(S) and cannot be accessed or modified by client-side JavaScript.
+            httpOnly: true, //The 'httpOnly' option ensures that the cookie is only accessible via HTTP(S) and cannot be accessed or modified by client-side JavaScript.
+            path: '/api',
+            sameSite: 'strict'
         });
 
         res.cookie('refreshToken', refreshToken, { // send refresh token to client
-            httpOnly: true,           // httpOnly: true means that the cookie is not accessible from JavaScript. This is a security measure to prevent cross-site scripting (XSS) attacks.
+            httpOnly: true, // httpOnly: true means that the cookie is not accessible from JavaScript. This is a security measure to prevent cross-site scripting (XSS) attacks.
             path: '/api/auth/refresh-token', // path: '/api/auth/refresh-token' means that the cookie is only sent to the /api/auth/refresh-token endpoint.
         });
 
@@ -75,15 +77,15 @@ export const refreshToken = async (req, res) => {
         }
 
         // Verify the refresh token
-        const { user: { id } } = verifyToken(refreshToken, 'refresh');
+        const { user: { id } } = verifyToken(refreshToken, 'REFRESH');
 
         // Check if the refresh token is valid
         const isValid = await RefreshToken.isValidToken(id, refreshToken);
 
         switch (isValid) {
-            case 'valid':
+            case 'VALID':
                 // Generate new access token
-                const accessToken = generateToken(id, 'access');
+                const accessToken = generateToken(id, 'ACCESS');
 
                 // Send the access token to the client
                 res.cookie('accessToken', accessToken, {
@@ -91,10 +93,10 @@ export const refreshToken = async (req, res) => {
                 });
                 return res.status(200).json({ message: 'Token refreshed' });
 
-            case 'not-valid':
+            case 'INVALID':
                 return res.status(401).json({ message: 'Invalid refresh token' });
 
-            case 'expired':
+            case 'EXPIRED':
                 return res.status(401).json({ message: 'Refresh token expired' });
 
             default:

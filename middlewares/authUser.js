@@ -1,6 +1,4 @@
 import passport from "../config/passport.js";
-import { User, RefreshToken } from "../models/index.js";
-import { generateToken, verifyToken } from "./jwtUtils.js";
 
 export const authJWT = (req, res, next) => {
     passport.authenticate('jwt', { session: false }, async (err, user, info) => {

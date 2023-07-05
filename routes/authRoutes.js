@@ -5,7 +5,7 @@ import {
     refreshToken,
     getUsers,
 } from "../controllers/authControllers.js"; // for routing
-import { authJWT } from "../utils/authUser.js"; // for authenticating user
+import { authJWT } from "../middlewares/authUser.js"; // for authenticating user
 
 const router = Router();
 
