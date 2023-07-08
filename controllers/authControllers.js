@@ -59,9 +59,27 @@ export const login = async (req, res) => {
         res.cookie('refreshToken', refreshToken, { // send refresh token to client
             httpOnly: true, // httpOnly: true means that the cookie is not accessible from JavaScript. This is a security measure to prevent cross-site scripting (XSS) attacks.
             path: '/api/auth/refresh-token', // path: '/api/auth/refresh-token' means that the cookie is only sent to the /api/auth/refresh-token endpoint.
+            sameSite: 'strict'
         });
 
         return res.status(200).json({ message: 'Login successful', user });
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};
+
+export const googleLogin = async (req, res) => {
+    try {
+        const { googleAccessToken } = req.body; // get access token from request body
+        const url = `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${googleAccessToken}`
+        fetch(url) // fetch user info from google
+            .then((res) => res.json())
+            .then(async (data) => {
+                return res.status(200).json({ message: 'Login successful', user: data });
+            })
+            .catch((err) => {
+                return res.status(500).json({ message: err.message });
+            });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -90,6 +108,8 @@ export const refreshToken = async (req, res) => {
                 // Send the access token to the client
                 res.cookie('accessToken', accessToken, {
                     httpOnly: true,
+                    path: '/api',
+                    sameSite: 'strict'
                 });
                 return res.status(200).json({ message: 'Token refreshed' });
 
