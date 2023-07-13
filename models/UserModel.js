@@ -13,10 +13,22 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false
         },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        mobile_no: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: false, // TODO: check again
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
     },
     {
         tableName: 'users',
-        timestamps: false
     }
 );
 

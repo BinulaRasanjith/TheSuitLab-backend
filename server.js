@@ -7,6 +7,7 @@ import sequelize from './config/db.js'; // for connecting to database
 
 import routes from './routes/routes.js'; // for routing
 
+import { ASCII } from './config/config.js';
 
 dotenv.config(); // for loading environment variables from .env file
 
@@ -25,14 +26,9 @@ app.use(cookieParser()); // for parsing cookies
 app.use('/api', routes); // for routing
 
 
-
-
-
-import { ASCII } from './config/config.js';
-
 // connect to database
 sequelize
-    .sync()
+    .sync({alter: true})
     .then(() => {
         // if success, log and continue process
         console.log(`${ASCII.green}\nDatabase connection established!${ASCII.reset}`);

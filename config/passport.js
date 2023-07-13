@@ -13,7 +13,7 @@ const options = {
         }
         return token;
     },
-    secretOrKey: process.env.ACCESS_TOKEN_SECRET,
+    secretOrKey: process.env.ACCESS_TOKEN_SECRET || "access-token-secret",
 };
 
 const verifyUser = async (payload, done) => {
