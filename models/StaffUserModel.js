@@ -8,7 +8,6 @@ const StaffUser = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
-            autoIncrement: true,
         },
         role: {
             type: DataTypes.STRING,

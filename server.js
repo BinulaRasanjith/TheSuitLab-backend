@@ -28,7 +28,7 @@ app.use('/api', routes); // for routing
 
 // connect to database
 sequelize
-    .sync({alter: true})
+    .sync({ alter: true, force: true })
     .then(() => {
         // if success, log and continue process
         console.log(`${ASCII.green}\nDatabase connection established!${ASCII.reset}`);

@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db";
+import sequelize from "../config/db.js";
 
 const Customer = sequelize.define(
     'Customer',
@@ -8,7 +8,7 @@ const Customer = sequelize.define(
             type: DataTypes.INTEGER,
             unique: true,
             allowNull: false,
-            autoIncrement: true, // TODO: check again??
+            // TODO: check again??
         },
         address: {
             type: DataTypes.STRING,
