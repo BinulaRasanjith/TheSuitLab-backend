@@ -39,7 +39,7 @@ export const login = async (req, res) => {
         }
 
         // generate tokens
-        const accessToken = generateToken(user.id, 'ACCESS');
+        const accessToken = generateToken(user, 'ACCESS');
         const refreshToken = generateToken(user.id, 'REFRESH');
 
         const decodedRefreshToken = verifyToken(refreshToken, 'REFRESH'); // decode refresh token
@@ -50,11 +50,11 @@ export const login = async (req, res) => {
         // save refresh token in db
         await RefreshToken.storeRefreshToken(user.id, refreshToken, refreshTokenExpiration); // store refresh token in db
 
-        res.cookie('accessToken', accessToken, { // send access token to client
-            httpOnly: true, //The 'httpOnly' option ensures that the cookie is only accessible via HTTP(S) and cannot be accessed or modified by client-side JavaScript.
-            path: '/api',
-            sameSite: 'strict'
-        });
+        // res.cookie('accessToken', accessToken, { // send access token to client
+        //     httpOnly: true, //The 'httpOnly' option ensures that the cookie is only accessible via HTTP(S) and cannot be accessed or modified by client-side JavaScript.
+        //     path: '/api',
+        //     sameSite: 'strict'
+        // });
 
         res.cookie('refreshToken', refreshToken, { // send refresh token to client
             httpOnly: true, // httpOnly: true means that the cookie is not accessible from JavaScript. This is a security measure to prevent cross-site scripting (XSS) attacks.

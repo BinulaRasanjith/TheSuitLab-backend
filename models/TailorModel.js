@@ -6,6 +6,7 @@ const Tailor = sequelize.define(
     {
         employee_id: {
             type: DataTypes.INTEGER,
+            primaryKey: true,
             allowNull: false,
             unique: true,
         },
