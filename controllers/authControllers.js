@@ -1,24 +1,35 @@
-import bcrypt from 'bcrypt'; // import bcrypt for hashing password
-
 import { User, RefreshToken } from '../models/models.js'; // import User and RefreshToken model
 import { generateToken, verifyToken } from '../utils/jwtUtils.js'; // import jwt utils
+import { ACCESS, REFRESH, VALID, INVALID, EXPIRED } from '../constants/constants.js'; // import constants
 
 export const signup = async (req, res) => {
     try {
-        const { email, password } = req.body; // get email and password from request body
+        const {
+            mobile_no,
+            first_name,
+            last_name,
+            email, // TODO: check???
+            confirm_password,
+            password,
+        } = req.body; // get email and password from request body
 
-        const userExist = await User.findOne({ where: { email } }); // check if user exist
-
-        if (userExist) { // check if user exist
+        // check if user exist
+        const userExist = await User.findOne({ where: { mobile_no } });
+        if (userExist) {
             return res.status(400).json({ message: 'User already exist' }); // return error
         }
 
-        const salt = await bcrypt.genSalt(10); // generate salt for hashing password
-        const hashedPassword = await bcrypt.hash(password, salt); // hash password
-
-        const user = await User.create({ // create user
+        if (password !== confirm_password) {
+            return res.status(400).json({ message: 'Password and Confirm Password do not match' }); // return error
+        }
+        // create user
+        const user = await User.create({
+            mobile_no,
             email,
-            password: hashedPassword,
+            first_name,
+            last_name,
+            password,
+            status: 'active',
         });
 
         return res.status(201).json({ user }); // return user
@@ -34,27 +45,21 @@ export const login = async (req, res) => {
         const user = await User.findOne({ where: { email } }); // check if user exist
 
         // check if user exist and password is correct
-        if (!user || !(await bcrypt.compare(password, user.password))) {
+        if (!user || !(await user.isValidPassword(password))) {
             return res.status(401).json({ message: 'Invalid credentials' });
         }
 
         // generate tokens
-        const accessToken = generateToken(user, 'ACCESS');
-        const refreshToken = generateToken(user.id, 'REFRESH');
+        const accessToken = generateToken(user, ACCESS);
+        const refreshToken = generateToken(user, REFRESH);
 
-        const decodedRefreshToken = verifyToken(refreshToken, 'REFRESH'); // decode refresh token
+        const decodedRefreshToken = verifyToken(refreshToken, REFRESH); // decode refresh token
         // The decodedRefreshToken.exp property represents the expiration time of the token in UNIX timestamp format. By multiplying it by 1000 and passing it to the Date constructor, we convert it to a Date object representing the expiration date of the refresh token.
         const refreshTokenExpiration = new Date(decodedRefreshToken.exp * 1000); // get expiration date of refresh token
 
 
         // save refresh token in db
         await RefreshToken.storeRefreshToken(user.id, refreshToken, refreshTokenExpiration); // store refresh token in db
-
-        // res.cookie('accessToken', accessToken, { // send access token to client
-        //     httpOnly: true, //The 'httpOnly' option ensures that the cookie is only accessible via HTTP(S) and cannot be accessed or modified by client-side JavaScript.
-        //     path: '/api',
-        //     sameSite: 'strict'
-        // });
 
         res.cookie('refreshToken', refreshToken, { // send refresh token to client
             httpOnly: true, // httpOnly: true means that the cookie is not accessible from JavaScript. This is a security measure to prevent cross-site scripting (XSS) attacks.
@@ -63,7 +68,7 @@ export const login = async (req, res) => {
         });
 
         // return res.status(200).json({ message: 'Login successful', user });
-        return res.status(200).json({ message: 'Login successful', accessToken, user });
+        return res.status(200).json({ message: 'Login successful', accessToken });
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -96,29 +101,22 @@ export const refreshToken = async (req, res) => {
         }
 
         // Verify the refresh token
-        const { user: { id } } = verifyToken(refreshToken, 'REFRESH');
+        const { user } = verifyToken(refreshToken, REFRESH);
 
         // Check if the refresh token is valid
-        const isValid = await RefreshToken.isValidToken(id, refreshToken);
+        const isValid = await RefreshToken.isValidToken(user.id, refreshToken);
 
         switch (isValid) {
-            case 'VALID':
+            case VALID:
                 // Generate new access token
-                const accessToken = generateToken(id, 'ACCESS');
-
-                // Send the access token to the client
-                // res.cookie('accessToken', accessToken, {
-                //     httpOnly: true,
-                //     path: '/api',
-                //     sameSite: 'strict'
-                // });
+                const accessToken = generateToken(user, ACCESS);
 
                 return res.status(200).json({ message: 'Token refreshed', accessToken });
 
-            case 'INVALID':
+            case INVALID:
                 return res.status(401).json({ message: 'Invalid refresh token' });
 
-            case 'EXPIRED':
+            case EXPIRED:
                 return res.status(401).json({ message: 'Refresh token expired' });
 
             default:
@@ -138,7 +136,6 @@ export const logout = async (req, res) => {
         await RefreshToken.destroy({ where: { userId } });
 
         // Clear the cookies containing the tokens
-        res.clearCookie('accessToken');
         res.clearCookie('refreshToken');
 
         res.status(200).json({ message: 'Logout successful' });

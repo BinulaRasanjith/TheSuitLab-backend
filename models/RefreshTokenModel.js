@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
+import { VALID, INVALID, EXPIRED } from "../constants/constants.js";
 
 const RefreshToken = sequelize.define(
     "RefreshToken",
@@ -34,12 +35,12 @@ RefreshToken.isValidToken = async (userId, refreshToken) => {
         const refreshTokenExpiration = new Date(refreshTokenInstance.expiresAt);
 
         if (currentDateTime < refreshTokenExpiration) {
-            return 'VALID'; // Refresh token is valid
+            return VALID; // Refresh token is valid
         } else {
-            return 'EXPIRED'; // Refresh token has expired
+            return EXPIRED; // Refresh token has expired
         }
     }
-    return 'INVALID'; // Refresh token is invalid or not found
+    return INVALID; // Refresh token is invalid or not found
 };
 
 RefreshToken.storeRefreshToken = async (userId, refreshToken, refreshTokenExpiration) => {
