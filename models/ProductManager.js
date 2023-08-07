@@ -1,15 +1,9 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const ProductManager = sequelize.define(
     'ProductManager',
-    {
-        employee_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: true,
-        },
-    },
+    {},
     {
         tableName: 'product_managers',
     }

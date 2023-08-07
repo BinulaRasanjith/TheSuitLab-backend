@@ -1,16 +1,16 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const Fabric = sequelize.define(
     'Fabric',
     {
-        material_code: {
+        materialCode: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
             unique: true,
         },
-        fabric_name: {
+        fabricName: {
             type: DataTypes.STRING,
         },
         size: {

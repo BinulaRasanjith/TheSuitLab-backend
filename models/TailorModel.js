@@ -1,19 +1,13 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const Tailor = sequelize.define(
     'Tailor',
     {
-        employee_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            allowNull: false,
-            unique: true,
-        },
-        experience: {
+        experienceInYears: {
             type: DataTypes.INTEGER,
         },
-        specializations: {
+        specialization: {
             type: DataTypes.STRING,
         }
     },

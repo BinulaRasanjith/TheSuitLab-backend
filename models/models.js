@@ -22,48 +22,66 @@ import Supplier from "./SupplierModel.js";
 */
 
 // User relationships
-User.hasMany(RefreshToken, { foreignKey: 'user_id' });
-User.hasOne(Customer, { foreignKey: 'id', });
-User.hasOne(StaffUser, { foreignKey: 'id', });
+User.hasMany(RefreshToken, { foreignKey: 'userId' });
+RefreshToken.belongsTo(User, { foreignKey: 'userId' });
 
-// ? StaffUser relationships
+User.hasOne(Customer, { foreignKey: 'id', });
+Customer.belongsTo(User, { foreignKey: 'id', });
+
+User.hasOne(StaffUser, { foreignKey: 'id', });
+StaffUser.belongsTo(User, { foreignKey: 'id', });
+
+
+// StaffUser relationships
 StaffUser.hasOne(ProductManager, { foreignKey: 'id' });
+ProductManager.belongsTo(StaffUser, { foreignKey: 'id' });
+
 StaffUser.hasOne(Tailor, { foreignKey: 'id' });
+Tailor.belongsTo(StaffUser, { foreignKey: 'id' });
+
 StaffUser.hasOne(SystemAdmin, { foreignKey: 'id' });
+SystemAdmin.belongsTo(StaffUser, { foreignKey: 'id' });
+
 
 // PurchaseOrder relationships
-Customer.hasMany(PurchaseOrder, { foreignKey: 'customer_id', });
-PurchaseOrder.hasMany(Costume, { foreignKey: 'order_id', });
+Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', });
+PurchaseOrder.hasMany(Costume, { foreignKey: 'orderId', });
+
 
 // Payment relationships
-Customer.hasMany(Payment, { foreignKey: 'customer_id', });
-PurchaseOrder.hasMany(Payment, { foreignKey: 'order_id', });
+Customer.hasMany(Payment, { foreignKey: 'customerId', });
+PurchaseOrder.hasMany(Payment, { foreignKey: 'orderId', });
+
 
 // ? Material - Supplier - ProductManager - SupplyOrder relationships
-ProductManager.hasMany(SupplyOrder, { foreignKey: 'product_manager_id', });
-SupplyOrder.belongsTo(ProductManager, { foreignKey: 'product_manager_id', });
-Supplier.hasMany(SupplyOrder, { foreignKey: 'supplier_id', });
-SupplyOrder.belongsTo(Supplier, { foreignKey: 'supplier_id', });
+ProductManager.hasMany(SupplyOrder, { foreignKey: 'productManagerId', });
+SupplyOrder.belongsTo(ProductManager, { foreignKey: 'productManagerId', });
+Supplier.hasMany(SupplyOrder, { foreignKey: 'supplierId', });
+SupplyOrder.belongsTo(Supplier, { foreignKey: 'supplierId', });
 // ? does supply order have many materials? or just one?
 
 
 // Costume - Material relationship
-Costume.hasMany(Material, { foreignKey: 'costume_id', }); // ? problem
+Costume.hasMany(Material, { foreignKey: 'costumeId', }); // ? problem
+
 
 // Rent relationships
-Customer.hasMany(Rent, { foreignKey: 'customer_id', });
-Costume.hasMany(Rent, { foreignKey: 'costume_id', });
+Customer.hasMany(Rent, { foreignKey: 'customerId', });
+Costume.hasMany(Rent, { foreignKey: 'costumeId', });
+
 
 // Material type relationships
-Material.hasOne(Fabric, { foreignKey: 'material_code', sourceKey: 'material_code' });
-Material.hasOne(Buttons, { foreignKey: 'material_code', sourceKey: 'material_code' });
-Material.hasOne(Strings, { foreignKey: 'material_code', sourceKey: 'material_code' });
+Material.hasOne(Fabric, { foreignKey: 'materialCode', sourceKey: 'materialCode' });
+Material.hasOne(Buttons, { foreignKey: 'materialCode', sourceKey: 'materialCode' });
+Material.hasOne(Strings, { foreignKey: 'materialCode', sourceKey: 'materialCode' });
+
 
 // Review relationships
-Customer.hasMany(Review, { foreignKey: 'customer_id', });
-Review.belongsTo(Customer, { foreignKey: 'customer_id', });
-Costume.hasMany(Review, { foreignKey: 'costume_id', });
-Review.belongsTo(Costume, { foreignKey: 'costume_id', });
+Customer.hasMany(Review, { foreignKey: 'customerId', });
+Review.belongsTo(Customer, { foreignKey: 'customerId', });
+Costume.hasMany(Review, { foreignKey: 'costumeId', });
+Review.belongsTo(Costume, { foreignKey: 'costumeId', });
+
 
 export {
 	User,

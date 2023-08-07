@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const Rent = sequelize.define(
     'Rent',
@@ -10,10 +10,10 @@ const Rent = sequelize.define(
         advance: {
             type: DataTypes.FLOAT,
         },
-        rent_date: {
+        rentDate: {
             type: DataTypes.DATE,
         },
-        collected_date: {
+        collectedDate: {
             type: DataTypes.DATE,
         },
     },

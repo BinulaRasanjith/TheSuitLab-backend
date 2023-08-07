@@ -1,16 +1,10 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
+// TODO: check
 const SystemAdmin = sequelize.define(
     'SystemAdmin',
-    {
-        employee_id: {
-            type: DataTypes.INTEGER,
-            primaryKey: true,
-            allowNull: false,
-            unique: true,
-        },
-    },
+    {},
     {
         tableName: 'system_admins',
     }

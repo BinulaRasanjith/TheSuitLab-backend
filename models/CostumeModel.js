@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const Costume = sequelize.define(
     'Costume',
@@ -10,11 +10,11 @@ const Costume = sequelize.define(
         price: {
             type: DataTypes.FLOAT,
         },
-        costume_type: {
+        costumeType: {
 
             type: DataTypes.STRING,
         },
-        order_type: { // * costume is a order or a rental
+        orderType: { // * costume is a order or a rental
             type: DataTypes.STRING,
         },
     },

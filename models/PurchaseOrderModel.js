@@ -1,19 +1,19 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const PurchaseOrder = sequelize.define(
     'PurchaseOrder',
     {
-        reference_no: {
+        referenceNo: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
             // TODO: auto increment or not ??
         },
-        no_of_items: {
+        noOfItems: {
             type: DataTypes.INTEGER
         },
-        total_amount: {
+        totalAmount: {
             type: DataTypes.INTEGER,
         },
         status: {
@@ -22,13 +22,13 @@ const PurchaseOrder = sequelize.define(
         remarks: {
             type: DataTypes.STRING,
         },
-        requested_date: {
+        requestedDate: {
             type: DataTypes.DATE,
         },
-        collected_date: {
+        collectedDate: {
             type: DataTypes.DATE,
         },
-        fit_on_date: {
+        fitOnDate: {
             type: DataTypes.DATE,
         },
 

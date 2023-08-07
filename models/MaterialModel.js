@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const Material = sequelize.define(
     'Material',
     {
-        material_code: {
+        materialCode: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
@@ -13,13 +13,13 @@ const Material = sequelize.define(
         color: {
             type: DataTypes.STRING,
         },
-        color_code: {
+        colorCode: {
             type: DataTypes.STRING,
         },
         quantity: {
             type: DataTypes.INTEGER,
         },
-        used_quantity: {
+        usedQuantity: {
             type: DataTypes.INTEGER,
         },
     },

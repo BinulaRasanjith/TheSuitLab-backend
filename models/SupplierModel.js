@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const Supplier = sequelize.define(
     'Supplier',
@@ -8,7 +8,7 @@ const Supplier = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        contact_no: {
+        contactNo: {
             type: DataTypes.STRING,
         },
         email: {

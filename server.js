@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-import sequelize from './config/db.js'; // for connecting to database
+import sequelize from './db/db.js'; // for connecting to database
 
 import routes from './routes/routes.js'; // for routing
 
@@ -13,14 +13,15 @@ dotenv.config(); // for loading environment variables from .env file
 
 const app = express(); // for creating express app
 
-
-
 app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+    origin: [
+        process.env.FRONTEND_URL || 'http://localhost:3000',
+        'http://localhost:3001'
+    ],
     credentials: true
-})); // for enabling CORS
+}));
 app.use(cookieParser()); // for parsing cookies
 
 app.use('/api', routes); // for routing

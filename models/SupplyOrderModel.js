@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const SupplyOrder = sequelize.define(
     'SupplyOrder',
     {
-        invoice_no: {
+        invoiceNo: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,

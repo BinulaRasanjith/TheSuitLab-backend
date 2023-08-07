@@ -1,23 +1,19 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const Payment = sequelize.define(
     'Payment',
     {
-        payment_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        payment_amount: {
+        amount: {
             type: DataTypes.FLOAT,
         },
-        payment_method: {
+        method: {
             type: DataTypes.STRING,
         },
-        payment_date: {
+        date: {
             type: DataTypes.DATE,
         },
-        payment_status: {
+        status: {
             type: DataTypes.STRING,
         },
     },

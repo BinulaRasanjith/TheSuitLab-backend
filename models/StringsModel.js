@@ -1,10 +1,10 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../config/db.js";
+import sequelize from "../db/db.js";
 
 const Buttons = sequelize.define(
     'Buttons',
     {
-        material_code: {
+        materialCode: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
