@@ -1,35 +1,37 @@
-import express from 'express';
-import dotenv from 'dotenv';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
+import express from 'express'; // for creating express app
+import dotenv from 'dotenv'; // for loading environment variables from .env file
+import cors from 'cors';  // for enabling CORS
+import cookieParser from 'cookie-parser'; // for parsing cookies
 
-import sequelize from './db/db.js'; // for connecting to database
+import sequelize from './db/db.js'; // for connecting to database and creating tables
 
-import routes from './routes/routes.js'; // for routing
+import routes from './routes/routes.js'; // for routing to different endpoints
 
-import { ASCII } from './config/config.js';
+import { ASCII } from './config/config.js'; // for ASCII art
 
 dotenv.config(); // for loading environment variables from .env file
 
 const app = express(); // for creating express app
 
-app.use(express.json()); // for parsing application/json
-app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
-app.use(cors({
-    origin: [
-        process.env.FRONTEND_URL || 'http://localhost:3000',
+// for parsing request body and cookies from request headers 
+app.use(express.json()); // for parsing application/json 
+app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded 
+app.use(cors({ // for enabling CORS
+    origin: [ // for allowing requests from these origins
+        process.env.FRONTEND_URL || 'http://localhost:3000', 
         'http://localhost:3001'
     ],
-    credentials: true
+    credentials: true // for allowing cookies to be sent from frontend
 }));
-app.use(cookieParser()); // for parsing cookies
 
-app.use('/api', routes); // for routing
+app.use(cookieParser()); // for parsing cookies from request headers 
+
+app.use('/api', routes); // for routing to different endpoints
 
 
-// connect to database
+// connect to database and create tables if not exists and start server if success else exit process if error 
 sequelize
-    .sync({ alter: true, force: true })
+    .sync({ alter: true, force: true }) // for creating tables if not exists and alter tables if exists and force: true for dropping tables if exists and creating new tables 
     .then(() => {
         // if success, log and continue process
         console.log(`${ASCII.green}\nDatabase connection established!${ASCII.reset}`);
