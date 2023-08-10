@@ -57,14 +57,14 @@ RefreshToken.storeRefreshToken = async (userId, refreshToken, refreshTokenExpira
             existingToken.expiresAt = refreshTokenExpiration; // Set the new expiration date
             await existingToken.save(); // Save the changes
         } else {
-            
             await RefreshToken.create({ // create new refresh token
                 userId, // set user id
                 token: refreshToken, // set refresh token
                 expiresAt: refreshTokenExpiration, // set expiration date
             });
         }
-    } catch (error) { // catch error if there is an error in storing the refresh token 
+    } catch (error) { // catch error if there is an error in storing the refresh token
+        console.log(error);
         throw new Error('Failed to store refresh token');
     }
 };

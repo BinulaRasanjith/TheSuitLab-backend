@@ -26,7 +26,7 @@ const User = sequelize.define(
         },
         lastName: {
             type: DataTypes.STRING,
-            // TODO: allowNull: false,
+            // allowNull: false, // TODO: lastName - allow null for now
         },
         role: {
             type: DataTypes.STRING,

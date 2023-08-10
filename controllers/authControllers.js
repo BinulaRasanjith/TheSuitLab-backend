@@ -1,10 +1,10 @@
 import { User, RefreshToken } from '../models/models.js'; // import User and RefreshToken model
 import { generateToken, verifyToken } from '../utils/jwtUtils.js'; // import jwt utils
-import { ACCESS, REFRESH, VALID, INVALID, EXPIRED } from '../constants/constants.js'; // import constants
+import { ACCESS, REFRESH, VALID, INVALID, EXPIRED, ACTIVE } from '../constants/constants.js'; // import constants
 
 export const signup = async (req, res) => { // for signing up user
     try {
-        const { 
+        const {
             mobile_no,
             first_name,
             last_name,
@@ -29,7 +29,7 @@ export const signup = async (req, res) => { // for signing up user
             first_name,
             last_name,
             password,
-            status: 'active',
+            status: ACTIVE,
         });
 
         return res.status(201).json({ user }); // return user data if success 
@@ -51,12 +51,11 @@ export const login = async (req, res) => {
 
         // generate encoded access token and refresh token
         const accessToken = generateToken(user, ACCESS);
-        const refreshToken = generateToken(user, REFRESH);
+        const refreshToken = generateToken(user.id, REFRESH);
 
         const decodedRefreshToken = verifyToken(refreshToken, REFRESH); // decode refresh token to get expiration date of refresh token in UNIX timestamp format (seconds since Jan 1, 1970) 
         // The decodedRefreshToken.exp property represents the expiration time of the token in UNIX timestamp format. By multiplying it by 1000 and passing it to the Date constructor, we convert it to a Date object representing the expiration date of the refresh token.
         const refreshTokenExpiration = new Date(decodedRefreshToken.exp * 1000); // get expiration date of refresh token
-
 
         // save refresh token in db 
         await RefreshToken.storeRefreshToken(user.id, refreshToken, refreshTokenExpiration); // store refresh token in db
@@ -102,14 +101,15 @@ export const refreshToken = async (req, res) => { // for refreshing access token
 
         // Verify the refresh token 
         // object destructuring to get user from decoded refresh token
-        const { user } = verifyToken(refreshToken, REFRESH);   // verify refresh token and get user data from it
+        const { id } = verifyToken(refreshToken, REFRESH);   // verify refresh token and get user data from it
 
         // Check if the refresh token is valid
-        const isValid = await RefreshToken.isValidToken(user.id, refreshToken); // check if refresh token is valid in db 
+        const isValid = await RefreshToken.isValidToken(id, refreshToken); // check if refresh token is valid in db 
 
         switch (isValid) {
             case VALID:
-                // Generate new access token 
+                // Generate new access token
+                const user = await User.findOne({ where: { id } }); // get user from db
                 const accessToken = generateToken(user, ACCESS);
 
                 return res.status(200).json({ message: 'Token refreshed', accessToken });
