@@ -6,7 +6,7 @@ import sequelize from "../db/db.js";
 const User = sequelize.define(
     'User',
     {
-        mobile_no: {
+        mobileNo: {
             type: DataTypes.STRING,
             unique: true,
             allowNull: false,
@@ -20,13 +20,17 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false
         },
-        first_name: {
+        firstName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        last_name: {
+        lastName: {
             type: DataTypes.STRING,
-            // TODO: allow null: true
+            // TODO: allowNull: false,
+        },
+        role: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         status: {
             type: DataTypes.STRING,

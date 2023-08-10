@@ -4,7 +4,7 @@ import cors from 'cors';  // for enabling CORS
 import cookieParser from 'cookie-parser'; // for parsing cookies
 
 import sequelize from './db/db.js'; // for connecting to database and creating tables
-
+import seed from './db/seed.js';
 import routes from './routes/routes.js'; // for routing to different endpoints
 
 import { ASCII } from './config/config.js'; // for ASCII art
@@ -18,7 +18,7 @@ app.use(express.json()); // for parsing application/json
 app.use(express.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded 
 app.use(cors({ // for enabling CORS
     origin: [ // for allowing requests from these origins
-        process.env.FRONTEND_URL || 'http://localhost:3000', 
+        process.env.FRONTEND_URL || 'http://localhost:3000',
         'http://localhost:3001'
     ],
     credentials: true // for allowing cookies to be sent from frontend
@@ -35,6 +35,7 @@ sequelize
     .then(() => {
         // if success, log and continue process
         console.log(`${ASCII.green}\nDatabase connection established!${ASCII.reset}`);
+        seed();
 
         const port = process.env.PORT || 3333;
 

@@ -23,6 +23,9 @@ const Material = sequelize.define(
             type: DataTypes.INTEGER,
         },
     },
+    {
+        tableName: 'materials',
+    }
 );
 
 export default Material;
