@@ -14,5 +14,7 @@ export const EXPIRED = 'EXPIRED';
 export const ADMIN = 'admin';
 export const CUSTOMER = 'customer';
 export const PRODUCT_MANAGER = 'product-manager';
-export const OPERATION_ASSISTANT = 'operation-assistant';
+export const OPERATION_ASSISTANT = 'op-assistant';
 export const TAILOR = 'tailor';
+
+// 
