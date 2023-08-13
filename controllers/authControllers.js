@@ -1,4 +1,4 @@
-import { User, RefreshToken } from '../models/models.js'; // import User and RefreshToken model
+import { User, RefreshToken, Customer } from '../models/models.js'; // import User and RefreshToken model
 import { generateToken, verifyToken } from '../utils/jwtUtils.js'; // import jwt utils
 import { ACCESS, REFRESH, VALID, INVALID, EXPIRED, ACTIVE, CUSTOMER } from '../constants/constants.js'; // import constants
 
@@ -9,6 +9,7 @@ export const signup = async (req, res) => {
 			mobileNo,
 			firstName,
 			lastName,
+			address,
 			email, // TODO: check???
 			confirmPassword,
 			password,
@@ -34,8 +35,15 @@ export const signup = async (req, res) => {
 			status: ACTIVE,
 		});
 
-		return res.status(201).json({ user }); // return user data if success 
+		// create customer
+		await Customer.create({
+			userId: user.id,
+			address,
+		});
+
+		return res.status(201).json({ message: 'Signup successful', user }); // return user data if success 
 	} catch (error) {
+		console.log(error);
 		return res.status(500).json({ message: error.message }); // return error if error
 	}
 };
