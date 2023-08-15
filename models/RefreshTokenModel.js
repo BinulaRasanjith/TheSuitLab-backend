@@ -24,7 +24,7 @@ const RefreshToken = sequelize.define( // define model
 RefreshToken.isValidToken = async (userId, refreshToken) => {
     const refreshTokenInstance = await RefreshToken.findOne({ // Find the refresh token in the database using the user ID and the refresh token 
         where: {
-            user_id: userId,
+            userId,
             token: refreshToken,
         },
     });

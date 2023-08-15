@@ -10,11 +10,15 @@ const Material = sequelize.define(
             allowNull: false,
             unique: true,
         },
+        type: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+        },
         color: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(20),
         },
         colorCode: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(7),
         },
         quantity: {
             type: DataTypes.INTEGER,
