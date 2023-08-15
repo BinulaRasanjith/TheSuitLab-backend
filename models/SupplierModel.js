@@ -8,6 +8,10 @@ const Supplier = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
+        bankAccNo: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
         contactNo: {
             type: DataTypes.STRING,
         },
