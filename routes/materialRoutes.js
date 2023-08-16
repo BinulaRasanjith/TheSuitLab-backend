@@ -7,13 +7,14 @@ import {
     removeMaterial,
     useMaterialQuantity,
 } from "../controllers/materialController.js";
+import { materialImageUpload } from "../middlewares/imageUpload.js";
 
 const router = Router();
 
 router.post("/", getMaterials);
-router.post("/add", addMaterial);
+router.post("/add", materialImageUpload.single("image"), addMaterial);
 router.post("/remove", removeMaterial);
-router.post("/add-quantity", addMaterialQuantity);
-router.post("/use-quantity", useMaterialQuantity);
+router.patch("/add-quantity", addMaterialQuantity);
+router.patch("/use-quantity", useMaterialQuantity);
 
 export default router;

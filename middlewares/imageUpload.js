@@ -14,4 +14,14 @@ const profilePicStorage = multer.diskStorage({
     }
 });
 
+const materialImageStorage = multer.diskStorage({
+    destination: path.join(__dirname, '../uploads/material-images'), // Set the destination folder for uploads
+    filename: (req, file, cb) => {
+        // Generate a unique filename for the uploaded file
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
 export const profilePicUpload = multer({ storage: profilePicStorage });
+export const materialImageUpload = multer({ storage: materialImageStorage });

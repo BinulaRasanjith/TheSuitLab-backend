@@ -20,6 +20,9 @@ const Material = sequelize.define(
         colorCode: {
             type: DataTypes.STRING(7),
         },
+        image: {
+            type: DataTypes.STRING,
+        },
         quantity: {
             type: DataTypes.INTEGER,
         },
