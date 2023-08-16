@@ -155,3 +155,46 @@ export const logout = async (req, res) => {
 		res.status(500).json({ message: error.message });
 	}
 };
+
+// change password
+export const changePassword = async (req, res) => {
+	try {
+		const { oldPassword, newPassword } = req.body; // get old password and new password from request body
+		const { id } = req.user; // get user id from authenticated user
+
+		const user = await User.findOne({ where: { id } }); // get user from db
+
+		// check if old password is correct
+		if (!(await user.isValidPassword(oldPassword))) {
+			return res.status(401).json({ message: 'Invalid credentials' });
+		}
+
+		// update password
+		user.password = newPassword;
+		await user.save();
+
+		return res.status(200).json({ message: 'Password changed successfully' });
+	} catch (error) {
+		return res.status(500).json({ message: error.message });
+	}
+};
+
+export const updateProfile = async (req, res) => {
+	try {
+		const { firstName, lastName, email, mobileNo } = req.body; // get first name, last name, email from request body
+		const { id } = req.user; // get user id from authenticated user
+
+		const user = await User.findOne({ where: { id } }); // get user from db
+
+		// update user
+		user.firstName = firstName;
+		user.lastName = lastName;
+		user.email = email;
+		user.mobileNo = mobileNo;
+		await user.save();
+
+		return res.status(200).json({ message: 'Profile updated successfully' });
+	} catch (error) {
+		return res.status(500).json({ message: error.message });
+	}
+}
