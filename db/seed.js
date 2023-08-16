@@ -21,7 +21,7 @@ const seed = async () => {
                 lastName: 'Test',
                 role: ADMIN,
                 status: ACTIVE,
-                image: '',
+                image: 'avatar.png',
             }
         });
 
@@ -34,7 +34,7 @@ const seed = async () => {
                 lastName: 'Test',
                 role: CUSTOMER,
                 status: ACTIVE,
-                image: '',
+                image: 'costume1.jpeg',
             }
         });
 
@@ -47,7 +47,7 @@ const seed = async () => {
                 lastName: 'Test',
                 role: TAILOR,
                 status: ACTIVE,
-                image: '',
+                image: 'costume2.jpeg',
             }
         });
 
@@ -60,7 +60,7 @@ const seed = async () => {
                 lastName: 'Test',
                 role: OPERATION_ASSISTANT,
                 status: ACTIVE,
-                image: '',
+                image: 'costume3.jpeg',
             }
         });
 
@@ -73,7 +73,7 @@ const seed = async () => {
                 lastName: 'Test',
                 role: PRODUCT_MANAGER,
                 status: ACTIVE,
-                image: '',
+                image: 'costume4.jpeg',
             }
         });
 
