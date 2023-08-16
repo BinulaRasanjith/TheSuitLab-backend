@@ -51,7 +51,7 @@ const seed = async () => {
         User.findOrCreate({
             where: { mobileNo: '1234567893' },
             defaults: {
-                email: 'op_assistant@email.com',
+                email: 'assistant@email.com',
                 password: defaultPassword,
                 firstName: 'Op-Assistant',
                 lastName: 'Test',
