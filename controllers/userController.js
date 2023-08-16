@@ -24,3 +24,19 @@ export const addUser = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+// get users by role
+export const getUsers = async (req, res) => {
+    try {
+        const roles = req.body.roles;
+
+        const condition = roles ? { role: roles } : {};
+        const users = await User.findAll({
+            where: condition
+        });
+
+        res.status(200).json({ users });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+}
