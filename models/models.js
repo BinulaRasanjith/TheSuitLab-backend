@@ -16,6 +16,7 @@ import Buttons from "./ButtonsModel.js";
 import Strings from "./StringsModel.js";
 import SupplyOrder from "./SupplyOrderModel.js";
 import Supplier from "./SupplierModel.js";
+import Return from "./ReturnModel.js";
 /* 
 ? relationship between customer rents costumes
 ? payment too
@@ -46,6 +47,7 @@ SystemAdmin.belongsTo(StaffUser, { foreignKey: 'id' });
 // PurchaseOrder relationships
 Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', });
 PurchaseOrder.hasMany(Costume, { foreignKey: 'orderId', });
+Return.belongsTo(PurchaseOrder, { foreignKey: 'referenceNo' });
 
 
 // Payment relationships
