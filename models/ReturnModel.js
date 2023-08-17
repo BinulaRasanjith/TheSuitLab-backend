@@ -12,6 +12,14 @@ const Return = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        orderedDate: {
+            type: DataTypes.DATE,
+        },
+        returnDate: {
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+            allowNull: false,
+        },
         reason: {
             type: DataTypes.STRING,
             allowNull: false,

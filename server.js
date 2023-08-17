@@ -36,7 +36,7 @@ app.use('/api', routes); // for routing to different endpoints
 
 // connect to database and create tables if not exists and start server if success else exit process if error 
 sequelize
-    .sync({ alter: true, force: true }) // for creating tables if not exists and alter tables if exists and force: true for dropping tables if exists and creating new tables 
+    .sync({ alter: true, }) // for creating tables if not exists and alter tables if exists and force: true for dropping tables if exists and creating new tables 
     .then(() => {
         // if success, log and continue process
         console.log(`${ASCII.green}\nDatabase connection established!${ASCII.reset}`);

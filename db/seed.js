@@ -26,12 +26,12 @@ const seed = async () => {
         });
 
         User.findOrCreate({
-            where: { mobileNo: '1234567891' },
+            where: { mobileNo: '0773364290' },
             defaults: {
-                email: 'customer@email.com',
+                email: 'kavisula@email.com',
                 password: defaultPassword,
-                firstName: 'Customer',
-                lastName: 'Test',
+                firstName: 'Kavishka',
+                lastName: 'Sulakshana',
                 role: CUSTOMER,
                 status: ACTIVE,
                 image: 'costume1.jpeg',
@@ -39,12 +39,38 @@ const seed = async () => {
         });
 
         User.findOrCreate({
-            where: { mobileNo: '1234567892' },
+            where: { mobileNo: '07645902431' },
             defaults: {
-                email: 'tailor@email.com',
+                email: 'sunil@email.com',
                 password: defaultPassword,
-                firstName: 'Tailor',
-                lastName: 'Test',
+                firstName: 'Sunil',
+                lastName: 'Perera',
+                role: CUSTOMER,
+                status: ACTIVE,
+                image: 'costume1.jpeg',
+            }
+        });
+
+        User.findOrCreate({
+            where: { mobileNo: '0712340991' },
+            defaults: {
+                email: 'nimal@email.com',
+                password: defaultPassword,
+                firstName: 'Nimal',
+                lastName: 'Fernando',
+                role: CUSTOMER,
+                status: ACTIVE,
+                image: 'costume1.jpeg',
+            }
+        });
+
+        User.findOrCreate({
+            where: { mobileNo: '0753429081' },
+            defaults: {
+                email: 'mamatailor@email.com',
+                password: defaultPassword,
+                firstName: 'John',
+                lastName: 'Taylor',
                 role: TAILOR,
                 status: ACTIVE,
                 image: 'costume2.jpeg',
@@ -52,12 +78,12 @@ const seed = async () => {
         });
 
         User.findOrCreate({
-            where: { mobileNo: '1234567893' },
+            where: { mobileNo: '0778235998' },
             defaults: {
                 email: 'assistant@email.com',
                 password: defaultPassword,
-                firstName: 'Op-Assistant',
-                lastName: 'Test',
+                firstName: 'Bhanuka',
+                lastName: 'Rajapaksha',
                 role: OPERATION_ASSISTANT,
                 status: ACTIVE,
                 image: 'costume3.jpeg',
@@ -65,12 +91,12 @@ const seed = async () => {
         });
 
         User.findOrCreate({
-            where: { mobileNo: '1234567894' },
+            where: { mobileNo: '0773098124' },
             defaults: {
-                email: 'pr_manager@email.com',
+                email: 'manager@email.com',
                 password: defaultPassword,
-                firstName: 'Pr-Manager',
-                lastName: 'Test',
+                firstName: 'Viraj',
+                lastName: 'Sandakalum',
                 role: PRODUCT_MANAGER,
                 status: ACTIVE,
                 image: 'costume4.jpeg',
