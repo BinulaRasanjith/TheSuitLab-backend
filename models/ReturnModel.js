@@ -4,6 +4,10 @@ import sequelize from "../db/db.js";
 const Return = sequelize.define(
     'Return',
     {
+        referenceNo: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         itemCount: {
             type: DataTypes.INTEGER,
             allowNull: false,

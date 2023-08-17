@@ -47,7 +47,7 @@ SystemAdmin.belongsTo(StaffUser, { foreignKey: 'id' });
 // PurchaseOrder relationships
 Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', });
 PurchaseOrder.hasMany(Costume, { foreignKey: 'orderId', });
-Return.belongsTo(PurchaseOrder, { foreignKey: 'referenceNo' });
+// Return.belongsTo(PurchaseOrder, { foreignKey: 'referenceNo' });
 
 
 // Payment relationships
