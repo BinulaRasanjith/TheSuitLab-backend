@@ -16,3 +16,7 @@ export const CUSTOMER = 'customer';
 export const PRODUCT_MANAGER = 'manager';
 export const OPERATION_ASSISTANT = 'assistant';
 export const TAILOR = 'tailor';
+
+// material types
+export const FABRIC = 'fabric';
+export const BUTTON = 'button';

@@ -1,10 +1,14 @@
 import dotenv from 'dotenv';
 
-import User from "../models/UserModel.js";
+import {
+    User,
+    Material
+} from "../models/models.js";
 import {
     ACTIVE,
     ADMIN, CUSTOMER, TAILOR, OPERATION_ASSISTANT, PRODUCT_MANAGER
 } from "../constants/constants.js";
+import materialSeed from './materialSeed.js';
 
 dotenv.config();
 
@@ -103,6 +107,7 @@ const seed = async () => {
             }
         });
 
+        await Material.bulkCreate(materialSeed);
     } catch (error) {
         console.log(error);
     }
