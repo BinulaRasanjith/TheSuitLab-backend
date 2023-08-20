@@ -2,7 +2,7 @@ import Return from "../models/ReturnModel.js";
 
 export const addReturn = async (req, res) => {
     try {
-        // request eke body ekjen me pahala thiyena tika ganna
+        // request eke body eken me pahala thiyena tika ganna
         const {
             referenceNo,
             itemCount,
