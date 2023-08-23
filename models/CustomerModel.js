@@ -8,7 +8,10 @@ const Customer = sequelize.define(
             type: DataTypes.STRING,
             allowNull: true,
         },
-        // TODO: measurements??
+        measurements: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        }
     },
     {
         tableName: 'customers',

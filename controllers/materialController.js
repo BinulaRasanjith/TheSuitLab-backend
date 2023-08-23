@@ -3,7 +3,6 @@ import Material from "../models/MaterialModel.js";
 
 export const getMaterials = async (req, res) => {
     try {
-        console.log(req.body);
         const { type } = req.body;
 
         let materials;
@@ -13,7 +12,6 @@ export const getMaterials = async (req, res) => {
             materials = await Material.findAll();
         }
 
-        console.log(materials);
         return res.status(200).json({ materials });
     } catch (error) {
         console.log(error);
