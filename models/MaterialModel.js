@@ -4,30 +4,35 @@ import sequelize from "../db/db.js";
 const Material = sequelize.define(
     'Material',
     {
-        materialCode: {
+        material_code: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
             unique: true,
         },
-        type: {
-            type: DataTypes.STRING(20),
+        material_name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        supplier: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        unit_price: {
+            type: DataTypes.DOUBLE(17, 2),
             allowNull: false,
         },
         color: {
             type: DataTypes.STRING(20),
+            allowNull: true,
         },
         colorCode: {
-            type: DataTypes.STRING(7),
+            type: DataTypes.STRING(10),
+            allowNull: true,
         },
         image: {
             type: DataTypes.STRING,
-        },
-        quantity: {
-            type: DataTypes.INTEGER,
-        },
-        usedQuantity: {
-            type: DataTypes.INTEGER,
+            allowNull: true,
         },
     },
     {

@@ -6,8 +6,8 @@ import sequelize from "../db/db.js";
 const User = sequelize.define(
     'User',
     {
-        mobileNo: {
-            type: DataTypes.STRING,
+        mobile_no: {
+            type: DataTypes.STRING(15),
             unique: true,
             allowNull: false,
         },
@@ -15,10 +15,6 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             allowNull: true,
             unique: true
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
         },
         firstName: {
             type: DataTypes.STRING,
@@ -28,12 +24,16 @@ const User = sequelize.define(
             type: DataTypes.STRING,
             // allowNull: false, // TODO: lastName - allow null for now
         },
-        role: {
+        password: {
             type: DataTypes.STRING,
+            allowNull: false
+        },
+        role: {
+            type: DataTypes.STRING(25),
             allowNull: false,
         },
-        status: {
-            type: DataTypes.STRING,
+        progress: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
         image: {

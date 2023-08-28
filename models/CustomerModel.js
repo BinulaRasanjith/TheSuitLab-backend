@@ -8,7 +8,11 @@ const Customer = sequelize.define(
             type: DataTypes.STRING,
             allowNull: true,
         },
-        measurements: {
+        coat_measurements: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        },
+        trouser_measurements: {
             type: DataTypes.JSON,
             allowNull: true,
         }

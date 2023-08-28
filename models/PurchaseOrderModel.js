@@ -4,32 +4,43 @@ import sequelize from "../db/db.js";
 const PurchaseOrder = sequelize.define(
     'PurchaseOrder',
     {
-        referenceNo: {
+        reference_no: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
             // TODO: auto increment or not ??
         },
-        noOfItems: {
-            type: DataTypes.INTEGER
-        },
-        totalAmount: {
+        customer: {
             type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        item_count: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        total_amount: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        payment_method: {
+            type: DataTypes.STRING,
+            allowNull: false,
         },
         status: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
-        remarks: {
-            type: DataTypes.STRING,
-        },
-        requestedDate: {
+        requested_date: {
             type: DataTypes.DATE,
+            allowNull: false,
         },
-        collectedDate: {
+        fit_on_date: {
             type: DataTypes.DATE,
+            allowNull: true,
         },
-        fitOnDate: {
+        collected_date: {
             type: DataTypes.DATE,
+            allowNull: true,
         },
 
         // ! payment details (check if needed a payment id)

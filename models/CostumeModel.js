@@ -4,18 +4,29 @@ import sequelize from "../db/db.js";
 const Costume = sequelize.define(
     'Costume',
     {
-        size: {
+        costume_name: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
-        price: {
-            type: DataTypes.FLOAT,
+        size: {
+            type: DataTypes.JSON,
+            allowNull: false,
+        },
+        rental_price: {
+            type: DataTypes.DOUBLE(12, 2),
+            allowNull: false,
+        },
+        sale_price: {
+            type: DataTypes.DOUBLE(12, 2),
+            allowNull: false,
         },
         costumeType: {
-
             type: DataTypes.STRING,
+            // allowNull: false,
         },
-        orderType: { // * costume is a order or a rental
-            type: DataTypes.STRING,
+        image: {
+            type: DataTypes.TEXT,
+            allowNull: true,
         },
     },
     {

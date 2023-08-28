@@ -4,14 +4,19 @@ import sequelize from "../db/db.js";
 const Buttons = sequelize.define(
     'Buttons',
     {
-        materialCode: {
+        material_code: {
             type: DataTypes.STRING,
             primaryKey: true,
             allowNull: false,
             unique: true,
         },
-        size: {
-            type: DataTypes.STRING,
+        quantity: {
+            type: DataTypes.DOUBLE(12, 2),
+            allowNull: false,
+        },
+        size: { // DIAMETER OF THE BUTTON
+            type: DataTypes.DOUBLE(12, 2),
+            // allowNull: true,
         },
     },
     {
