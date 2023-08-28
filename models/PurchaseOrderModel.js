@@ -19,11 +19,11 @@ const PurchaseOrder = sequelize.define(
             allowNull: false,
         },
         total_amount: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.DOUBLE(12, 2),
             allowNull: false,
         },
         payment_method: {
-            type: DataTypes.STRING,
+            type: DataTypes.STRING(20),
             allowNull: false,
         },
         status: {
@@ -32,6 +32,7 @@ const PurchaseOrder = sequelize.define(
         },
         requested_date: {
             type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
             allowNull: false,
         },
         fit_on_date: {

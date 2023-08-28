@@ -4,24 +4,33 @@ import sequelize from "../db/db.js";
 const Return = sequelize.define(
     'Return',
     {
-        referenceNo: {
-            type: DataTypes.STRING,
+        return_id: {
+            type: DataTypes.INTEGER,
             allowNull: false,
+            primaryKey: true,
+            unique: true,
         },
-        itemCount: {
+        order_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        orderedDate: {
-            type: DataTypes.DATE,
+        item_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            unique: true,
         },
-        returnDate: {
+        returned_date: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
             allowNull: false,
         },
         reason: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        status: {
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
     },

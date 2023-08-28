@@ -1,41 +1,43 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-const Rent = sequelize.define(
-    'Rent',
+const Handover = sequelize.define(
+    'Handover',
     {
-        customer: {
+        rental_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
+            primaryKey: true,
+            unique: true,
         },
-        costume: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        rented_date: {
+        handovered_date: {
             type: DataTypes.DATE,
             allowNull: false,
         },
-        will_handover: {
-            type: DataTypes.DATE,
+        handovered_by: {
+            type: DataTypes.INTEGER,
             allowNull: true,
         },
-        price: {
+        damages: {
+            type: DataTypes.JSON,
+            allowNull: false,
+        },
+        balance: {
             type: DataTypes.DOUBLE(12, 2),
             allowNull: true,
         },
-        advance: {
+        penalties: {
             type: DataTypes.DOUBLE(12, 2),
             allowNull: false,
         },
-        mobile_no: {
-            type: DataTypes.STRING(15),
+        total: {
+            type: DataTypes.DOUBLE(12, 2),
             allowNull: false,
         },
     },
     {
-        tableName: 'rents',
+        tableName: 'handovers',
     }
 );
 
-export default Rent;
+export default Handover;
