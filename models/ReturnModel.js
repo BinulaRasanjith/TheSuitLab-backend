@@ -1,3 +1,4 @@
+// TABLE: returns
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
@@ -7,7 +8,7 @@ const Return = sequelize.define(
         return_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true,
+            compositePrimaryKey: true,
             unique: true,
         },
         order_id: {
@@ -17,7 +18,7 @@ const Return = sequelize.define(
         item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            primaryKey: true,
+            compositePrimaryKey: true,
             unique: true,
         },
         returned_date: {

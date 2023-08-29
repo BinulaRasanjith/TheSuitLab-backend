@@ -1,3 +1,4 @@
+// TABLE: suppliers
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
@@ -8,14 +9,23 @@ const Supplier = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        bankAccNo: {
+        bank: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        account_no: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        contactNo: {
+        mobile_no: {
             type: DataTypes.STRING,
+            allowNull: false,
         },
-        email: {
+        progress: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        image: {
             type: DataTypes.STRING,
             allowNull: true,
         },

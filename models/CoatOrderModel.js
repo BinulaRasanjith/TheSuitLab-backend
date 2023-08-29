@@ -1,10 +1,11 @@
+// TABLE: coat_orders
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
 const CoatOrder = sequelize.define(
     'CoatOrder',
     {
-        order_id: {
+        item_id: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,

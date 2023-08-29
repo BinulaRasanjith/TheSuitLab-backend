@@ -1,3 +1,4 @@
+// TABLE: payments
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
@@ -32,7 +33,8 @@ const Payment = sequelize.define(
             allowNull: false,
         },
         date: {
-            type: DataTypes.NOW,
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

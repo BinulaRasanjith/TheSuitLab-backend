@@ -1,9 +1,16 @@
+// TABLE FOR BELTS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
 const Belt = sequelize.define(
     'Belt',
     {
+        item_id: {  // THE INDIVIDUAL ITEM ID
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            PrimaryKey: true,
+            autoIncrement: true,
+        },
         brand: {
             type: DataTypes.STRING,
             allowNull: false,

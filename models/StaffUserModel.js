@@ -1,3 +1,4 @@
+// TODO: IS THIS NEEDED??
 import { DataTypes } from 'sequelize'
 import sequelize from '../db/db.js'
 

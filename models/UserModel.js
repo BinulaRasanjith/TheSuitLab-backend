@@ -1,3 +1,4 @@
+// TABLE: users
 import bcrypt from 'bcrypt'; // import bcrypt for hashing password
 import { DataTypes } from "sequelize";
 
@@ -8,8 +9,8 @@ const User = sequelize.define(
     {
         mobile_no: {
             type: DataTypes.STRING(15),
-            unique: true,
             allowNull: false,
+            unique: true,
         },
         email: {
             type: DataTypes.STRING,
