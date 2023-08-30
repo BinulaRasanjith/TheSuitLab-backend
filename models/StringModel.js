@@ -1,4 +1,4 @@
-// TABLE: strings
+// TABLE FOR STRINGS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
@@ -6,10 +6,9 @@ const Strings = sequelize.define(
     'Strings',
     {
         material_code: {
-            type: DataTypes.STRING,
-            primaryKey: true,
+            type: DataTypes.TEXT,
             allowNull: false,
-            unique: true,
+            primaryKey: true,
         },
         quantity: {
             type: DataTypes.DOUBLE(12, 2),
@@ -17,7 +16,7 @@ const Strings = sequelize.define(
         },
         size: { // SIZE OF THE STRING
             type: DataTypes.DOUBLE(12, 2),
-            // allowNull: true,
+            allowNull: false,
         },
     },
     {

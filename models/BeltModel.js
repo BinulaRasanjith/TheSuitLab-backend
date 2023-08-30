@@ -6,26 +6,9 @@ const Belt = sequelize.define(
     'Belt',
     {
         item_id: {  // THE INDIVIDUAL ITEM ID
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             PrimaryKey: true,
-            autoIncrement: true,
-        },
-        brand: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        item_name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        material: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        color: {
-            type: DataTypes.STRING,
-            allowNull: false,
         },
         buckle_type: {
             type: DataTypes.STRING,
@@ -33,18 +16,6 @@ const Belt = sequelize.define(
         },
         size: {
             type: DataTypes.STRING(10),
-            allowNull: false,
-        },
-        price: {
-            type: DataTypes.DOUBLE(12, 2),
-            allowNull: false,
-        },
-        quantity: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
-        image: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: false,
         },
     },
