@@ -1,15 +1,17 @@
-// TABLE: supply_orders
+// TABLE FOR SUPPLY ORDERS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
+
+sequelize.query(`CREATE SEQUENCE supply_invoice_code_seq;`);
 
 const SupplyOrder = sequelize.define(
     'SupplyOrder',
     {
-        invoiceNo: {
-            type: DataTypes.STRING,
-            primaryKey: true,
+        invoice: {
+            type: DataTypes.TEXT,
             allowNull: false,
-            unique: true,
+            primaryKey: true,
+            defaultValue: sequelize.literal(`'INV' || LPAD(nextval('supply_invoice_code_seq')::TEXT, 10, '0')`), // INV0000000001
         },
         material: {
             type: DataTypes.INTEGER,

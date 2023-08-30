@@ -1,25 +1,27 @@
-// TABLE: returns
+// TABLE FOR RETURNS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
+
+sequelize.query(`CREATE SEQUENCE return_code_seq;`);
 
 const Return = sequelize.define(
     'Return',
     {
         return_id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
-            compositePrimaryKey: true,
+            unique: true,
+            PrimaryKey: true,
+            defaultValue: sequelize.literal(`'RET' || LPAD(nextval('return_code_seq')::TEXT, 10, '0')`), // RET0000000001
+        },
+        item_id: {
+            type: DataTypes.TEXT,
+            allowNull: false,
             unique: true,
         },
         order_id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
-        },
-        item_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            compositePrimaryKey: true,
-            unique: true,
         },
         returned_date: {
             type: DataTypes.DATE,

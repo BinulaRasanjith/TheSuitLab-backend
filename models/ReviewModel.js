@@ -1,4 +1,4 @@
-// TABLE: review
+// TABLE FOR REVIEWS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
@@ -6,11 +6,11 @@ const Review = sequelize.define(
     'Review',
     {
         customer: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         item: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         reviewed_on: {
@@ -18,12 +18,14 @@ const Review = sequelize.define(
             defaultValue: DataTypes.NOW,
             allowNull: false,
         },
+        rating: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         description: {
             type: DataTypes.TEXT,
+            allowNull: true,
         },
-        rating: { //? check if this actually needs
-            type: DataTypes.INTEGER,
-        }
     },
     {
         tableName: 'review',

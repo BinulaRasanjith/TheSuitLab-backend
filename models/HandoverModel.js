@@ -1,4 +1,4 @@
-// TABLE: handovers
+// TABLE FOR HANDOVERS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
@@ -6,7 +6,7 @@ const Handover = sequelize.define(
     'Handover',
     {
         rental_id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
             unique: true,
@@ -15,12 +15,12 @@ const Handover = sequelize.define(
             type: DataTypes.DATE,
             allowNull: false,
         },
-        handovered_by: {
-            type: DataTypes.INTEGER,
+        handovered_to: {
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         damages: {
-            type: DataTypes.JSON,
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
         },
         balance: {

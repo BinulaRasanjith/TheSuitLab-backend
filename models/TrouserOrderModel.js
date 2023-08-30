@@ -1,15 +1,19 @@
-// TABLE: trouser_orders
+// TABLE FOR TROUSER ORDERS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
 const TrouserOrder = sequelize.define(
     'TrouserOrder',
     {
-        order_id: {
-            type: DataTypes.INTEGER,
+        costume_id: {
+            type: DataTypes.TEXT,
             allowNull: false,
-            primaryKey: true,
             unique: true,
+            primaryKey: true,
+        },
+        order_id: {
+            type: DataTypes.TEXT,
+            allowNull: false,
         },
         customization: {
             type: DataTypes.JSON,

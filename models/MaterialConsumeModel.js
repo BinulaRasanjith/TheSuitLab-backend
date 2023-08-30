@@ -1,4 +1,4 @@
-// TABLE: material_consume
+// TABLE FOR MATERIAL CONSUMPTION
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
@@ -6,12 +6,12 @@ const MaterialConsume = sequelize.define(
     'MaterialConsume',
     {
         costume: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             compositePrimaryKey: true,
         },
         material: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             compositePrimaryKey: true,
         },

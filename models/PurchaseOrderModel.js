@@ -1,18 +1,27 @@
-// TABLE: purchase_orders
+// TABLE FOR PURCHASE ORDERS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
+
+sequelize.query(`CREATE SEQUENCE order_code_seq;`);
 
 const PurchaseOrder = sequelize.define(
     'PurchaseOrder',
     {
+        order_id: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            primaryKey: true,
+            unique: true,
+            defaultValue: sequelize.literal(`'#' || LPAD(nextval('order_code_seq')::TEXT, 10, '0')`), // #0000000001
+        },
         reference_no: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
-            // TODO: auto increment or not ??
+            autoIncrement: true,
         },
         customer: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         item_count: {

@@ -1,21 +1,23 @@
-// TABLE FOR PURCHASE PAYMENTS
+// TABLE FOR SUPPLIER PAYMENTS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-const Payment = sequelize.define(
-    'Payment',
+sequelize.query(`CREATE SEQUENCE supplier_payment_code_seq;`);
+
+const SupplierPayment = sequelize.define(
+    'SupplierPayment',
     {
         reference_no: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
-            autoIncrement: true,
+            defaultValue: sequelize.literal(`'REF' || LPAD(nextval('supplier_payment_code_seq')::TEXT, 10, '0')`), // REF0000000001
         },
-        customer: {
+        supplier: {
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        order_id: {
+        invoiceNo: {
             type: DataTypes.TEXT,
             allowNull: false,
         },
@@ -37,8 +39,8 @@ const Payment = sequelize.define(
         },
     },
     {
-        tableName: 'payments',
+        tableName: 'supplier_payments',
     }
 );
 
-export default Payment;
+export default SupplierPayment;
