@@ -1,12 +1,19 @@
-// TABLE: users
+// TABLE FOR ALL USERS
 import bcrypt from 'bcrypt'; // import bcrypt for hashing password
 import { DataTypes } from "sequelize";
-
 import sequelize from "../db/db.js";
+
+sequelize.query(`CREATE SEQUENCE user_code_seq;`);
 
 const User = sequelize.define(
     'User',
     {
+        user_id: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+            primaryKey: true,
+            defaultValue: sequelize.literal(`'USER' || LPAD(nextval('user_code_seq')::TEXT, 10, '0')`), // USER0000000001
+        },
         mobile_no: {
             type: DataTypes.STRING(15),
             allowNull: false,
@@ -15,7 +22,7 @@ const User = sequelize.define(
         email: {
             type: DataTypes.STRING,
             allowNull: true,
-            unique: true
+            unique: true,
         },
         firstName: {
             type: DataTypes.STRING,
@@ -23,11 +30,11 @@ const User = sequelize.define(
         },
         lastName: {
             type: DataTypes.STRING,
-            // allowNull: false, // TODO: lastName - allow null for now
+            allowNull: false,
         },
         password: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false,
         },
         role: {
             type: DataTypes.STRING(25),
@@ -38,7 +45,7 @@ const User = sequelize.define(
             allowNull: false,
         },
         image: {
-            type: DataTypes.STRING,
+            type: DataTypes.TEXT,
             allowNull: true,
         },
 
