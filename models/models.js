@@ -1,22 +1,35 @@
-import User from "./UserModel.js";
-import RefreshToken from "./RefreshTokenModel.js";
+import Accessory from "./AccessoryModel.js";
+import AccessoryOrder from "./AccessoryOrderModel.js";
+import Belt from "./BeltModel.js";
+import Buttons from "./ButtonModel.js";
+import Cart from "./CartModel.js";
+import CoatOrder from "./CoatOrderModel.js";
+import Costume from "./CostumeModel.js";
 import Customer from "./CustomerModel.js";
+import Fabric from "./FabricModel.js";
+import Handover from "./HandoverModel.js";
+import MaterialConsumption from "./MaterialConsumeModel.js";
+import Material from "./MaterialModel.js";
+import Payment from "./PaymentModel.js";
+import PurchaseOrder from "./PurchaseOrderModel.js";
+import RefreshToken from "./RefreshTokenModel.js";
+import Rent from "./RentModel.js";
+import Return from "./ReturnModel.js";
+import Review from "./ReviewModel.js";
+import ShirtOrder from "./ShirtOrderModel.js"
+import Shoe from "./ShoeModel.js";
 import StaffUser from "./StaffUserModel.js";
+import Strings from "./StringModel.js";
+import Supplier from "./SupplierModel.js";
+import SupplierPayment from "./SupplierPaymentModel.js"
+import SupplyOrder from "./SupplyOrderModel.js";
+import Tie from "./TieModel.js";
+import TrouserOrder from "./TrouserOrderModel.js";
+import User from "./UserModel.js";
+
 import ProductManager from "./ProductManager.js";
 import Tailor from "./TailorModel.js";
 import SystemAdmin from "./SystemAdmin.js";
-import PurchaseOrder from "./PurchaseOrderModel.js";
-import Review from "./ReviewModel.js";
-import Payment from "./PaymentModel.js";
-import Rent from "./RentModel.js";
-import Costume from "./CostumeModel.js";
-import Material from "./MaterialModel.js";
-import Fabric from "./FabricModel.js";
-import Buttons from "./ButtonModel.js";
-import Strings from "./StringModel.js";
-import SupplyOrder from "./SupplyOrderModel.js";
-import Supplier from "./SupplierModel.js";
-import Return from "./ReturnModel.js";
 /* 
 ? relationship between customer rents costumes
 ? payment too
@@ -26,11 +39,14 @@ import Return from "./ReturnModel.js";
 User.hasMany(RefreshToken, { foreignKey: 'userId' });
 RefreshToken.belongsTo(User, { foreignKey: 'userId' });
 
-User.hasOne(Customer, { foreignKey: 'id', });
-Customer.belongsTo(User, { foreignKey: 'id', });
+// STAFF-USER AND CUSTOMER RELATIONSHIP
+User.hasOne(Customer, { foreignKey: 'user_id', });
+Customer.belongsTo(User, { foreignKey: 'user_id', });
 
-User.hasOne(StaffUser, { foreignKey: 'id', });
-StaffUser.belongsTo(User, { foreignKey: 'id', });
+// STAFF-USER AND USER RELATIONSHIP
+User.hasOne(StaffUser, { foreignKey: 'user_id', });
+StaffUser.belongsTo(User, { foreignKey: 'user_id', });
+// StaffUser.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id' });
 
 
 // StaffUser relationships
@@ -51,7 +67,7 @@ PurchaseOrder.hasMany(Costume, { foreignKey: 'orderId', });
 
 
 // Payment relationships
-Customer.hasMany(Payment, { foreignKey: 'customerId', });
+Customer.hasMany(Payment, { foreignKey: 'user_id', });
 PurchaseOrder.hasMany(Payment, { foreignKey: 'orderId', });
 
 
@@ -86,22 +102,32 @@ Review.belongsTo(Costume, { foreignKey: 'costumeId', });
 
 
 export {
-	User,
-	RefreshToken,
-	Customer,
-	StaffUser,
-	PurchaseOrder,
-	Review,
-	Payment,
-	Rent,
-	Costume,
-	Material,
-	Fabric,
+	Accessory,
+	AccessoryOrder,
+	Belt,
 	Buttons,
+	Cart,
+	CoatOrder,
+	Costume,
+	Customer,
+	Fabric,
+	Handover,
+	MaterialConsumption,
+	Material,
+	Payment,
+	PurchaseOrder,
+	RefreshToken,
+	Rent,
+	Return,
+	Review,
+	ShirtOrder,
+	Shoe,
+	StaffUser,
 	Strings,
-	SupplyOrder,
 	Supplier,
-	ProductManager,
-	Tailor,
-	SystemAdmin,
+	SupplierPayment,
+	SupplyOrder,
+	Tie,
+	TrouserOrder,
+	User,
 };
