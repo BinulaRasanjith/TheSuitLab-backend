@@ -20,7 +20,7 @@ const PurchaseOrder = sequelize.define(
             unique: true,
             autoIncrement: true,
         },
-        customer: {
+        customer_id: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

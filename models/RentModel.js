@@ -14,7 +14,7 @@ const Rent = sequelize.define(
             PrimaryKey: true,
             defaultValue: sequelize.literal(`'HE' || LPAD(nextval('hire_code_seq')::TEXT, 10, '0')`), // HE0000000001
         },
-        customer: {
+        customer_id: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

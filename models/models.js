@@ -30,38 +30,41 @@ import User from "./UserModel.js";
 import ProductManager from "./ProductManager.js";
 import Tailor from "./TailorModel.js";
 import SystemAdmin from "./SystemAdmin.js";
-/* 
-? relationship between customer rents costumes
-? payment too
+
+/*
+User.hasMany(RefreshToken, { foreignKey: 'userId' });
+? A SINGLE USER IN `User` TABLE CAN HAVE ONE OR MORE REFRESH TOKENS FROM `RefreshToken` TABLE
+RefreshToken.belongsTo(User, { foreignKey: 'userId' });
+? A SINGLE REFRESH TOKEN IN `RefreshToken` TABLE BELONGS TO A SINGLE USER IN `User` TABLE
 */
 
-// User relationships
-User.hasMany(RefreshToken, { foreignKey: 'userId' });
-RefreshToken.belongsTo(User, { foreignKey: 'userId' });
+// User relationships (ONE TO MANY RELATIONSHIP)
+User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'user_id' });
+RefreshToken.belongsTo(User, { foreignKey: 'userId', targetKey: 'user_id' });
 
 // STAFF-USER AND CUSTOMER RELATIONSHIP
-User.hasOne(Customer, { foreignKey: 'user_id', });
-Customer.belongsTo(User, { foreignKey: 'user_id', });
+User.hasOne(Customer, { foreignKey: 'user_id', sourceKey: 'user_id' });
+Customer.belongsTo(User, { foreignKey: 'user_id', targetKey: 'user_id' });
 
 // STAFF-USER AND USER RELATIONSHIP
-User.hasOne(StaffUser, { foreignKey: 'user_id', });
-StaffUser.belongsTo(User, { foreignKey: 'user_id', });
-// StaffUser.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id' });
+User.hasOne(StaffUser, { foreignKey: 'user_id', sourceKey: 'user_id' });
+StaffUser.belongsTo(User, { foreignKey: 'user_id', targetKey: 'user_id' });
 
 
-// StaffUser relationships
-StaffUser.hasOne(ProductManager, { foreignKey: 'id' });
-ProductManager.belongsTo(StaffUser, { foreignKey: 'id' });
 
-StaffUser.hasOne(Tailor, { foreignKey: 'id' });
-Tailor.belongsTo(StaffUser, { foreignKey: 'id' });
+// STAFF USERS RELATIONSHIPS
+// StaffUser.hasOne(ProductManager, { foreignKey: 'id' });
+// ProductManager.belongsTo(StaffUser, { foreignKey: 'id' });
 
-StaffUser.hasOne(SystemAdmin, { foreignKey: 'id' });
-SystemAdmin.belongsTo(StaffUser, { foreignKey: 'id' });
+// StaffUser.hasOne(Tailor, { foreignKey: 'id' });
+// Tailor.belongsTo(StaffUser, { foreignKey: 'id' });
+
+// StaffUser.hasOne(SystemAdmin, { foreignKey: 'id' });
+// SystemAdmin.belongsTo(StaffUser, { foreignKey: 'id' });
 
 
 // PurchaseOrder relationships
-Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', });
+Customer.hasMany(PurchaseOrder, { foreignKey: 'customer_id', sourceKey: 'user_id', });
 PurchaseOrder.hasMany(Costume, { foreignKey: 'orderId', });
 // Return.belongsTo(PurchaseOrder, { foreignKey: 'referenceNo' });
 
