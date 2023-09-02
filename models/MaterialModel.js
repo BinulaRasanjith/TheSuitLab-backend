@@ -2,7 +2,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE materialCode_seq;`);
+// sequelize.query(`CREATE SEQUENCE materialCode_seq;`);
 
 const Material = sequelize.define(
     'Material',
@@ -19,11 +19,11 @@ const Material = sequelize.define(
             allowNull: false,
         },
         supplier: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         unitPrice: {
-            type: DataTypes.DOUBLE(17, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         color: {

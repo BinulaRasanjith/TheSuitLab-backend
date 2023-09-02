@@ -2,13 +2,15 @@ import dotenv from 'dotenv';
 
 import {
     User,
-    Material
+    Material,
+    Supplier
 } from "../models/models.js";
 import {
     ACTIVE,
     ADMIN, CUSTOMER, TAILOR, OPERATION_ASSISTANT, PRODUCT_MANAGER
 } from "../constants/constants.js";
-import materialSeed from './materialSeed.js';
+import supplierSeed from './seeds/supplierSeed.js';
+import materialSeed from './seeds/materialSeed.js';
 
 dotenv.config();
 
@@ -24,7 +26,7 @@ const seed = async () => {
                 firstName: 'Admin',
                 lastName: 'Test',
                 role: ADMIN,
-                status: ACTIVE,
+                progress: ACTIVE,
                 image: 'avatar.png',
             }
         });
@@ -37,7 +39,7 @@ const seed = async () => {
                 firstName: 'Kavishka',
                 lastName: 'Sulakshana',
                 role: CUSTOMER,
-                status: ACTIVE,
+                progress: ACTIVE,
                 image: 'costume1.jpeg',
             }
         });
@@ -50,7 +52,7 @@ const seed = async () => {
                 firstName: 'Sunil',
                 lastName: 'Perera',
                 role: CUSTOMER,
-                status: ACTIVE,
+                progress: ACTIVE,
                 image: 'costume1.jpeg',
             }
         });
@@ -63,7 +65,7 @@ const seed = async () => {
                 firstName: 'Nimal',
                 lastName: 'Fernando',
                 role: CUSTOMER,
-                status: ACTIVE,
+                progress: ACTIVE,
                 image: 'costume1.jpeg',
             }
         });
@@ -76,7 +78,7 @@ const seed = async () => {
                 firstName: 'John',
                 lastName: 'Taylor',
                 role: TAILOR,
-                status: ACTIVE,
+                progress: ACTIVE,
                 image: 'costume2.jpeg',
             }
         });
@@ -89,7 +91,7 @@ const seed = async () => {
                 firstName: 'Bhanuka',
                 lastName: 'Rajapaksha',
                 role: OPERATION_ASSISTANT,
-                status: ACTIVE,
+                progress: ACTIVE,
                 image: 'costume3.jpeg',
             }
         });
@@ -102,11 +104,12 @@ const seed = async () => {
                 firstName: 'Viraj',
                 lastName: 'Sandakalum',
                 role: PRODUCT_MANAGER,
-                status: ACTIVE,
+                progress: ACTIVE,
                 image: 'costume4.jpeg',
             }
         });
 
+        await Supplier.bulkCreate(supplierSeed);
         await Material.bulkCreate(materialSeed);
     } catch (error) {
         console.log(error);

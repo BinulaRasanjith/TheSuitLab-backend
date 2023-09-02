@@ -15,7 +15,7 @@ const Tie = sequelize.define(
             allowNull: false,
         },
         width: {
-            type: DataTypes.DOUBLE(10, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
     },

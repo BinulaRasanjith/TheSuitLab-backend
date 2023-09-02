@@ -11,7 +11,7 @@ const Fabric = sequelize.define(
             primaryKey: true,
         },
         quantity: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         pattern: {

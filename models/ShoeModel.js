@@ -15,7 +15,7 @@ const Shoe = sequelize.define(
             allowNull: false,
         },
         size: {
-            type: DataTypes.DOUBLE(10, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
     },

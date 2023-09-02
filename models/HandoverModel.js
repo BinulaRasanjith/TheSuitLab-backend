@@ -24,15 +24,15 @@ const Handover = sequelize.define(
             allowNull: false,
         },
         balance: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: true,
         },
         penalties: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         total: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
     },

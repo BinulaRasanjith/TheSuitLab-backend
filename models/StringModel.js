@@ -11,11 +11,11 @@ const Strings = sequelize.define(
             primaryKey: true,
         },
         quantity: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         size: { // SIZE OF THE STRING
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
     },

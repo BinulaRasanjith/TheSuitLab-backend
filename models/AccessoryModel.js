@@ -2,10 +2,10 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE accessory_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE accessory_code_seq;`);
 
-const Belt = sequelize.define(
-    'Belt',
+const Accessory = sequelize.define(
+    'Accessory',
     {
         itemId: {
             type: DataTypes.TEXT,
@@ -31,7 +31,7 @@ const Belt = sequelize.define(
             allowNull: false,
         },
         price: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         quantity: {
@@ -44,8 +44,8 @@ const Belt = sequelize.define(
         },
     },
     {
-        tableName: 'belts',
+        tableName: 'accessories',
     }
 );
 
-export default Belt;
+export default Accessory;

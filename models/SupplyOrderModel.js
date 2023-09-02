@@ -2,7 +2,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE supply_invoice_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE supply_invoice_code_seq;`);
 
 const SupplyOrder = sequelize.define(
     'SupplyOrder',
@@ -22,11 +22,11 @@ const SupplyOrder = sequelize.define(
             allowNull: false,
         },
         unitPrice: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         quantity: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         status: { // PENDING, RECEIVED, CANCELLED

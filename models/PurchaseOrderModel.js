@@ -2,7 +2,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE order_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE order_code_seq;`);
 
 const PurchaseOrder = sequelize.define(
     'PurchaseOrder',
@@ -29,7 +29,7 @@ const PurchaseOrder = sequelize.define(
             allowNull: false,
         },
         totalAmount: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         paymentMethod: {

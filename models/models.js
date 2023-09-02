@@ -79,8 +79,8 @@ TrouserOrder.hasMany(Costume, { foreignKey: 'costumeId', sourceKey: 'costumeId',
 Costume.belongsTo(TrouserOrder, { foreignKey: 'costumeId', targetKey: 'costumeId', });
 
 // ACCESSORY-ACCESSORY_ORDER RELATIONSHIP
-AccessoryOrder.hasMany(Accessory, { foreignKey: 'itemId', sourceKey: 'itemId', });
-Accessory.belongsTo(AccessoryOrder, { foreignKey: 'itemId', targetKey: 'itemId', });
+Accessory.hasOne(AccessoryOrder, { foreignKey: 'itemId', sourceKey: 'itemId', });
+AccessoryOrder.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId', });
 
 
 // ACCESSORIES RELATIONSHIPS
@@ -116,8 +116,8 @@ Costume.belongsTo(Cart, { foreignKey: 'costumeId', targetKey: 'itemId', });
 
 
 // ? Material - Supplier - ProductManager - SupplyOrder relationships
-ProductManager.hasMany(SupplyOrder, { foreignKey: 'productManagerId', });
-SupplyOrder.belongsTo(ProductManager, { foreignKey: 'productManagerId', });
+// ProductManager.hasMany(SupplyOrder, { foreignKey: 'productManagerId', });
+// SupplyOrder.belongsTo(ProductManager, { foreignKey: 'productManagerId', });
 Supplier.hasMany(SupplyOrder, { foreignKey: 'supplierId', });
 SupplyOrder.belongsTo(Supplier, { foreignKey: 'supplierId', });
 // ? does supply order have many materials? or just one?

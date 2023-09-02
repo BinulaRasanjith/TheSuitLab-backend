@@ -6,12 +6,12 @@ const AccessoryOrder = sequelize.define(
     'AccessoryOrder',
     {
         orderId: {  // THE WHOLE ORDER ID
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             compositePrimaryKey: true,
         },
         itemId: {  // THE INDIVIDUAL ITEM ID
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             compositePrimaryKey: true,
         },

@@ -11,11 +11,11 @@ const Buttons = sequelize.define(
             primaryKey: true,
         },
         quantity: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         size: { // DIAMETER OF THE BUTTON
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: true,
         },
     },

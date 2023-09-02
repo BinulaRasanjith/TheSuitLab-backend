@@ -2,7 +2,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE hire_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE hire_code_seq;`);
 
 const Rent = sequelize.define(
     'Rent',
@@ -31,11 +31,11 @@ const Rent = sequelize.define(
             allowNull: true,
         },
         price: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: true,
         },
         advance: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         mobileNo: {

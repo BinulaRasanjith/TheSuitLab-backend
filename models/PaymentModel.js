@@ -24,7 +24,7 @@ const Payment = sequelize.define(
             allowNull: false,
         },
         amountPaid: {
-            type: DataTypes.DOUBLE(12, 2),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
         status: {
