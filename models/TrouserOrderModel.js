@@ -5,13 +5,13 @@ import sequelize from "../db/db.js";
 const TrouserOrder = sequelize.define(
     'TrouserOrder',
     {
-        costume_id: {
+        costumeId: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             primaryKey: true,
         },
-        order_id: {
+        orderId: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

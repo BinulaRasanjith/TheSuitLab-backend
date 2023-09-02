@@ -2,19 +2,19 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE material_code_seq;`);
+sequelize.query(`CREATE SEQUENCE materialCode_seq;`);
 
 const Material = sequelize.define(
     'Material',
     {
-        material_code: {
+        materialCode: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
             unique: true,
-            defaultValue: sequelize.literal(`'MAT' || LPAD(nextval('material_code_seq')::TEXT, 4, '0')`), // MAT0001
+            defaultValue: sequelize.literal(`'MAT' || LPAD(nextval('materialCode_seq')::TEXT, 4, '0')`), // MAT0001
         },
-        material_name: {
+        materialName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -22,7 +22,7 @@ const Material = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        unit_price: {
+        unitPrice: {
             type: DataTypes.DOUBLE(17, 2),
             allowNull: false,
         },

@@ -7,32 +7,32 @@ sequelize.query(`CREATE SEQUENCE order_code_seq;`);
 const PurchaseOrder = sequelize.define(
     'PurchaseOrder',
     {
-        order_id: {
+        orderId: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
             unique: true,
             defaultValue: sequelize.literal(`'#' || LPAD(nextval('order_code_seq')::TEXT, 10, '0')`), // #0000000001
         },
-        reference_no: {
+        referenceNo: {
             type: DataTypes.INTEGER,
             allowNull: false,
             unique: true,
             autoIncrement: true,
         },
-        customer_id: {
+        customerId: {
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        item_count: {
+        itemCount: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        total_amount: {
+        totalAmount: {
             type: DataTypes.DOUBLE(12, 2),
             allowNull: false,
         },
-        payment_method: {
+        paymentMethod: {
             type: DataTypes.STRING(20),
             allowNull: false,
         },
@@ -40,16 +40,16 @@ const PurchaseOrder = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        requested_date: {
+        requestedDate: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
             allowNull: false,
         },
-        fit_on_date: {
+        fitOnDate: {
             type: DataTypes.DATE,
             allowNull: true,
         },
-        collected_date: {
+        collectedDate: {
             type: DataTypes.DATE,
             allowNull: true,
         },
@@ -62,7 +62,7 @@ const PurchaseOrder = sequelize.define(
         // payment_amount: {
         //     type: DataTypes.FLOAT,
         // },
-        // payment_method: {
+        // paymentMethod: {
         //     type: DataTypes.STRING,
         // },
         // payment_date: {

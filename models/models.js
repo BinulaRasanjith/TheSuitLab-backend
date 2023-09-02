@@ -27,51 +27,92 @@ import Tie from "./TieModel.js";
 import TrouserOrder from "./TrouserOrderModel.js";
 import User from "./UserModel.js";
 
-import ProductManager from "./ProductManager.js";
-import Tailor from "./TailorModel.js";
-import SystemAdmin from "./SystemAdmin.js";
-
 /*
-User.hasMany(RefreshToken, { foreignKey: 'userId' });
+User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId' });
 ? A SINGLE USER IN `User` TABLE CAN HAVE ONE OR MORE REFRESH TOKENS FROM `RefreshToken` TABLE
-RefreshToken.belongsTo(User, { foreignKey: 'userId' });
+RefreshToken.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 ? A SINGLE REFRESH TOKEN IN `RefreshToken` TABLE BELONGS TO A SINGLE USER IN `User` TABLE
 */
 
-// User relationships (ONE TO MANY RELATIONSHIP)
-User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'user_id' });
-RefreshToken.belongsTo(User, { foreignKey: 'userId', targetKey: 'user_id' });
+// USER-LOGIN SESSION RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId' });
+RefreshToken.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 
 // STAFF-USER AND CUSTOMER RELATIONSHIP
-User.hasOne(Customer, { foreignKey: 'user_id', sourceKey: 'user_id' });
-Customer.belongsTo(User, { foreignKey: 'user_id', targetKey: 'user_id' });
+User.hasOne(Customer, { foreignKey: 'userId', sourceKey: 'userId' });
+Customer.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 
 // STAFF-USER AND USER RELATIONSHIP
-User.hasOne(StaffUser, { foreignKey: 'user_id', sourceKey: 'user_id' });
-StaffUser.belongsTo(User, { foreignKey: 'user_id', targetKey: 'user_id' });
+User.hasOne(StaffUser, { foreignKey: 'userId', sourceKey: 'userId' });
+StaffUser.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 
 
-
-// STAFF USERS RELATIONSHIPS
-// StaffUser.hasOne(ProductManager, { foreignKey: 'id' });
-// ProductManager.belongsTo(StaffUser, { foreignKey: 'id' });
-
-// StaffUser.hasOne(Tailor, { foreignKey: 'id' });
-// Tailor.belongsTo(StaffUser, { foreignKey: 'id' });
-
-// StaffUser.hasOne(SystemAdmin, { foreignKey: 'id' });
-// SystemAdmin.belongsTo(StaffUser, { foreignKey: 'id' });
+// CUSTOMER-ORDER RELATIONSHIP
+Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', sourceKey: 'userId', });
+PurchaseOrder.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
 
-// PurchaseOrder relationships
-Customer.hasMany(PurchaseOrder, { foreignKey: 'customer_id', sourceKey: 'user_id', });
-PurchaseOrder.hasMany(Costume, { foreignKey: 'orderId', });
-// Return.belongsTo(PurchaseOrder, { foreignKey: 'referenceNo' });
+// ORDER RELATIONSHIPS
+PurchaseOrder.hasMany(ShirtOrder, { foreignKey: 'orderId', sourceKey: 'orderId', });
+ShirtOrder.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
+
+PurchaseOrder.hasMany(CoatOrder, { foreignKey: 'orderId', sourceKey: 'orderId', });
+CoatOrder.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
+
+PurchaseOrder.hasMany(TrouserOrder, { foreignKey: 'orderId', sourceKey: 'orderId', });
+TrouserOrder.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
+
+PurchaseOrder.hasMany(AccessoryOrder, { foreignKey: 'orderId', sourceKey: 'orderId', });
+AccessoryOrder.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
 
 
-// Payment relationships
-Customer.hasMany(Payment, { foreignKey: 'user_id', });
-PurchaseOrder.hasMany(Payment, { foreignKey: 'orderId', });
+// SHIRT-SHIRT_ORDER RELATIONSHIP
+ShirtOrder.hasMany(Costume, { foreignKey: 'costumeId', sourceKey: 'costumeId', });
+Costume.belongsTo(ShirtOrder, { foreignKey: 'costumeId', targetKey: 'costumeId', });
+
+// COAT-COAT_ORDER RELATIONSHIP
+CoatOrder.hasMany(Costume, { foreignKey: 'costumeId', sourceKey: 'costumeId', });
+Costume.belongsTo(CoatOrder, { foreignKey: 'costumeId', targetKey: 'costumeId', });
+
+// TROUSER-TROUSER_ORDER RELATIONSHIP
+TrouserOrder.hasMany(Costume, { foreignKey: 'costumeId', sourceKey: 'costumeId', });
+Costume.belongsTo(TrouserOrder, { foreignKey: 'costumeId', targetKey: 'costumeId', });
+
+// ACCESSORY-ACCESSORY_ORDER RELATIONSHIP
+AccessoryOrder.hasMany(Accessory, { foreignKey: 'itemId', sourceKey: 'itemId', });
+Accessory.belongsTo(AccessoryOrder, { foreignKey: 'itemId', targetKey: 'itemId', });
+
+
+// ACCESSORIES RELATIONSHIPS
+Accessory.hasOne(Belt, { foreignKey: 'itemId', sourceKey: 'itemId', });
+Belt.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId', });
+
+Accessory.hasOne(Tie, { foreignKey: 'itemId', sourceKey: 'itemId', });
+Tie.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId', });
+
+Accessory.hasOne(Shoe, { foreignKey: 'itemId', sourceKey: 'itemId', });
+Shoe.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId', });
+
+
+// CUSTOMER-PAYMENT RELATIONSHIP
+Customer.hasMany(Payment, { foreignKey: 'customerId', sourceKey: 'userId', });
+Payment.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
+
+
+// PURCHASE_ORDER-PAYMENT RELATIONSHIP
+PurchaseOrder.hasMany(Payment, { foreignKey: 'orderId', sourceKey: 'orderId', });
+Payment.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
+
+
+// CUSTOMER-CART RELATIONSHIP
+Customer.hasOne(Cart, { foreignKey: 'customerId', sourceKey: 'userId', });
+Cart.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
+
+
+// CART-ITEM RELATIONSHIP
+Cart.hasMany(Costume, { foreignKey: 'costumeId', sourceKey: 'itemId', });
+Costume.belongsTo(Cart, { foreignKey: 'costumeId', targetKey: 'itemId', });
+
 
 
 // ? Material - Supplier - ProductManager - SupplyOrder relationships

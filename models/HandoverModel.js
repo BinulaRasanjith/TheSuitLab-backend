@@ -5,17 +5,17 @@ import sequelize from "../db/db.js";
 const Handover = sequelize.define(
     'Handover',
     {
-        rental_id: {
+        costumeId: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
             unique: true,
         },
-        handovered_date: {
+        handoveredDate: {
             type: DataTypes.DATE,
             allowNull: false,
         },
-        handovered_to: {
+        handoveredTo: {
             type: DataTypes.TEXT,
             allowNull: true,
         },

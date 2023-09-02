@@ -5,7 +5,7 @@ import sequelize from "../db/db.js";
 const Shoe = sequelize.define(
     'Shoe',
     {
-        item_id: {  // THE INDIVIDUAL ITEM ID
+        itemId: {  // THE INDIVIDUAL ITEM ID
             type: DataTypes.TEXT,
             allowNull: false,
             PrimaryKey: true,

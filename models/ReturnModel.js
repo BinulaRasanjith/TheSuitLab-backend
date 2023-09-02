@@ -14,12 +14,12 @@ const Return = sequelize.define(
             PrimaryKey: true,
             defaultValue: sequelize.literal(`'RET' || LPAD(nextval('return_code_seq')::TEXT, 10, '0')`), // RET0000000001
         },
-        item_id: {
+        itemId: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
         },
-        order_id: {
+        orderId: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

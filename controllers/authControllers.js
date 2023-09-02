@@ -13,7 +13,7 @@ export const signup = async (req, res) => {
 			email, // TODO: check???
 			confirmPassword,
 			password,
-		} = req.body; // get email and password, mobile_no, first_name, last_name from request body
+		} = req.body; // get email and password, mobileNo, first_name, last_name from request body
 
 		// check if user exist
 		const userExist = await User.findOne({ where: { mobileNo } });

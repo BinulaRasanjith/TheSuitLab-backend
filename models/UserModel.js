@@ -8,13 +8,13 @@ sequelize.query(`CREATE SEQUENCE user_code_seq;`);
 const User = sequelize.define(
     'User',
     {
-        user_id: {
+        userId: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
             defaultValue: sequelize.literal(`'USER' || LPAD(nextval('user_code_seq')::TEXT, 10, '0')`), // USER0000000001
         },
-        mobile_no: {
+        mobileNo: {
             type: DataTypes.STRING(15),
             allowNull: false,
             unique: true,

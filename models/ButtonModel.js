@@ -5,7 +5,7 @@ import sequelize from "../db/db.js";
 const Buttons = sequelize.define(
     'Buttons',
     {
-        material_code: {
+        materialCode: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,

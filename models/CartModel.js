@@ -13,12 +13,12 @@ const Cart = sequelize.define(
         //     primaryKey: true,
         //     defaultValue: sequelize.literal(`'CART' || LPAD(nextval('cart_code_seq')::TEXT, 10, '0')`), // CART0000000001
         // },
-        customer: {
+        customerId: {
             type: DataTypes.TEXT,
             allowNull: false,
             compositePrimaryKey: true,
         },
-        item: {
+        itemId: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,

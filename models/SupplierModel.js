@@ -7,7 +7,7 @@ sequelize.query(`CREATE SEQUENCE supplier_code_seq;`);
 const Supplier = sequelize.define(
     'Supplier',
     {
-        supplier_id: {
+        supplierId: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
@@ -21,11 +21,11 @@ const Supplier = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        account_no: {
+        accountNo: {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        mobile_no: {
+        mobileNo: {
             type: DataTypes.STRING,
             allowNull: false,
         },

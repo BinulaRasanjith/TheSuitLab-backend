@@ -5,11 +5,11 @@ import sequelize from "../db/db.js";
 const Review = sequelize.define(
     'Review',
     {
-        customer_id: {
+        customerId: {
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        item: {
+        itemId: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

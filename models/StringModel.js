@@ -5,7 +5,7 @@ import sequelize from "../db/db.js";
 const Strings = sequelize.define(
     'Strings',
     {
-        material_code: {
+        materialCode: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,

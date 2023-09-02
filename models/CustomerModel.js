@@ -5,7 +5,7 @@ import sequelize from "../db/db.js";
 const Customer = sequelize.define(
     'Customer',
     {
-        user_id: {
+        userId: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
@@ -14,11 +14,11 @@ const Customer = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        coat_measurements: {
+        coatMeasurements: {
             type: DataTypes.JSON,
             allowNull: true,
         },
-        trouser_measurements: {
+        trouserMeasurements: {
             type: DataTypes.JSON,
             allowNull: true,
         }

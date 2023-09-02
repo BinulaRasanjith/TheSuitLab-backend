@@ -8,13 +8,13 @@ sequelize.query(`CREATE SEQUENCE staff_code_seq;`);
 const StaffUser = sequelize.define(
     'StaffUser',
     {
-        user_id: {
+        userId: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             compositeprimaryKey: true,
         },
-        staff_id: {
+        staffId: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,

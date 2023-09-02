@@ -4,8 +4,8 @@ import sequelize from "../db/db.js";
 
 const Tie = sequelize.define(
     'Tie',
-    {   
-        item_id: {  // THE INDIVIDUAL ITEM ID
+    {
+        itemId: {  // THE INDIVIDUAL ITEM ID
             type: DataTypes.TEXT,
             allowNull: false,
             PrimaryKey: true,

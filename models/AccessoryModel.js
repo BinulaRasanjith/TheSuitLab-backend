@@ -7,7 +7,7 @@ sequelize.query(`CREATE SEQUENCE accessory_code_seq;`);
 const Belt = sequelize.define(
     'Belt',
     {
-        item_id: {
+        itemId: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
@@ -18,7 +18,7 @@ const Belt = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        item_name: {
+        itemName: {
             type: DataTypes.STRING,
             allowNull: false,
         },

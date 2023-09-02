@@ -4,17 +4,20 @@ import sequelize from "../db/db.js";
 
 sequelize.query(`CREATE SEQUENCE costume_code_seq;`);
 
+// ? WHEN CUSTOMER CUSTOMIZING A NEW COSTUME, THE COSTUME WILL BE ADDED TO THIS TABLE AND THE PARTICULAR ORDER TABLE
+// ? WHEN SHOP MEMBER ADDING A NEW COSTUME, THE COSTUME WILL BE ADDED TO THIS TABLE ONLY
+
 const Costume = sequelize.define(
     'Costume',
     {
-        costume_id: {
+        costumeId: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
             unique: true,
             defaultValue: sequelize.literal(`'COST' || LPAD(nextval('costume_code_seq')::TEXT, 10, '0')`), // COST0000000001
         },
-        costume_name: {
+        costumeName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -22,11 +25,11 @@ const Costume = sequelize.define(
             type: DataTypes.JSON,
             allowNull: false,
         },
-        rental_price: {
+        rentalPrice: {
             type: DataTypes.DOUBLE(12, 2),
             allowNull: false,
         },
-        sale_price: {
+        salePrice: {
             type: DataTypes.DOUBLE(12, 2),
             allowNull: false,
         },

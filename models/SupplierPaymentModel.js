@@ -7,7 +7,7 @@ sequelize.query(`CREATE SEQUENCE supplier_payment_code_seq;`);
 const SupplierPayment = sequelize.define(
     'SupplierPayment',
     {
-        reference_no: {
+        referenceNo: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
@@ -25,7 +25,7 @@ const SupplierPayment = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        amount_paid: {
+        amountPaid: {
             type: DataTypes.DOUBLE(12, 2),
             allowNull: false,
         },

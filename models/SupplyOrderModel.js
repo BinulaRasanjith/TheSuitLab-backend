@@ -21,7 +21,7 @@ const SupplyOrder = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        unit_price: {
+        unitPrice: {
             type: DataTypes.DOUBLE(12, 2),
             allowNull: false,
         },

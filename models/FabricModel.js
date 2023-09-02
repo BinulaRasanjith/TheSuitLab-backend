@@ -5,7 +5,7 @@ import sequelize from "../db/db.js";
 const Fabric = sequelize.define(
     'Fabric',
     {
-        material_code: {
+        materialCode: {
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
