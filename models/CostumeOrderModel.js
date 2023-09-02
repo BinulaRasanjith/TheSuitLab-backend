@@ -1,9 +1,9 @@
-// TABLE FOR SHIRT ORDERS
+// TABLE FOR COAT ORDERS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-const ShirtOrder = sequelize.define(
-    'ShirtOrder',
+const CostumeOrder = sequelize.define(
+    'CostumeOrder',
     {
         costumeId: {
             type: DataTypes.TEXT,
@@ -15,18 +15,10 @@ const ShirtOrder = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        customization: {
-            type: DataTypes.JSON,
-            allowNull: false,
-        },
-        measurements: {
-            type: DataTypes.JSON,
-            allowNull: false,
-        },
     },
     {
-        tableName: 'shirt_orders',
+        tableName: 'costume_orders',
     }
 );
 
-export default ShirtOrder;
+export default CostumeOrder;

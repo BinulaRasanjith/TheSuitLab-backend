@@ -21,24 +21,33 @@ const Costume = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        size: {
+        customization: {
             type: DataTypes.JSON,
             allowNull: false,
         },
-        rentalPrice: {
-            type: DataTypes.FLOAT,
+        measurements: {
+            type: DataTypes.JSON,
             allowNull: false,
         },
-        salePrice: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        costumeType: {
+        costumeType: { // COAT, SHIRT, TROUSER
             type: DataTypes.STRING,
             allowNull: false,
         },
+        designType: { // PRE-DESIGNED OR CUSTOMIZED
+            type: DataTypes.STRING,
+            allowNull: false,
+            defaultValue: 'Predesign',
+        },
+        rentalPrice: { // FOR CUSTOMIZED COSTUMES THERE IS NO RENTAL PRICE
+            type: DataTypes.FLOAT,
+            allowNull: true,
+        },
+        salePrice: { // FOR CUSTOMIZED COSTUMES SALE-PRICE WILL CALCULATED AND ADDED TO THIS FIELD
+            type: DataTypes.FLOAT,
+            allowNull: false,
+        },
         image: {
-            type: DataTypes.TEXT,
+            type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: true,
         },
     },

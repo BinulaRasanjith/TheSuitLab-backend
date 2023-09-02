@@ -2,7 +2,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE supplier_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE supplier_code_seq;`);
 
 const Supplier = sequelize.define(
     'Supplier',
@@ -10,14 +10,15 @@ const Supplier = sequelize.define(
         supplierId: {
             type: DataTypes.TEXT,
             allowNull: false,
+            unique: true,
             primaryKey: true,
-            defaultValue: sequelize.literal(`'SUP' || LPAD(nextval('supplier_code_seq')::TEXT, 5, '0')`), // SUP00001
+            defaultValue: sequelize.literal(`'SUP' || LPAD(nextval('supplier_code_seq')::TEXT, 10, '0')`), // SUP0000000001
         },
-        name: {
+        supplierName: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        bank: {
+        bankName: {
             type: DataTypes.TEXT,
             allowNull: true,
         },
@@ -27,6 +28,7 @@ const Supplier = sequelize.define(
         },
         mobileNo: {
             type: DataTypes.STRING,
+            unique: true,
             allowNull: false,
         },
         progress: {

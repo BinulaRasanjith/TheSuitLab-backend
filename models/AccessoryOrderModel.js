@@ -13,6 +13,7 @@ const AccessoryOrder = sequelize.define(
         itemId: {  // THE INDIVIDUAL ITEM ID
             type: DataTypes.TEXT,
             allowNull: false,
+            unique: true, // TODO: SAME ITEM MODEL HAVE SAME ITEM ID ?
             compositePrimaryKey: true,
         },
         itemType: {  // THE INDIVIDUAL ITEM TYPE BELT, TIE, ETC
@@ -20,6 +21,10 @@ const AccessoryOrder = sequelize.define(
             allowNull: false,
             compositePrimaryKey: true,
         },
+        // quantity: { // TODO: CHECK THIS AND THINK ABOUT IT
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false,
+        // },
     },
     {
         tableName: 'accessory_orders',

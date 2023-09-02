@@ -2,16 +2,19 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
+// sequelize.query(`CREATE SEQUENCE payment_invoice_seq;`);
+
 const Payment = sequelize.define(
     'Payment',
     {
-        referenceNo: {
-            type: DataTypes.INTEGER,
+        invoiceNo: {
+            type: DataTypes.TEXT,
             allowNull: false,
+            unique: true,
             primaryKey: true,
-            autoIncrement: true,
+            defaultValue: sequelize.literal(`'PMT' || LPAD(nextval('payment_invoice_seq')::TEXT, 10, '0')`), // PMT0000000001
         },
-        customerId: {
+        customerId: { // TODO: CHECK, THIS CAN BE GET FROM `orderId`
             type: DataTypes.TEXT,
             allowNull: false,
         },

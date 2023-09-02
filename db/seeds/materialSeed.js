@@ -2,10 +2,10 @@ import { FABRIC } from "../../constants/constants.js"
 
 export default [
     {
-        materialCode: "MAT00001",
-        type: FABRIC,
+        materialCode: "MAT0000000001",
+        materialType: FABRIC,
         materialName: "Cotton Grey",
-        supplier: "SUP00001",
+        supplier: "SUP0000000001",
         unitPrice: 100.00,
         color: "Grey",
         colorCode: "#808080",

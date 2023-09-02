@@ -10,14 +10,15 @@ const SupplierPayment = sequelize.define(
         referenceNo: {
             type: DataTypes.TEXT,
             allowNull: false,
+            unique: true,
             primaryKey: true,
             defaultValue: sequelize.literal(`'REF' || LPAD(nextval('supplier_payment_code_seq')::TEXT, 10, '0')`), // REF0000000001
         },
-        supplier: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
-        invoiceNo: {
+        // supplier: { // TODO: CHECK, THIS CAN BE GET FROM `supplyID`
+        //     type: DataTypes.TEXT,
+        //     allowNull: false,
+        // },
+        supplyID: {
             type: DataTypes.TEXT,
             allowNull: false,
         },

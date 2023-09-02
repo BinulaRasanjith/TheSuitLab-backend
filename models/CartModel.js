@@ -2,17 +2,9 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE cart_code_seq;`);
-
 const Cart = sequelize.define(
     'Cart',
     {
-        // cart_id: {
-        //     type: DataTypes.TEXT,
-        //     allowNull: false,
-        //     primaryKey: true,
-        //     defaultValue: sequelize.literal(`'CART' || LPAD(nextval('cart_code_seq')::TEXT, 10, '0')`), // CART0000000001
-        // },
         customerId: {
             type: DataTypes.TEXT,
             allowNull: false,
@@ -21,9 +13,13 @@ const Cart = sequelize.define(
         itemId: {
             type: DataTypes.TEXT,
             allowNull: false,
-            unique: true,
+            unique: true, // TODO: SAME ITEM MODEL HAVE SAME ITEM ID ?
             compositePrimaryKey: true,
         },
+        // quantity: { // TODO: CHECK THIS AND THINK ABOUT IT
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false,
+        // },
     },
     {
         tableName: 'shopping_cart',

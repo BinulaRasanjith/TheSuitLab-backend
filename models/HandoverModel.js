@@ -5,33 +5,38 @@ import sequelize from "../db/db.js";
 const Handover = sequelize.define(
     'Handover',
     {
-        costumeId: {
+        rentalId: {
             type: DataTypes.TEXT,
             allowNull: false,
-            primaryKey: true,
-            unique: true,
+            // unique: true,
+            PrimaryKey: true,
         },
-        handoveredDate: {
-            type: DataTypes.DATE,
+        costumeId: { // COSTUME ID
+            type: DataTypes.TEXT,
             allowNull: false,
         },
-        handoveredTo: {
+        handoveredDate: { // DATE OF HANDOVER
+            type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
+            allowNull: false,
+        },
+        handoveredTo: { // NAME OF THE PERSON WHO RECEIVED THE COSTUME
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        damages: {
+        damages: { // DAMAGES TO THE COSTUME
             type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
         },
-        balance: {
+        balance: { // BALANCE AFTER INITIAL PAYMENT
             type: DataTypes.FLOAT,
             allowNull: true,
         },
-        penalties: {
+        penalties: { // PENALTIES FOR DAMAGES AND DELAYS
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        total: {
+        total: { // TOTAL COST FOR HIRE
             type: DataTypes.FLOAT,
             allowNull: false,
         },

@@ -2,23 +2,24 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE supply_invoice_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE supply_code_seq;`);
 
 const SupplyOrder = sequelize.define(
     'SupplyOrder',
     {
-        invoice: {
+        supplyID: {
             type: DataTypes.TEXT,
             allowNull: false,
+            unique: true,
             primaryKey: true,
-            defaultValue: sequelize.literal(`'INV' || LPAD(nextval('supply_invoice_code_seq')::TEXT, 10, '0')`), // INV0000000001
+            defaultValue: sequelize.literal(`'SPL' || LPAD(nextval('supply_code_seq')::TEXT, 10, '0')`), // SPL0000000001
         },
         material: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         supplier: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         unitPrice: {
@@ -33,19 +34,13 @@ const SupplyOrder = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        payment_type: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         price: {
             type: DataTypes.FLOAT,
-        },
-        paid_by: {
-            type: DataTypes.INTEGER,
-            allowNull: true,
+            allowNull: false,
         },
         date: {
             type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
         },
     },
     {

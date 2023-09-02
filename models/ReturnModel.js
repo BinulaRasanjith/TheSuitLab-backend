@@ -2,28 +2,28 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE return_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE return_code_seq;`);
 
 const Return = sequelize.define(
     'Return',
     {
-        return_id: {
+        returnId: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             PrimaryKey: true,
-            defaultValue: sequelize.literal(`'RET' || LPAD(nextval('return_code_seq')::TEXT, 10, '0')`), // RET0000000001
+            defaultValue: sequelize.literal(`'RTN' || LPAD(nextval('return_code_seq')::TEXT, 10, '0')`), // RTN0000000001
         },
-        itemId: {
+        orderId: { // TODO: CHECH, THIS CAN BE GET FROM `itemId`
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        itemId: { // TODO: NO RELATIONSHIP ADDED
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
         },
-        orderId: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
-        returned_date: {
+        returnedDate: {
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
             allowNull: false,

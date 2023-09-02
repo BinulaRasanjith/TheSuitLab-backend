@@ -8,6 +8,7 @@ const Customer = sequelize.define(
         userId: {
             type: DataTypes.TEXT,
             allowNull: false,
+            unique: true,
             primaryKey: true,
         },
         address: {

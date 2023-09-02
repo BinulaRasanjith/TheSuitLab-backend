@@ -8,6 +8,7 @@ const Strings = sequelize.define(
         materialCode: {
             type: DataTypes.TEXT,
             allowNull: false,
+            unique: true,
             primaryKey: true,
         },
         quantity: {

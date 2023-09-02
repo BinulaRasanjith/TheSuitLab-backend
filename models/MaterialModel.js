@@ -2,7 +2,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE materialCode_seq;`);
+// sequelize.query(`CREATE SEQUENCE material_code_seq;`);
 
 const Material = sequelize.define(
     'Material',
@@ -10,9 +10,13 @@ const Material = sequelize.define(
         materialCode: {
             type: DataTypes.TEXT,
             allowNull: false,
-            primaryKey: true,
             unique: true,
-            defaultValue: sequelize.literal(`'MAT' || LPAD(nextval('materialCode_seq')::TEXT, 4, '0')`), // MAT0001
+            primaryKey: true,
+            defaultValue: sequelize.literal(`'MAT' || LPAD(nextval('material_code_seq')::TEXT, 10, '0')`), // MAT0000000001
+        },
+        materialType: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
         },
         materialName: {
             type: DataTypes.STRING,

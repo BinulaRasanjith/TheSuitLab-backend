@@ -3,7 +3,7 @@
 import { DataTypes } from 'sequelize'
 import sequelize from '../db/db.js'
 
-sequelize.query(`CREATE SEQUENCE staff_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE staff_code_seq;`);
 
 const StaffUser = sequelize.define(
     'StaffUser',
@@ -12,13 +12,12 @@ const StaffUser = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
-            compositeprimaryKey: true,
+            primaryKey: true,
         },
         staffId: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
-            compositeprimaryKey: true,
             defaultValue: sequelize.literal(`'EMP' || LPAD(nextval('staff_code_seq')::TEXT, 5, '0')`), // EMP00001
         },
     },

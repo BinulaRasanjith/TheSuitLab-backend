@@ -10,15 +10,9 @@ const PurchaseOrder = sequelize.define(
         orderId: {
             type: DataTypes.TEXT,
             allowNull: false,
+            unique: true,
             primaryKey: true,
-            unique: true,
-            defaultValue: sequelize.literal(`'#' || LPAD(nextval('order_code_seq')::TEXT, 10, '0')`), // #0000000001
-        },
-        referenceNo: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            unique: true,
-            autoIncrement: true,
+            defaultValue: sequelize.literal(`'##' || LPAD(nextval('order_code_seq')::TEXT, 15, '0')`), // ##000000000000001
         },
         customerId: {
             type: DataTypes.TEXT,
@@ -53,24 +47,6 @@ const PurchaseOrder = sequelize.define(
             type: DataTypes.DATE,
             allowNull: true,
         },
-
-        // ! payment details (check if needed a payment id)
-        // payment_id: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        // },
-        // payment_amount: {
-        //     type: DataTypes.FLOAT,
-        // },
-        // paymentMethod: {
-        //     type: DataTypes.STRING,
-        // },
-        // payment_date: {
-        //     type: DataTypes.DATE,
-        // },
-        // payment_status: {
-        //     type: DataTypes.STRING,
-        // },
     },
     {
         tableName: 'purchase_orders',

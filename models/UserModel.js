@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt'; // import bcrypt for hashing password
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-sequelize.query(`CREATE SEQUENCE user_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE user_code_seq;`);
 
 const User = sequelize.define(
     'User',

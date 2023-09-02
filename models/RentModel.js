@@ -7,7 +7,7 @@ import sequelize from "../db/db.js";
 const Rent = sequelize.define(
     'Rent',
     {
-        rental_id: {
+        rentalId: {
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
@@ -22,11 +22,11 @@ const Rent = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        rented_date: {
+        rentedDate: {
             type: DataTypes.DATE,
             allowNull: false,
         },
-        will_handover: {
+        willHandover: {
             type: DataTypes.DATE,
             allowNull: true,
         },

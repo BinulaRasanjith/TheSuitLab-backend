@@ -1,8 +1,8 @@
 const suppliers = [
     {
-        supplierId: 'SUP00001',
-        name: 'Cotton Inc.',
-        bank: 'BDO',
+        supplierId: 'SUP0000000001',
+        supplierName: 'Cotton Inc.',
+        bankName: 'BDO',
         accountNo: '1234567890',
         mobileNo: '1234567890',
         progress: true,

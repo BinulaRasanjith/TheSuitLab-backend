@@ -8,6 +8,7 @@ const Tie = sequelize.define(
         itemId: {  // THE INDIVIDUAL ITEM ID
             type: DataTypes.TEXT,
             allowNull: false,
+            unique: true,
             PrimaryKey: true,
         },
         Pattern: {

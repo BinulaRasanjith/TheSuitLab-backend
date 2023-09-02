@@ -18,7 +18,7 @@ const Accessory = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        itemName: {
+        itemName: { // TODO: GET THE QUANTITY AND CREATE RECORDS FOR EACH ITEM WITH SAME NAME
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -34,10 +34,10 @@ const Accessory = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        quantity: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-        },
+        // quantity: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false,
+        // },
         image: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: false,
