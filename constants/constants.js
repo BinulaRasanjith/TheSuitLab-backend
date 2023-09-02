@@ -1,5 +1,5 @@
 // user status
-export const ACTIVE = 'ACTIVE';
+export const ACTIVE = true;
 
 // jwt constants
 export const REFRESH = 'REFRESH';
