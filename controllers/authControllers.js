@@ -37,7 +37,7 @@ export const signup = async (req, res) => {
 
 		// create customer
 		await Customer.create({
-			userId: user.id,
+			userId: user.userId,
 			address,
 		});
 
@@ -61,14 +61,14 @@ export const login = async (req, res) => {
 
 		// generate encoded access token and refresh token
 		const accessToken = generateToken(user, ACCESS);
-		const refreshToken = generateToken(user.id, REFRESH);
+		const refreshToken = generateToken(user.userId, REFRESH);
 
 		const decodedRefreshToken = verifyToken(refreshToken, REFRESH); // decode refresh token to get expiration date of refresh token in UNIX timestamp format (seconds since Jan 1, 1970) 
 		// The decodedRefreshToken.exp property represents the expiration time of the token in UNIX timestamp format. By multiplying it by 1000 and passing it to the Date constructor, we convert it to a Date object representing the expiration date of the refresh token.
 		const refreshTokenExpiration = new Date(decodedRefreshToken.exp * 1000); // get expiration date of refresh token
 
 		// save refresh token in db 
-		await RefreshToken.storeRefreshToken(user.id, refreshToken, refreshTokenExpiration); // store refresh token in db
+		await RefreshToken.storeRefreshToken(user.userId, refreshToken, refreshTokenExpiration); // store refresh token in db
 
 		res.cookie('refreshToken', refreshToken, { // set refresh token in cookie 
 			httpOnly: true, // httpOnly: true means that the cookie is not accessible from JavaScript. This is a security measure to prevent cross-site scripting (XSS) attacks.
@@ -142,7 +142,7 @@ export const refreshToken = async (req, res) => {
 export const logout = async (req, res) => {
 	try {
 		// Get the user ID from the authenticated user
-		const userId = req.user.id;
+		const userId = req.user.userId;
 
 		// Delete the refresh token from the database 
 		await RefreshToken.destroy({ where: { userId } });
