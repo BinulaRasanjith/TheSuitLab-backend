@@ -7,7 +7,7 @@ export const getMaterials = async (req, res) => {
 
         let materials;
         if (type) { // if type is specified
-            materials = await Material.findAll({ where: { type } });
+            materials = await Material.findAll({ where: { materialType: type } });
         } else { // if type is not specified
             materials = await Material.findAll();
         }
