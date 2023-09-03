@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { sendSMS, notifyFitOn, notifyCollection } from '../controllers/smsController';
+import { sendSMS, notifyFitOn, notifyCollection } from '../controllers/smsController.js'
 
 const router = Router();
 

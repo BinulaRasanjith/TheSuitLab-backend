@@ -1,16 +1,17 @@
 import twilio from 'twilio';
-import { accountSid, authToken, phoneNumber } from '../config/twilioConfig';
+import { accountSid, authToken, phoneNumber } from '../config/twilioConfig.js';
 
 const client = twilio(accountSid, authToken);
-
+const twilioNumber = phoneNumber;
 
 export const sendOTP = async (req, res) => {
     try {
+        // GET RECEIVER AND OTP FROM REQUEST BODY
         const { receiver, otp } = req.body;
 
         const smsResponse = await client.messages.create({
             body: `Your The Suit Lab's verification code is ${ otp }. Only valid for 5 minutes`,
-            from: phoneNumber,
+            from: twilioNumber,
             to: receiver,
         });
 

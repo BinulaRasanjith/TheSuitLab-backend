@@ -6,3 +6,6 @@ node_modules
 
 # IGNORE IDEA FOLDER
 /.idea
+
+# IGNORE VSCODE FOLDER
+/.vscode

@@ -24,6 +24,8 @@ import Supplier from "./SupplierModel.js";
 import SupplierPayment from "./SupplierPaymentModel.js"
 import SupplyOrder from "./SupplyOrderModel.js";
 import Tie from "./TieModel.js";
+import Zipper from "./ZipperModel.js";
+import Interlining from "./InterliningModel.js";
 import User from "./UserModel.js";
 
 /*
@@ -164,6 +166,12 @@ Buttons.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCo
 Material.hasOne(Strings, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
 Strings.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
 
+Material.hasOne(Zipper, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Zipper.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
+
+Material.hasOne(Interlining, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Interlining.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
+
 // MATERIAL - MATERIAL_CONSUME RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 Material.hasMany(MaterialConsume, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
 MaterialConsume.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode'});
@@ -212,5 +220,7 @@ export {
 	SupplierPayment,
 	SupplyOrder,
 	Tie,
+	Zipper,
+	Interlining,
 	User,
 };
