@@ -18,5 +18,6 @@ export const OPERATION_ASSISTANT = 'assistant';
 export const TAILOR = 'tailor';
 
 // material types
-export const FABRIC = 'fabric';
+export const FABRIC_SOLID = 'fabric-solid';
+export const FABRIC_PATTERN = 'fabric-pattern';
 export const BUTTON = 'button';
