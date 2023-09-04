@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import { sendSMS } from '../controllers/smsController';
+import { sendSMS, notifyFitOn, notifyCollection } from '../controllers/smsController.js'
 
 const router = Router();
 
-router.post('/send-sms', sendSMS);
+router.post('/send', sendSMS);
+router.post('/fit-on', notifyFitOn);
+router.post('/collection', notifyCollection);
 
 export default router;

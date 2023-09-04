@@ -6,6 +6,7 @@ import supplierRoutes from './supplierRoutes.js';
 import returnRoutes from './returnRoutes.js';
 import handoverRoutes from './handoverRoutes.js';
 import customerRoutes from './customerRoutes.js';
+import smsRoutes from './smsRoutes.js';
 
 const router = Router(); // for creating router
 
@@ -16,5 +17,6 @@ router.use('/suppliers', supplierRoutes);
 router.use('/returns', returnRoutes);
 router.use('/hiring', handoverRoutes);
 router.use('/customers', customerRoutes);
+router.use('/notify', smsRoutes);
 
 export default router;
