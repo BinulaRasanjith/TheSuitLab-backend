@@ -5,6 +5,7 @@ import userRoutes from './userRoutes.js'; // for routing to user endpoints
 import supplierRoutes from './supplierRoutes.js';
 import returnRoutes from './returnRoutes.js';
 import handoverRoutes from './handoverRoutes.js';
+import customerRoutes from './customerRoutes.js';
 
 const router = Router(); // for creating router
 
@@ -14,5 +15,6 @@ router.use('/materials', materialRoutes);
 router.use('/suppliers', supplierRoutes);
 router.use('/returns', returnRoutes);
 router.use('/hiring', handoverRoutes);
+router.use('/customers', customerRoutes);
 
 export default router;
