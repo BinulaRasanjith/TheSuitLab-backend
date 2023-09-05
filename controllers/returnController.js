@@ -23,6 +23,9 @@ export const addReturn = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
+export const test = async (req, res) => {
+    res.status(200).json({ message: "test" });
+}
 
 // READING FUNCTION
 export const getReturns = async (req, res) => {
@@ -30,7 +33,7 @@ export const getReturns = async (req, res) => {
         const returns = await Return.findAll();
         res.status(200).json(returns);
     } catch (error) {
-        res.status(404).json({ message: error.message });
+        res.status(403).json({ message: error.message });
     }
 }
 
