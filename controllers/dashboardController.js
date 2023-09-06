@@ -33,7 +33,6 @@ export const dashboardData = async (req, res) => {
 // CURRENTLY PROCESSING ORDER COUNT CALCULATING FUNCTION - LOCALLY CALLING (WORKING)
 const calculateProcessingOrderCount = async () => {
     try {
-
         // CALCULATE THE END DATE (TODAY)
         const today = moment().toDate();
         // CALCULATE THE START DATE (7 DAYS BEFORE TODAY)
@@ -50,9 +49,7 @@ const calculateProcessingOrderCount = async () => {
             percentageChange: percentageChange.toFixed(2),
         };
         return result; // SEND CORRECTLY CALCULATED VALUES TO THE INITIAL FUNCTION
-
     } catch (error) {
-
         console.log(error);
         const result = {
             processingCount: 0,
@@ -60,7 +57,6 @@ const calculateProcessingOrderCount = async () => {
             percentageChange: 0.00,
         };
         return result; // SEND 0s WHEN ERROR OCCURS
-
     }
 }
 
@@ -68,13 +64,11 @@ const calculateProcessingOrderCount = async () => {
 // LOW STOCK MATERIAL COUNT CALCULATING FUNCTION - LOCALLY CALLING (WORKING)
 const calculateLowStockMaterialCount = async () => {
     try {
-
         const lowStockButtons = await Button.count({ where: { quantity: { [Op.lt]: 50 } } });           // LIMIT: 50 PIECES
         const lowStockFabrics = await Fabric.count({ where: { quantity: { [Op.lt]: 25 } } });           // LIMIT: 25 METERS (1 ROLL)
         const lowStockStirngs = await Strings.count({ where: { quantity: { [Op.lt]: 2500 } } });        // LIMIT: 2500 METERS (10 ROLLS)
         const lowStockInterlinings = await Interlining.count({ where: { quantity: { [Op.lt]: 20 } } }); // LIMIT: 20 PIECES
         const lowStockZippers = await Zipper.count({ where: { quantity: { [Op.lt]: 20 } } });           // LIMIT: 20 METERS
-
 
         const totalButtonStock = await Button.count();
         const totalFabricStock = await Fabric.count();
@@ -93,9 +87,7 @@ const calculateLowStockMaterialCount = async () => {
             lowerPresentage: lowerPresentage.toFixed(2),
         };
         return result; // SEND CORRECTLY CALCULATED VALUES TO THE INITIAL FUNCTION
-
     } catch (error) {
-
         console.log(error);
         const result = {
             lowStockMaterials: 0,
@@ -103,7 +95,6 @@ const calculateLowStockMaterialCount = async () => {
             lowerPresentage: 0.00,
         };
         return result; // SEND 0s WHEN ERROR OCCURS
-
     }
 }
 
@@ -111,7 +102,6 @@ const calculateLowStockMaterialCount = async () => {
 // RECENT TWO WEEKS ORDER COUNT CALCULATING FUNCTION - LOCALLY CALLING (WORKING)
 const calculateOrderCount = async () => {
     try {
-        
         // CALCULATE THE END DATE (TODAY)
         const today = moment().toDate();
         // CALCULATE THE START DATE (7 DAYS BEFORE TODAY)
@@ -130,9 +120,7 @@ const calculateOrderCount = async () => {
             orderPresentage: orderPresentage.toFixed(2),
         };
         return result; // SEND CORRECTLY CALCULATED VALUES TO THE INITIAL FUNCTION
-        
     } catch (error) {
-        
         console.log(error);
         const result = {
             thisWeekOrderCount: 0,
@@ -140,7 +128,6 @@ const calculateOrderCount = async () => {
             orderPresentage: 0.00,
         };
         return result; // SEND 0s WHEN ERROR OCCURS
-        
     }
 }
 
@@ -148,7 +135,6 @@ const calculateOrderCount = async () => {
 // RECENT TWO WEEKS INCOME CALCULATING FUNCTION - LOCALLY CALLING (WORKING)
 const findIncomeTotal = async () => {
     try {
-        
         // CALCULATE THE END DATE (TODAY)
         const today = moment().toDate();
         // CALCULATE THE START DATE (7 DAYS BEFORE TODAY)
@@ -167,9 +153,7 @@ const findIncomeTotal = async () => {
             incomePercentage: incomePercentage.toFixed(2),
         };
         return result; // SEND CORRECTLY CALCULATED VALUES TO THE INITIAL FUNCTION
-        
     } catch (error) {
-        
         console.log(error);
         const result = {
             thisWeekIncome: 0,
@@ -177,7 +161,6 @@ const findIncomeTotal = async () => {
             incomePercentage: 0.00,
         };
         return result; // SEND 0s WHEN ERROR OCCURS
-        
     }
 }
 
@@ -185,19 +168,15 @@ const findIncomeTotal = async () => {
 // GET RECENT 5 ORDERS - LOCALLY CALLING (WORKING)
 const getRecentOrders = async () => {
     try {
-
         // GET RECENT 5 RECORDS
         const recentOrders = await CostumeOrder.findAll({
             order: [['createdAt', 'DESC']],
             limit: 5,
         });
         return recentOrders; // SEND RECENT 5 RECORDS TO THE INITIAL FUNCTION
-        
     } catch (error) {
-        
         console.log(error);
         return null; // SEND NULL WHEN ERROR OCCURS
-        
     }
 }
 
@@ -239,24 +218,17 @@ export const getWeeklyPerformance = async (req, res) => {
                 orderCount: lastWeekCount,
             });
         }
-
         const weeklyPerformance = {
             thisWeekPerformance: thisWeekPerformance,
             lastWeekPerformance: lastWeekPerformance,
         };
-        
         return weeklyPerformance;
-        
     } catch (error) {
-        
         console.log(error);
-
         const weeklyPerformance = {
             thisWeekPerformance: null,
             lastWeekPerformance: null,
         };
-        
         return weeklyPerformance;
-        
     }
 }
