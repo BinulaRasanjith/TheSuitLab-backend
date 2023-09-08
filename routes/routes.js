@@ -8,9 +8,9 @@ import returnRoutes from './returnRoutes.js';
 import handoverRoutes from './handoverRoutes.js';
 import customerRoutes from './customerRoutes.js';
 import smsRoutes from './smsRoutes.js';
-// import dashboardRoutes from './dashboardRoutes.js'; // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
+import dashboardRoutes from './dashboardRoutes.js'; // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
 
-import { dashboardData } from '../controllers/dashboardController.js';
+// import { dashboardData } from '../controllers/dashboardController.js';
 
 
 const router = Router(); // for creating router
@@ -23,8 +23,8 @@ router.use('/returns', returnRoutes);
 router.use('/hiring', handoverRoutes);
 router.use('/customers', customerRoutes);
 router.use('/notify', smsRoutes);
-// router.use('/', dashboardRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
+router.use('/dashboard', dashboardRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
 
-router.get('/', dashboardData);
+// router.get('/dashboard', dashboardData);
 
 export default router;

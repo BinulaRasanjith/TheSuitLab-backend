@@ -4,6 +4,6 @@ import { dashboardData } from "../controllers/dashboardController.js";
 
 const router = Router();
 
-router.get("", dashboardData);
+router.get("/", dashboardData);
 
 export default router;
