@@ -16,10 +16,18 @@ const Cart = sequelize.define(
             unique: true, // TODO: SAME ITEM MODEL HAVE SAME ITEM ID ?
             compositePrimaryKey: true,
         },
-        // quantity: { // TODO: CHECK THIS AND THINK ABOUT IT
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        // },
+        description: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        size: {
+            type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        quantity: { // TODO: CHECK THIS AND THINK ABOUT IT
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
     },
     {
         tableName: 'shopping_cart',
