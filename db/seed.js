@@ -1,9 +1,12 @@
 import dotenv from 'dotenv';
 
+import { ASCII } from '../config/config.js';
+
 import {
     User,
     Material,
-    Supplier
+    Supplier,
+    HireCostume,
 } from "../models/models.js";
 import {
     ACTIVE,
@@ -11,6 +14,7 @@ import {
 } from "../constants/constants.js";
 import supplierSeed from './seeds/supplierSeed.js';
 import materialSeed from './seeds/materialSeed.js';
+import hireCostumesSeed from './seeds/hireCostumesSeed.js';
 
 dotenv.config();
 
@@ -111,6 +115,9 @@ const seed = async () => {
 
         await Supplier.bulkCreate(supplierSeed);
         await Material.bulkCreate(materialSeed);
+        await HireCostume.bulkCreate(hireCostumesSeed);
+
+        console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}`);
     } catch (error) {
         console.log(error);
     }
