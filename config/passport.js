@@ -19,7 +19,7 @@ const options = {
 
 const verifyUser = async (payload, done) => {
     try {
-        const user = await User.findByPk(payload.user.userId);
+        const user = await User.findOne({ where: { userId: payload.user.userId } });
         if (!user) {
             return done(null, false);
         }

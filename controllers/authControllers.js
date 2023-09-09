@@ -120,7 +120,7 @@ export const refreshToken = async (req, res) => {
 		switch (isValid) {
 			case VALID:
 				// Generate new access token
-				const user = await User.findOne({ where: { id } }); // get user from db
+				const user = await User.findOne({ where: { userId: id } }); // get user from db
 				const accessToken = generateToken(user, ACCESS);
 
 				return res.status(200).json({ message: 'Token refreshed', accessToken });
