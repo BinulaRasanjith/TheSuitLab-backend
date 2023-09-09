@@ -7,8 +7,9 @@ import supplierRoutes from './supplierRoutes.js';
 import returnRoutes from './returnRoutes.js';
 import handoverRoutes from './handoverRoutes.js';
 import customerRoutes from './customerRoutes.js';
-import smsRoutes from './smsRoutes.js';
+// import smsRoutes from './smsRoutes.js';
 import dashboardRoutes from './dashboardRoutes.js'; // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
+import hireCostumesRoutes from './hireCostumeRoutes.js';
 
 // import { dashboardData } from '../controllers/dashboardController.js';
 
@@ -22,8 +23,9 @@ router.use('/suppliers', supplierRoutes);
 router.use('/returns', returnRoutes);
 router.use('/hiring', handoverRoutes);
 router.use('/customers', customerRoutes);
-router.use('/notify', smsRoutes);
+// router.use('/notify', smsRoutes);
 router.use('/dashboard', dashboardRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
+router.use('/hire-costumes', hireCostumesRoutes);
 
 // router.get('/dashboard', dashboardData);
 

@@ -1,6 +1,8 @@
 // TABLE FOR COSTUMES
 import { DataTypes } from "sequelize";
+
 import sequelize from "../db/db.js";
+import { PRE_DESIGNED } from "../constants/constants.js";
 
 // sequelize.query(`CREATE SEQUENCE costume_code_seq;`);
 
@@ -36,7 +38,7 @@ const Costume = sequelize.define(
         designType: { // PRE-DESIGNED OR CUSTOMIZED
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 'Predesign',
+            defaultValue: PRE_DESIGNED,
         },
         rentalPrice: { // FOR CUSTOMIZED COSTUMES THERE IS NO RENTAL PRICE
             type: DataTypes.FLOAT,

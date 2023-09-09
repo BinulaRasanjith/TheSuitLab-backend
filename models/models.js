@@ -27,6 +27,7 @@ import Tie from "./TieModel.js";
 import Zipper from "./ZipperModel.js";
 import Interlining from "./InterliningModel.js";
 import User from "./UserModel.js";
+import HireCostume from "./HireCostumesModel.js";
 
 /*
 User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId' });
@@ -36,32 +37,32 @@ RefreshToken.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 */
 
 // USER - LOGIN SESSION RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 RefreshToken.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 
 // USER - CUSTOMER RELATIONSHIP (ONE TO ONE RELATIONSHIP)
-User.hasOne(Customer, { foreignKey: 'userId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+User.hasOne(Customer, { foreignKey: 'userId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Customer.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 
 // USER - STAFF_USER RELATIONSHIP (ONE TO ONE RELATIONSHIP)
-User.hasOne(StaffUser, { foreignKey: 'userId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+User.hasOne(StaffUser, { foreignKey: 'userId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 StaffUser.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 
 
 // ACCESSORIES INHERITANCE RELATIONSHIPS (ONE TO ONE RELATIONSHIPS)
-Accessory.hasOne(Belt, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Accessory.hasOne(Belt, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Belt.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId', });
 
-Accessory.hasOne(Tie, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Accessory.hasOne(Tie, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Tie.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId', });
 
-Accessory.hasOne(Shoe, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Accessory.hasOne(Shoe, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Shoe.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId', });
 
 // ACCESSORY - ACCESSORY_ORDER RELATIONSHIP (ONE TO ONE RELATIONSHIP)
 // ? Accessory එකේ PK COLUMN එකෙන් ටිකක් AccessoryOrder එකේ PK COLUMN එකේ තියෙන්න පුලුවන්
 // ? හැබැයි AccessoryOrder එකේ PK COLUMN එකේ හැම එකක්ම  Accessory එකේ PK COLUMN එකේ තියෙන්න ඕනේ
-Accessory.hasOne(AccessoryOrder, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Accessory.hasOne(AccessoryOrder, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 AccessoryOrder.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId', });
 
 // TODO: ACCESSORY - CART RELATIONSHIP (ONE TO ONE RELATIONSHIP)
@@ -70,15 +71,15 @@ AccessoryOrder.belongsTo(Accessory, { foreignKey: 'itemId', targetKey: 'itemId',
 
 
 // PURCHASE_ORDER - ACCESSORY_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-PurchaseOrder.hasMany(AccessoryOrder, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+PurchaseOrder.hasMany(AccessoryOrder, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 AccessoryOrder.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
 
 // PURCHASE_ORDER - PAYMENT RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-PurchaseOrder.hasMany(Payment, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+PurchaseOrder.hasMany(Payment, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 Payment.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
 
 // PURCHASE_ORDER - COSTUME_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-PurchaseOrder.hasMany(CostumeOrder, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+PurchaseOrder.hasMany(CostumeOrder, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 CostumeOrder.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
 
 // TODO: PURCHASE_ORDER - RETURN RELATIONSHIP (ONE TO MANY RELATIONSHIP) ITEM ID RELATIONSHIP
@@ -90,38 +91,38 @@ CostumeOrder.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'order
 // Review.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
 
 
-// CUSTOMER - PUCHASE_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+// CUSTOMER - PURCHASE_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 PurchaseOrder.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
 // CUSTOMER - REVIEW RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Customer.hasMany(Review, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Customer.hasMany(Review, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 Review.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
 // CUSTOMER - PAYMENT RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Customer.hasMany(Payment, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Customer.hasMany(Payment, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 Payment.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
 // CUSTOMER - CART RELATIONSHIP (ONE TO MANY RELATIONSHIP) ONE CART BUT MANY ITEMS
-Customer.hasMany(Cart, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Customer.hasMany(Cart, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Cart.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
 // CUSTOMER - RENT RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Customer.hasMany(Rent, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Customer.hasMany(Rent, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 Rent.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 // ! TODO: HAS TO RESTRICT DELETING CUSTOMER IF THERE ARE ANY INCOMPLETED RENTS
 
 
 // COSTUME - COSTUME_ORDER RELATIONSHIP (ONE TO ONE RELATIONSHIP)
-Costume.hasOne(CostumeOrder, { foreignKey: 'costumeId', sourceKey: 'costumeId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Costume.hasOne(CostumeOrder, { foreignKey: 'costumeId', sourceKey: 'costumeId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 CostumeOrder.belongsTo(Costume, { foreignKey: 'costumeId', targetKey: 'costumeId', });
 
 // COSTUME - MATERIAL_CONSUME RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Costume.hasMany(MaterialConsume, { foreignKey: 'costumeId', sourceKey: 'costumeId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Costume.hasMany(MaterialConsume, { foreignKey: 'costumeId', sourceKey: 'costumeId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 MaterialConsume.belongsTo(Costume, { foreignKey: 'costumeId', targetKey: 'costumeId', });
 
 // COSTUME - HANDOVER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Costume.hasMany(Handover, { foreignKey: 'costumeId', sourceKey: 'costumeId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Costume.hasMany(Handover, { foreignKey: 'costumeId', sourceKey: 'costumeId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 Handover.belongsTo(Costume, { foreignKey: 'costumeId', targetKey: 'costumeId', });
 
 // TODO: COSTUME - CART RELATIONSHIP (ONE TO ONE RELATIONSHIP)
@@ -129,26 +130,26 @@ Handover.belongsTo(Costume, { foreignKey: 'costumeId', targetKey: 'costumeId', }
 // Cart.belongsTo(Costume, { foreignKey: 'itemId', targetKey: 'costumeId', });
 
 // COSTUME - RENT RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Costume.hasMany(Rent, { foreignKey: 'costume', sourceKey: 'costumeId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Costume.hasMany(Rent, { foreignKey: 'costume', sourceKey: 'costumeId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 Rent.belongsTo(Costume, { foreignKey: 'costume', targetKey: 'costumeId', });
 
 
 // RENT - HANDOVER RELATIONSHIP (ONE TO MANY RELATIONSHIP) CAN HAVE MANY HANDOVERS BY COSTUMES
-Rent.hasMany(Handover, { foreignKey: 'rentalId', sourceKey: 'rentalId', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Rent.hasMany(Handover, { foreignKey: 'rentalId', sourceKey: 'rentalId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Handover.belongsTo(Rent, { foreignKey: 'rentalId', targetKey: 'rentalId', });
 
 
 // STAFF_USER - HANDOVER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-StaffUser.hasMany(Handover, { foreignKey: 'handoveredTo', sourceKey: 'staffId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+StaffUser.hasMany(Handover, { foreignKey: 'handoveredTo', sourceKey: 'staffId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 Handover.belongsTo(StaffUser, { foreignKey: 'handoveredTo', targetKey: 'staffId', });
 
 
 // SUPPLIER - SUPPLY_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Supplier.hasMany(SupplyOrder, { foreignKey: 'supplier', sourceKey: 'supplierId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Supplier.hasMany(SupplyOrder, { foreignKey: 'supplier', sourceKey: 'supplierId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 SupplyOrder.belongsTo(Supplier, { foreignKey: 'supplier', targetKey: 'supplierId', });
 
 // SUPPLIER - MATERIAL RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Supplier.hasMany(Material, { foreignKey: 'supplier', sourceKey: 'supplierId', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
+Supplier.hasMany(Material, { foreignKey: 'supplier', sourceKey: 'supplierId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 Material.belongsTo(Supplier, { foreignKey: 'supplier', targetKey: 'supplierId', });
 
 // ? IF REQUIRED: SUPPLIER - SUPPLIER_PAYMENT RELATIONSHIP (ONE TO MANY RELATIONSHIP)
@@ -157,32 +158,32 @@ Material.belongsTo(Supplier, { foreignKey: 'supplier', targetKey: 'supplierId', 
 
 
 // MATERIAL INHERITANCE RELATIONSHIPS (ONE TO ONE RELATIONSHIPS)
-Material.hasOne(Fabric, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Material.hasOne(Fabric, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Fabric.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
 
-Material.hasOne(Buttons, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Material.hasOne(Buttons, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Buttons.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
 
-Material.hasOne(Strings, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Material.hasOne(Strings, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Strings.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
 
-Material.hasOne(Zipper, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Material.hasOne(Zipper, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Zipper.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
 
-Material.hasOne(Interlining, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE',});
+Material.hasOne(Interlining, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Interlining.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
 
 // MATERIAL - MATERIAL_CONSUME RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Material.hasMany(MaterialConsume, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
-MaterialConsume.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode'});
+Material.hasMany(MaterialConsume, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+MaterialConsume.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode' });
 
 // MATERIAL - SUPPLY_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Material.hasMany(SupplyOrder, { foreignKey: 'material', sourceKey: 'materialCode', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
-SupplyOrder.belongsTo(Material, { foreignKey: 'material', targetKey: 'materialCode'});
+Material.hasMany(SupplyOrder, { foreignKey: 'material', sourceKey: 'materialCode', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+SupplyOrder.belongsTo(Material, { foreignKey: 'material', targetKey: 'materialCode' });
 
 // SUPPLY_ORDER - SUPPLIER_PAYMENT RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-SupplyOrder.hasMany(SupplierPayment, { foreignKey: 'supplyID', sourceKey: 'supplyID', onDelete: 'NO ACTION', onUpdate: 'CASCADE',});
-SupplierPayment.belongsTo(SupplyOrder, { foreignKey: 'supplyID', targetKey: 'supplyID'});
+SupplyOrder.hasMany(SupplierPayment, { foreignKey: 'supplyID', sourceKey: 'supplyID', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+SupplierPayment.belongsTo(SupplyOrder, { foreignKey: 'supplyID', targetKey: 'supplyID' });
 
 
 // CART-COSTUME RELATIONSHIP
@@ -205,6 +206,7 @@ export {
 	Customer,
 	Fabric,
 	Handover,
+	HireCostume,
 	MaterialConsumption,
 	Material,
 	Payment,

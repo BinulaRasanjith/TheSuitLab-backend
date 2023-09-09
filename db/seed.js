@@ -117,7 +117,7 @@ const seed = async () => {
         await Material.bulkCreate(materialSeed);
         await HireCostume.bulkCreate(hireCostumesSeed);
 
-        console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}`);
+        console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);
     } catch (error) {
         console.log(error);
     }
