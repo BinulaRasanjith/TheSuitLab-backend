@@ -6,9 +6,9 @@ import { setCoatMeasurements, setCartItem, getCartItems } from "../controllers/c
 
 const router = Router();
 
-// '/customers'
+// /api/customer
 router.post("/set-coat-measurements", setCoatMeasurements);
 router.post("/add-to-cart", authJWT, setCartItem);
-router.get("/get-cart-items", authJWT, getCartItems);
+router.get("/cart", authJWT, getCartItems);
 
 export default router;

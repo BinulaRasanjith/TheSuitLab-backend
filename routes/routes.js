@@ -18,14 +18,14 @@ const router = Router(); // for creating router
 
 router.use('/auth', authRoutes);
 router.use('/user', userRoutes);
-router.use('/materials', materialRoutes);
-router.use('/suppliers', supplierRoutes);
+router.use('/material', materialRoutes);
+router.use('/supplier', supplierRoutes);
 router.use('/returns', returnRoutes);
 router.use('/hiring', handoverRoutes);
-router.use('/customers', customerRoutes);
+router.use('/customer', customerRoutes);
 // router.use('/notify', smsRoutes);
 router.use('/dashboard', dashboardRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
-router.use('/hire-costumes', hireCostumesRoutes);
+router.use('/hire-costume', hireCostumesRoutes);
 
 // router.get('/dashboard', dashboardData);
 

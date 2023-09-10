@@ -45,6 +45,7 @@ export const setCartItem = async (req, res) => {
     const { itemId, description, size, quantity } = req.body;
 
     try {
+        // TODO: check if item is already in cart
         const cartItem = new Cart({ customerId: userId, itemId, description, size, quantity });
         await cartItem.save();
         res.status(201).json({ message: "Item added to cart" });
