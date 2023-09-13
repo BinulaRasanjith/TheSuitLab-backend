@@ -67,7 +67,7 @@ const calculateLowStockMaterialCount = async () => {
         const lowStockButtons = await Button.count({ where: { quantity: { [Op.lt]: 50 } } });           // LIMIT: 50 PIECES
         const lowStockFabrics = await Fabric.count({ where: { quantity: { [Op.lt]: 25 } } });           // LIMIT: 25 METERS (1 ROLL)
         const lowStockStirngs = await Strings.count({ where: { quantity: { [Op.lt]: 2500 } } });        // LIMIT: 2500 METERS (10 ROLLS)
-        const lowStockInterlinings = await Interlining.count({ where: { quantity: { [Op.lt]: 20 } } }); // LIMIT: 20 PIECES
+        const lowStockInterlinings = await Interlining.count({ where: { quantity: { [Op.lt]: 20 } } }); // LIMIT: 20 METERS
         const lowStockZippers = await Zipper.count({ where: { quantity: { [Op.lt]: 20 } } });           // LIMIT: 20 METERS
 
         const totalButtonStock = await Button.count();
@@ -182,7 +182,7 @@ const getRecentOrders = async () => {
 
 
 // TO SHOW WEEKLY PERFOMANCE USING CHART - LOCALLY CALLING (WORKING)
-export const getWeeklyPerformance = async (req, res) => {
+const getWeeklyPerformance = async (req, res) => {
     try {
         // INITIALIZE AN EMPTY ARRAY TO STORE DAILY PERFORMANCE DATA
         const thisWeekPerformance = [];

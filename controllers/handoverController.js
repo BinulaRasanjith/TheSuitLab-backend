@@ -1,33 +1,50 @@
-import Return from "../models/ReturnModel.js";
+import Hires from "../models/HireCostumesModel.js";
+import Handovers from "../models/HandoverModel.js";
+
+import { Op } from "sequelize";
 
 // ADDING FUNCTION
-export const addReturn = async (req, res) => {
+export const handoverCostume = async (req, res) => {
     try {
-        // request eke body eken me pahala thiyena tika ganna
         const {
-            referenceNo,
-            itemCount,
-            orderedDate,
-            reason
+            costumeId,
+            handoveredTo,
+            damages,
+            balance,
+            penalties,
+            total
         } = req.body;
 
-        const returnObj = await Return.create({
-            referenceNo,
-            itemCount,
-            orderedDate,
-            reason
+        const handoveredObject = await Return.create({
+            costumeId,
+            handoveredTo,
+            damages,
+            balance,
+            penalties,
+            total
         });
 
-        res.status(201).json(returnObj);
+        res.status(201).json(handoveredObject);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
 
-// READING FUNCTION
-export const getReturns = async (req, res) => {
+// RENTED ITEM LISTING FUNCTION
+export const getHiredItems = async (req, res) => {
     try {
-        const returns = await Return.findAll();
+
+        const { find } = req.body;
+
+        const returns = await Hires.findAll({
+            where: {
+                status: 'status',
+                [Op.or]: [
+                    { status: 'Hired' },
+                    { hireCostumeId: find }
+                ]
+            }
+        });
         res.status(200).json(returns);
     } catch (error) {
         res.status(404).json({ message: error.message });
@@ -35,7 +52,7 @@ export const getReturns = async (req, res) => {
 }
 
 // REMOVING FUNCTION
-export const removeReturn = async (req, res) => {
+export const cancelHandover = async (req, res) => {
     try {
         const { referenceNo } = req.body;
 
