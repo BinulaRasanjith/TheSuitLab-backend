@@ -75,6 +75,29 @@ export const updateReturn = async (req, res) => {
     }
 }
 
+// UPDATING FUNCTION
+export const completeReturn = async (req, res) => {
+    try {
+        const { referenceNo } = req.params; // ASSUMING YOU PASS THE RETURN ID IN THE URL
+        const { status } = req.body;
+
+        // FIND THE RETURN BY ID
+        const returnObj = await Return.findByPk(referenceNo);
+
+        if (!returnObj) {
+            return res.status(404).json({ message: "Return not found" });
+        }
+
+        // UPDATE THE REASON FIELD
+        returnObj.status = status;
+        await returnObj.save();
+
+        res.status(200).json(returnObj);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+}
+
 // GETTING ORDERS FOR DROPDOWN
 export const getOrders = async (req, res) => {
     try {
