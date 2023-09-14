@@ -1,4 +1,4 @@
-import { User, RefreshToken, Customer } from '../models/models.js'; // import User and RefreshToken model
+import { User, RefreshToken } from '../models/models.js'; // import User and RefreshToken model
 import { generateToken, verifyToken } from '../utils/jwtUtils.js'; // import jwt utils
 import { ACCESS, REFRESH, VALID, INVALID, EXPIRED, ACTIVE, CUSTOMER } from '../constants/constants.js'; // import constants
 
@@ -9,8 +9,6 @@ export const signup = async (req, res) => {
 			mobileNo,
 			firstName,
 			lastName,
-			address,
-			email, // TODO: check???
 			confirmPassword,
 			password,
 		} = req.body; // get email and password, mobileNo, first_name, last_name from request body
@@ -27,18 +25,11 @@ export const signup = async (req, res) => {
 		// create user
 		const user = await User.create({
 			mobileNo,
-			email,
 			firstName,
 			lastName,
 			password,
 			role: CUSTOMER,
 			status: ACTIVE,
-		});
-
-		// create customer
-		await Customer.create({
-			userId: user.userId,
-			address,
 		});
 
 		return res.status(201).json({ message: 'Signup successful', user }); // return user data if success 
@@ -50,9 +41,9 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
 	try {
-		const { email, password } = req.body; // get email and password from request body
+		const { mobileNo, password } = req.body; // get email and password from request body
 
-		const user = await User.findOne({ where: { email } }); // check if user exist
+		const user = await User.findOne({ where: { mobileNo } }); // check if user exist
 
 		// check if user exist and password is correct
 		if (!user || !(await user.isValidPassword(password))) {
@@ -78,23 +69,6 @@ export const login = async (req, res) => {
 
 		// return res.status(200).json({ message: 'Login successful', user });
 		return res.status(200).json({ message: 'Login successful', accessToken });
-	} catch (error) {
-		return res.status(500).json({ message: error.message });
-	}
-};
-
-export const googleLogin = async (req, res) => {
-	try {
-		const { googleAccessToken } = req.body; // get access token from request body
-		const url = `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${googleAccessToken}` // create url for fetching user info from google
-		fetch(url) // fetch user info from google
-			.then((res) => res.json())
-			.then(async (data) => {
-				return res.status(200).json({ message: 'Login successful', user: data });
-			})
-			.catch((err) => {
-				return res.status(500).json({ message: err.message });
-			});
 	} catch (error) {
 		return res.status(500).json({ message: error.message });
 	}
