@@ -1,6 +1,7 @@
 import { Transaction } from "sequelize";
 import Material from "../models/MaterialModel.js";
 
+// VIEW ALL MATERIALS
 export const getMaterials = async (req, res) => {
     try {
         const { type } = req.body;
@@ -19,6 +20,7 @@ export const getMaterials = async (req, res) => {
     }
 }
 
+// ADD NEW MATERIAL
 export const addMaterial = async (req, res) => {
     try {
         const { materialCode, type, color, colorCode, quantity, usedQuantity } = req.body;
@@ -43,6 +45,7 @@ export const addMaterial = async (req, res) => {
     }
 }
 
+// REMOVE ENTIRE MATERIAL
 export const removeMaterial = async (req, res) => {
     try {
         const { materialCode } = req.body;
@@ -62,6 +65,7 @@ export const removeMaterial = async (req, res) => {
 
 
 // TODO: test this
+// MATERIAL QUANTITY UPDATE USING A TRANSACTION WHEN STOCK IS ADDED
 export const addMaterialQuantity = async (req, res) => {
     // starting a transaction
     let transaction;
@@ -99,6 +103,7 @@ export const addMaterialQuantity = async (req, res) => {
 }
 
 // TODO: test this
+// MATERIAL QUANTITY UPDATE USING A TRANSACTION WHEN STOCK IS USED
 export const useMaterialQuantity = async (req, res) => {
     let transaction;
     try {

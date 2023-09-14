@@ -34,6 +34,10 @@ const Accessory = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
+        type: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         // quantity: {
         //     type: DataTypes.INTEGER,
         //     allowNull: false,
