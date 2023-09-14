@@ -103,7 +103,7 @@ export const googleLogin = async (req, res) => {
 // for refreshing access token
 export const refreshToken = async (req, res) => {
 	try {
-		const { refreshToken } = req.cookies; // get refresh token from cookies 
+		const { refreshToken } = req.cookies; // get refresh token from cookies
 
 		// Check if the refresh token exists
 		if (!refreshToken) {
@@ -151,6 +151,7 @@ export const logout = async (req, res) => {
 		res.clearCookie('refreshToken');
 
 		res.status(200).json({ message: 'Logout successful' });
+		console.log('Logout successful');
 	} catch (error) {
 		res.status(500).json({ message: error.message });
 	}

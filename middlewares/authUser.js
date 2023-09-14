@@ -8,11 +8,13 @@ export const authJWT = (req, res, next) => {
         }
 
         if (!user && info && info.name === 'JsonWebTokenError') {
+            console.log(info);
             return res.status(401).json({ message: 'Unauthorized' });
         }
 
         // If access token is expired, 
         if (info && info.name === 'TokenExpiredError') {
+            console.log(info);
             return res.status(401).json({ message: 'Unauthorized', accessTokenExpired: true });
         }
 

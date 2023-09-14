@@ -6,13 +6,6 @@ import { User } from "../models/models.js";
 dotenv.config();
 
 const options = {
-    // jwtFromRequest: (req) => {
-    //     let token = null;
-    //     if (req && req.cookies) {
-    //         token = req.cookies.accessToken;
-    //     }
-    //     return token;
-    // },
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
     secretOrKey: process.env.ACCESS_TOKEN_SECRET || "access-token-secret",
 };

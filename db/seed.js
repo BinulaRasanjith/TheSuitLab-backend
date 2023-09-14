@@ -4,14 +4,12 @@ import { ASCII } from '../config/config.js';
 
 import {
     User,
+    Customer,
     Material,
     Supplier,
     HireCostume,
 } from "../models/models.js";
-import {
-    ACTIVE,
-    ADMIN, CUSTOMER, TAILOR, OPERATION_ASSISTANT, PRODUCT_MANAGER
-} from "../constants/constants.js";
+import userSeed from './seeds/userSeed.js';
 import supplierSeed from './seeds/supplierSeed.js';
 import materialSeed from './seeds/materialSeed.js';
 import hireCostumesSeed from './seeds/hireCostumesSeed.js';
@@ -22,96 +20,53 @@ const defaultPassword = process.env.DEFAULT_PASSWORD;
 
 const seed = async () => {
     try {
+        // Admin
         User.findOrCreate({
-            where: { mobileNo: '1234567890' },
-            defaults: {
-                email: 'admin@email.com',
-                password: defaultPassword,
-                firstName: 'Admin',
-                lastName: 'Test',
-                role: ADMIN,
-                progress: ACTIVE,
-                image: 'avatar.png',
-            }
+            where: { mobileNo: userSeed[0].mobileNo },
+            defaults: userSeed[0],
         });
 
+        // Operation Assistant
         User.findOrCreate({
-            where: { mobileNo: '0773364290' },
-            defaults: {
-                email: 'kavisula@email.com',
-                password: defaultPassword,
-                firstName: 'Kavishka',
-                lastName: 'Sulakshana',
-                role: CUSTOMER,
-                progress: ACTIVE,
-                image: 'costume1.jpeg',
-            }
+            where: { mobileNo: userSeed[2].mobileNo },
+            defaults: userSeed[2],
         });
 
+        // Tailor
         User.findOrCreate({
-            where: { mobileNo: '07645902431' },
-            defaults: {
-                email: 'sunil@email.com',
-                password: defaultPassword,
-                firstName: 'Sunil',
-                lastName: 'Perera',
-                role: CUSTOMER,
-                progress: ACTIVE,
-                image: 'costume1.jpeg',
-            }
+            where: { mobileNo: userSeed[3].mobileNo },
+            defaults: userSeed[3],
         });
 
+        // Product Manager
         User.findOrCreate({
-            where: { mobileNo: '0712340991' },
-            defaults: {
-                email: 'nimal@email.com',
-                password: defaultPassword,
-                firstName: 'Nimal',
-                lastName: 'Fernando',
-                role: CUSTOMER,
-                progress: ACTIVE,
-                image: 'costume1.jpeg',
-            }
+            where: { mobileNo: userSeed[4].mobileNo },
+            defaults: userSeed[4],
         });
 
-        User.findOrCreate({
-            where: { mobileNo: '0753429081' },
-            defaults: {
-                email: 'mamatailor@email.com',
-                password: defaultPassword,
-                firstName: 'John',
-                lastName: 'Taylor',
-                role: TAILOR,
-                progress: ACTIVE,
-                image: 'costume2.jpeg',
-            }
+        // Customer - 1
+        await User.findOrCreate({
+            where: { mobileNo: userSeed[1].mobileNo },
+            defaults: userSeed[1],
         });
 
-        User.findOrCreate({
-            where: { mobileNo: '0778235998' },
-            defaults: {
-                email: 'op_assistant@email.com',
-                password: defaultPassword,
-                firstName: 'Bhanuka',
-                lastName: 'Rajapaksha',
-                role: OPERATION_ASSISTANT,
-                progress: ACTIVE,
-                image: 'costume3.jpeg',
-            }
+        Customer.findOrCreate({ where: { userId: userSeed[1].userId } });
+
+        // Customer - 2
+        await User.findOrCreate({
+            where: { mobileNo: userSeed[5].mobileNo },
+            defaults: userSeed[5],
         });
 
-        User.findOrCreate({
-            where: { mobileNo: '0773098124' },
-            defaults: {
-                email: 'manager@email.com',
-                password: defaultPassword,
-                firstName: 'Viraj',
-                lastName: 'Sandakalum',
-                role: PRODUCT_MANAGER,
-                progress: ACTIVE,
-                image: 'costume4.jpeg',
-            }
+        Customer.findOrCreate({ where: { userId: userSeed[5].userId } });
+
+        // Customer - 3
+        await User.findOrCreate({
+            where: { mobileNo: userSeed[6].mobileNo },
+            defaults: userSeed[6],
         });
+
+        Customer.findOrCreate({ where: { userId: userSeed[6].userId } });
 
         await Supplier.bulkCreate(supplierSeed);
         await Material.bulkCreate(materialSeed);
