@@ -73,7 +73,6 @@ const userSeed = [
         progress: ACTIVE,
         image: 'costume1.jpeg',
     },
-
     {
         userId: 'USER0000000007',
         email: 'nimal@email.com',
