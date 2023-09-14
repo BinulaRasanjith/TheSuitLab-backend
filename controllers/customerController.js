@@ -41,7 +41,6 @@ export const setTrouserMeasurements = async (req, res) => {
 
 export const setCartItem = async (req, res) => {
     const userId = req.user.userId;
-    console.log(userId);
     const { itemId, description, size, quantity } = req.body;
 
     try {

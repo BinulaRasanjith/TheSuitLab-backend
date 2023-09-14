@@ -7,8 +7,5 @@ node_modules
 # IGNORE IDEA FOLDER
 /.idea
 
-# IGNORE VSCODE FOLDER
-/.vscode
-
 # IGNORE TEST FOLDER
 test
