@@ -11,10 +11,10 @@ const Customer = sequelize.define(
             unique: true,
             primaryKey: true,
         },
-        address: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
+        // address: {
+        //     type: DataTypes.TEXT,
+        //     allowNull: true,
+        // },
         coatMeasurements: {
             type: DataTypes.JSONB,
             allowNull: true,
