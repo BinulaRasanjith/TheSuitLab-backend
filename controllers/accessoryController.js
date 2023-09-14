@@ -1,4 +1,4 @@
-import { Transaction } from "sequelize";
+// import { Transaction } from "sequelize";
 import Accessory from "../models/AccessoryModel.js";
 import Belt from "../models/BeltModel.js";
 import Shoe from "../models/ShoeModel.js";
@@ -6,13 +6,20 @@ import Tie from "../models/TieModel.js";
 
 export const addNewAccessory = async (req, res) => {
     try {
-        const { brand, itemName, material, color, price, type, image } = req.body;
+        const { brand, itemName, material, color, price, accessoryType } = req.body;
 
-        const accessoryExist = await Accessory.findOne({ where: { itemName } });
+        // const accessoryExist = await Accessory.findOne({ where: { itemId } });
+        const accessoryExist = await Accessory.findOne({
+            where: { 
+                itemName: itemName,
+            }
+        });
 
         if (accessoryExist) {
-            return res.status(409).json({ message: "Material already exists" });
+            return res.status(409).json({ message: "Accessory already exists" });
         }
+
+        const imageFiles = req.files.map((file) => file.originalname);
 
         const accessory = await Accessory.create({
             brand,
@@ -20,39 +27,39 @@ export const addNewAccessory = async (req, res) => {
             material,
             color,
             price,
-            type,
-            image,
+            accessoryType,
+            image: imageFiles,
         });
 
         // const itemId = await Accessory.findOne({ where: { itemName } });
-        const itemId = await Accessory.findOne({
+        const thisItem = await Accessory.findOne({
             order: [['createdAt', 'DESC']] // ASSUMING 'CREATEDAT' IS A TIMESTAMP FIELD
         });
 
-        if (type === "belt") {
+        if (accessoryType === "belt") {
             const { buckleType, size } = req.body;
             const belt = await Belt.create({
-                itemId,
+                itemId: thisItem.itemId,
                 buckleType,
                 size,
             });
             return res.status(201).json({ accessory, belt });
         }
 
-        if (type === "shoe") {
+        if (accessoryType === "shoe") {
             const { style, size } = req.body;
             const shoe = await Shoe.create({
-                itemId,
+                itemId: thisItem.itemId,
                 style,
                 size,
             });
             return res.status(201).json({ accessory, shoe });
         }
 
-        if (type === "tie") {
+        if (accessoryType === "tie") {
             const { pattern, width } = req.body;
             const tie = await Tie.create({
-                itemId,
+                itemId: thisItem.itemId,
                 pattern,
                 width,
             });

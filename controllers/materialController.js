@@ -1,5 +1,10 @@
 import { Transaction } from "sequelize";
 import Material from "../models/MaterialModel.js";
+import Buttons from "../models/ButtonModel.js";
+import Fabric from "../models/FabricModel.js";
+import Interlining from "../models/InterliningModel.js";
+import Strings from "../models/StringModel.js";
+import Zipper from "../models/ZipperModel.js";
 
 // VIEW ALL MATERIALS
 export const getMaterials = async (req, res) => {
@@ -23,23 +28,84 @@ export const getMaterials = async (req, res) => {
 // ADD NEW MATERIAL
 export const addMaterial = async (req, res) => {
     try {
-        const { materialCode, type, color, colorCode, quantity, usedQuantity } = req.body;
+        const { materialType, materialName, supplier, unitPrice, color, colorCode, image } = req.body;
 
-        const materialExist = await Material.findOne({ where: { materialCode } });
+        // const materialExist = await Material.findOne({ where: { materialCode } });
+        const materialExist = await Material.findOne({
+            where: {
+                materialName: materialName,
+            }
+        });
 
         if (materialExist) {
             return res.status(409).json({ message: "Material already exists" });
         }
 
         const material = await Material.create({
-            materialCode,
-            type,
+            materialType,
+            materialName,
+            supplier,
+            unitPrice,
             color,
             colorCode,
-            quantity,
-            usedQuantity,
+            image,
         });
-        return res.status(201).json({ material });
+
+        const thisMaterial = await Material.findOne({
+            order: [['createdAt', 'DESC']] // ASSUMING 'CREATEDAT' IS A TIMESTAMP FIELD
+        });
+
+        if (accessoryType === "button") {
+            const { quantity, size } = req.body;
+            const button = await Buttons.create({
+                materialCode: thisMaterial.materialCode,
+                quantity,
+                size,
+            });
+            return res.status(201).json({ material, button });
+        }
+
+        if (accessoryType === "fabric") {
+            const { quantity, pattern } = req.body;
+            const fabric = await Fabric.create({
+                materialCode: thisMaterial.materialCode,
+                quantity,
+                pattern,
+            });
+            return res.status(201).json({ material, fabric });
+        }
+
+        if (accessoryType === "interlining") {
+            const { quantity, weightOfUnit } = req.body;
+            const interlining = await Interlining.create({
+                materialCode: thisMaterial.materialCode,
+                quantity,
+                weightOfUnit,
+            });
+            return res.status(201).json({ material, interlining });
+        }
+
+        if (accessoryType === "string") {
+            const { quantity, size } = req.body;
+            const string = await Strings.create({
+                materialCode: thisMaterial.materialCode,
+                quantity,
+                size,
+            });
+            return res.status(201).json({ material, string });
+        }
+
+        if (accessoryType === "zipper") {
+            const { quantity, style, size } = req.body;
+            const zipper = await Zipper.create({
+                materialCode: thisMaterial.materialCode,
+                quantity,
+                style,
+                size,
+            });
+            return res.status(201).json({ material, zipper });
+        }
+
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
@@ -50,9 +116,9 @@ export const removeMaterial = async (req, res) => {
     try {
         const { materialCode } = req.body;
 
-        // check if material exists
+        // CHECK IF MATERIAL EXISTS
         const material = await Material.findOne({ where: { materialCode } });
-        if (!material) { // if material does not exist
+        if (!material) { // IF MATERIAL DOES NOT EXIST
             return res.status(404).json({ message: "Material not found" });
         }
 
@@ -67,11 +133,11 @@ export const removeMaterial = async (req, res) => {
 // TODO: test this
 // MATERIAL QUANTITY UPDATE USING A TRANSACTION WHEN STOCK IS ADDED
 export const addMaterialQuantity = async (req, res) => {
-    // starting a transaction
+    // STARTING A TRANSACTION
     let transaction;
     try {
         transaction = await sequelize.transaction({
-            // isolation level is set to SERIALIZABLE (BECAUSE WE ARE DEALING WITH QUANTITY)
+            // ISOLATION LEVEL IS SET TO SERIALIZABLE (BECAUSE WE ARE DEALING WITH QUANTITY)
             isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE,
         });
 
@@ -81,11 +147,11 @@ export const addMaterialQuantity = async (req, res) => {
             transaction,
         });
 
-        if (!material) { // if material does not exist
+        if (!material) { // IF MATERIAL DOES NOT EXIST
             return res.status(404).json({ message: "Material not found" });
         }
 
-        // update material quantity
+        // UPDATE MATERIAL QUANTITY
         const newQuantity = material.quantity + quantity;
         await Material.update(
             { quantity: newQuantity },
@@ -93,10 +159,10 @@ export const addMaterialQuantity = async (req, res) => {
             { transaction }
         );
 
-        await transaction.commit(); // commit the transaction
+        await transaction.commit(); // COMMIT THE TRANSACTION
         return res.status(200).json({ message: "Material quantity updated" });
     } catch (error) {
-        // if transaction exists, rollback the transaction
+        // IF TRANSACTION EXISTS, ROLLBACK THE TRANSACTION
         if (transaction) await transaction.rollback();
         return res.status(500).json({ message: error.message });
     }

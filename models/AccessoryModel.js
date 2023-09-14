@@ -34,7 +34,7 @@ const Accessory = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        type: {
+        accessoryType: {
             type: DataTypes.STRING,
             allowNull: false,
         },
