@@ -11,7 +11,7 @@ const HireCostume = sequelize.define(
             PrimaryKey: true,
             defaultValue: sequelize.literal(`'HC' || LPAD(nextval('hire_costume_code_seq')::TEXT, 10, '0')`), // HC0000000001
         },
-        name: {
+        name: { // COSTUME NAME
             type: DataTypes.TEXT,
             allowNull: false,
         },
@@ -35,7 +35,7 @@ const HireCostume = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        images: {
+        images: { // TODO: CHECK THIS
             type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: true,
         },

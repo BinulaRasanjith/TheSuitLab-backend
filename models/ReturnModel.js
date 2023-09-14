@@ -14,7 +14,7 @@ const Return = sequelize.define(
             PrimaryKey: true,
             defaultValue: sequelize.literal(`'RTN' || LPAD(nextval('return_code_seq')::TEXT, 10, '0')`), // RTN0000000001
         },
-        orderId: { // TODO: CHECH, THIS CAN BE GET FROM `itemId`
+        orderId: { // TODO: CHECK, THIS CAN BE GET FROM `itemId`
             type: DataTypes.TEXT,
             allowNull: false,
         },
