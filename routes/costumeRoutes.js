@@ -1,11 +1,13 @@
 import { Router } from "express";
 
 import {
-    addNewAccessory,
-    getAccessories,
-    getAccessory,
-    removeAccessory,
-    updateAccessory,
+    addNewCostume,
+    getCostumes,
+    getCostumeById,
+    removeCostume,
+    updateCostume,
+    // sellCostume,
+    // customCostume,
 } from "../controllers/accessoryController.js";
 import { accessoryImageUpload } from "../middlewares/imageUpload.js";
 

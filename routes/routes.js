@@ -13,7 +13,7 @@ import dashboardRoutes from './dashboardRoutes.js'; // TODO: IF USING DASHBOARD,
 import odbRoutes from './odbRoutes.js'; // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
 import hireCostumesRoutes from './hireCostumeRoutes.js';
 
-// import { dashboardData } from '../controllers/dashboardController.js';
+import { dashboardData } from '../controllers/dashboardController.js';
 
 
 const router = Router(); // for creating router
@@ -31,6 +31,6 @@ router.use('/dashboard', dashboardRoutes); // TODO: IF USING DASHBOARD, UNCOMMEN
 router.use('/odb', odbRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
 router.use('/hire-costume', hireCostumesRoutes);
 
-// router.get('/dashboard', dashboardData);
+router.get('/assistant', dashboardData);
 
 export default router;
