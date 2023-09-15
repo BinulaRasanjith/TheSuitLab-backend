@@ -1,4 +1,3 @@
-@@ -0,0 +1,219 @@
 import Payment from "../models/PaymentModel.js";
 import CostumeOrder from "../models/CostumeOrderModel.js";
 import PurchaseOrder from "../models/PurchaseOrderModel.js";
