@@ -1,6 +1,7 @@
 import { Router } from 'express'; // for creating router
 
 import authRoutes from './authRoutes.js'; // for routing to auth endpoints
+import otpRoutes from './otpRoutes.js'; // for routing to otp endpoints
 import materialRoutes from './materialRoutes.js'; // for routing to material endpoints
 import userRoutes from './userRoutes.js'; // for routing to user endpoints
 import supplierRoutes from './supplierRoutes.js';
@@ -17,6 +18,7 @@ import hireCostumesRoutes from './hireCostumeRoutes.js';
 const router = Router(); // for creating router
 
 router.use('/auth', authRoutes);
+router.use('/otp', otpRoutes);
 router.use('/user', userRoutes);
 router.use('/material', materialRoutes);
 router.use('/supplier', supplierRoutes);
