@@ -2,10 +2,10 @@ import twilio from 'twilio';
 import speakeasy from 'speakeasy';
 
 import { OTPModel } from '../models/models.js';
-import { accountSid, authToken, phoneNumber } from '../config/twilioConfig.js';
+import { setup } from '../config/twilioConfig.js';
 
-const client = twilio(accountSid, authToken);
-const twilioNumber = phoneNumber;
+const client = twilio(setup.accountSid, setup.authToken);
+const twilioNumber = setup.phoneNumber;
 
 export const sendOTP = async (req, res) => {
     try {
