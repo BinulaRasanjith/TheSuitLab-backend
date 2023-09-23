@@ -6,7 +6,11 @@ export default [
     {
         name: "Tuxedo Shoe Slip-on Classic Patent Leather Loafers",
         costumeType: JACKET,
-        size: S,
+        size: [
+            {size: S, quantity: 2},
+            {size: M, quantity: 1},
+            {size: L, quantity: 3},
+        ],
         color: "Black",
         price: 1000,
         status: AVAILABLE,
@@ -15,7 +19,12 @@ export default [
     {
         name: "Plain Toe Genuine Leather Dress Shoes",
         costumeType: JACKET,
-        size: M,
+        size: [
+            {size: S, quantity: 3},
+            {size: M, quantity: 1},
+            {size: L, quantity: 3},
+            {size: XL, quantity: 2},
+        ],
         color: "Black",
         price: 1000,
         status: AVAILABLE,
@@ -24,7 +33,12 @@ export default [
     {
         name: "Plain Toe Genuine Leather Dress Shoes",
         costumeType: PANT,
-        size: L,
+        size: [
+            {size: S, quantity: 3},
+            {size: M, quantity: 1},
+            {size: L, quantity: 3},
+            {size: XL, quantity: 2},
+        ],
         color: "Black",
         price: 1000,
         status: UNAVAILABLE,
