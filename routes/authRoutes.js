@@ -2,7 +2,6 @@ import { Router } from "express"; // for creating router
 import {
     signup,
     login,
-    googleLogin,
     logout,
     refreshToken,
     changePassword,
@@ -15,7 +14,6 @@ const router = Router(); // for creating router
 // /api/auth
 router.post('/signup', signup); // for routing to auth endpoints and for handling requests to auth endpoints 
 router.post('/login', login);
-router.post('/google-login', googleLogin);
 router.post('/logout', authJWT, logout);
 router.get('/refresh-token', refreshToken);
 router.post('/change-password', authJWT, changePassword);

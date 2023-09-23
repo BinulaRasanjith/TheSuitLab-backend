@@ -23,5 +23,34 @@ const materialImageStorage = multer.diskStorage({
     }
 });
 
+const customCostumesImageStorage = multer.diskStorage({
+    destination: path.join(__dirname, '../uploads/costume-images'), // Set the destination folder for uploads
+    filename: (req, file, cb) => {
+        // Generate a unique filename for the uploaded file
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const accessoriesImageStorage = multer.diskStorage({
+    destination: path.join(__dirname, '../uploads/accessories-images'), // Set the destination folder for uploads
+    filename: (req, file, cb) => {
+        // Generate a unique filename for the uploaded file
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
+const costumesImageStorage = multer.diskStorage({
+    destination: path.join(__dirname, '../uploads/sell-costumes-images'), // Set the destination folder for uploads
+    filename: (req, file, cb) => {
+        // Generate a unique filename for the uploaded file
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        cb(null, uniqueSuffix + path.extname(file.originalname));
+    }
+});
+
 export const profilePicUpload = multer({ storage: profilePicStorage });
 export const materialImageUpload = multer({ storage: materialImageStorage });
+export const costumeImageUpload = multer({ storage: costumesImageStorage });
+export const accessoryImageUpload = multer({ storage: accessoriesImageStorage });

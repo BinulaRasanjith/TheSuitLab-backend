@@ -42,13 +42,13 @@ app.use("/api", routes); // for routing to different endpoints
 setup();
 sequelize
   .sync()
-  //   .sync({ alter: true, force: true }) // for creating tables if not exists and alter tables if exists and force: true for dropping tables if exists and creating new tables
+  // .sync({ alter: true, force: true }) // for creating tables if not exists and alter tables if exists and force: true for dropping tables if exists and creating new tables
   .then(async () => {
     // if success, log and continue process
     console.log(
       `${ASCII.bold + ASCII.green}Database connection established${ASCII.reset}`
     );
-    // seed(); // for seeding data if tables are empty or not exists or force: true for seeding data even if tables are not empty or exists or force: true for seeding data even if tables are not empty or exists
+    // seed();
 
     const port = process.env.PORT || 3333;
 

@@ -11,6 +11,7 @@ import Handover from "./HandoverModel.js";
 import MaterialConsume from "./MaterialConsumeModel.js";
 import MaterialConsumption from "./MaterialConsumeModel.js";
 import Material from "./MaterialModel.js";
+import OTPModel from "./OTPModel.js";
 import Payment from "./PaymentModel.js";
 import PurchaseOrder from "./PurchaseOrderModel.js";
 import RefreshToken from "./RefreshTokenModel.js";
@@ -209,6 +210,7 @@ export {
 	HireCostume,
 	MaterialConsumption,
 	Material,
+	OTPModel,
 	Payment,
 	PurchaseOrder,
 	RefreshToken,
