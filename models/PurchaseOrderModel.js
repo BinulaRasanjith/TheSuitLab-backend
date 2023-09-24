@@ -18,6 +18,10 @@ const PurchaseOrder = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
         },
+        description: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         itemCount: {
             type: DataTypes.INTEGER,
             allowNull: false,

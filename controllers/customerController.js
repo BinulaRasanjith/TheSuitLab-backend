@@ -41,13 +41,25 @@ export const setTrouserMeasurements = async (req, res) => {
 
 export const setCartItem = async (req, res) => {
     const userId = req.user.userId;
-    const { itemId, description, size, quantity } = req.body;
+    const { itemId, description, price, size, quantity } = req.body;
 
     try {
         // TODO: check if item is already in cart
-        const cartItem = new Cart({ customerId: userId, itemId, description, size, quantity });
+        const cartItem = new Cart({ customerId: userId, itemId, description, size, quantity, price });
         await cartItem.save();
         res.status(201).json({ message: "Item added to cart" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const setCartItemForCustomSuit = async (req, res) => {
+    const userId = req.user.userId;
+    const { description, price, quantity, selection } = req.body;
+
+    try {
+        const cartItem = new Cart({ customerId: userId, itemId, description, quantity, price, selection });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });

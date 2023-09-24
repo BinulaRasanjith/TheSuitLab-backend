@@ -8,26 +8,35 @@ const Cart = sequelize.define(
         customerId: {
             type: DataTypes.TEXT,
             allowNull: false,
-            compositePrimaryKey: true,
         },
         itemId: {
             type: DataTypes.TEXT,
-            allowNull: false,
-            unique: true, // TODO: SAME ITEM MODEL HAVE SAME ITEM ID ?
-            compositePrimaryKey: true,
+            allowNull: true,
         },
         description: {
             type: DataTypes.TEXT,
+            allowNull: true, // TODO: CHECK THIS AND THINK ABOUT IT
+        },
+        price: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+        },
+        type: {
+            type: DataTypes.STRING(10),
             allowNull: false,
         },
         size: {
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         quantity: { // TODO: CHECK THIS AND THINK ABOUT IT
             type: DataTypes.INTEGER,
             allowNull: false,
         },
+        selection: {
+            type: DataTypes.JSON,
+            allowNull: true,
+        }
     },
     {
         tableName: 'shopping_cart',
