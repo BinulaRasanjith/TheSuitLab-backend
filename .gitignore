@@ -9,3 +9,6 @@ node_modules
 
 # IGNORE TEST FOLDER
 test
+
+# IGNORE DS_STORE FILES
+.DS_Store
