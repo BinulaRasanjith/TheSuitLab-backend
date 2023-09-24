@@ -116,7 +116,7 @@ export const refreshToken = async (req, res) => {
 export const logout = async (req, res) => {
 	try {
 		// Get the user ID from the authenticated user
-		const userId = req.user.userId;
+		const userId = req.params.userId;
 
 		// Delete the refresh token from the database 
 		await RefreshToken.destroy({ where: { userId } });

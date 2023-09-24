@@ -14,7 +14,7 @@ const router = Router(); // for creating router
 // /api/auth
 router.post('/signup', signup); // for routing to auth endpoints and for handling requests to auth endpoints 
 router.post('/login', login);
-router.post('/logout', authJWT, logout);
+router.post('/logout/:userId', logout);
 router.get('/refresh-token', refreshToken);
 router.post('/change-password', authJWT, changePassword);
 router.post('/update-profile', authJWT, updateProfile);
