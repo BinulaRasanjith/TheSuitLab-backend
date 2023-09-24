@@ -69,6 +69,20 @@ export const setCartItemForCustomSuit = async (req, res) => {
     }
 };
 
+export const removeCartItem = async (req, res) => {
+    const { id } = req.params;
+    try {
+        const cartItem = await Cart.findOne({ where: { id } });
+        if (!cartItem) {
+            res.status(404).json({ message: "Item not found" });
+        } else {
+            await cartItem.destroy();
+            res.status(200).json({ message: "Item removed from cart" });
+        }
+    } catch (error) {
+    }
+};
+
 export const getCartItems = async (req, res) => {
     const { userId } = req.user;
 

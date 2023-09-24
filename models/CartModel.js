@@ -23,13 +23,13 @@ const Cart = sequelize.define(
         },
         type: {
             type: DataTypes.STRING(10),
-            allowNull: false,
+            allowNull: true,
         },
         size: {
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        quantity: { // TODO: CHECK THIS AND THINK ABOUT IT
+        quantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },

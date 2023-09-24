@@ -8,11 +8,13 @@ import {
     Material,
     Supplier,
     HireCostume,
+    Cart,
 } from "../models/models.js";
 import userSeed from './seeds/userSeed.js';
 import supplierSeed from './seeds/supplierSeed.js';
 import materialSeed from './seeds/materialSeed.js';
 import hireCostumesSeed from './seeds/hireCostumesSeed.js';
+import cartSeed from './seeds/cartSeed.js';
 
 dotenv.config();
 
@@ -71,6 +73,7 @@ const seed = async () => {
         await Supplier.bulkCreate(supplierSeed);
         await Material.bulkCreate(materialSeed);
         await HireCostume.bulkCreate(hireCostumesSeed);
+        await Cart.bulkCreate(cartSeed);
 
         console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);
     } catch (error) {
