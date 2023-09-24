@@ -157,9 +157,9 @@ export const changePassword = async (req, res) => {
 export const updateProfile = async (req, res) => {
 	try {
 		const { firstName, lastName, email, mobileNo } = req.body; // get first name, last name, email from request body
-		const { id } = req.user; // get user id from authenticated user
+		const { userId } = req.user; // get user id from authenticated user
 
-		const user = await User.findOne({ where: { id } }); // get user from db
+		const user = await User.findOne({ where: { userId } }); // get user from db
 
 		// update user
 		user.firstName = firstName;
@@ -170,6 +170,7 @@ export const updateProfile = async (req, res) => {
 
 		return res.status(200).json({ message: 'Profile updated successfully' });
 	} catch (error) {
+		console.log(error);
 		return res.status(500).json({ message: error.message });
 	}
 }
