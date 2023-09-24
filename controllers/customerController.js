@@ -59,7 +59,10 @@ export const setCartItemForCustomSuit = async (req, res) => {
     const { description, price, quantity, selection } = req.body;
 
     try {
-        const cartItem = new Cart({ customerId: userId, itemId, description, quantity, price, selection });
+        const cartItem = new Cart({ customerId: userId, description, quantity, price, selection });
+        await cartItem.save();
+
+        res.status(201).json({ message: "Item added to cart" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
