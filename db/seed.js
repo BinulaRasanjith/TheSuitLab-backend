@@ -15,6 +15,7 @@ import supplierSeed from './seeds/supplierSeed.js';
 import materialSeed from './seeds/materialSeed.js';
 import hireCostumesSeed from './seeds/hireCostumesSeed.js';
 import cartSeed from './seeds/cartSeed.js';
+import measurementSeed from './seeds/measurementSeed.js';
 
 dotenv.config();
 
@@ -52,7 +53,12 @@ const seed = async () => {
             defaults: userSeed[1],
         });
 
-        Customer.findOrCreate({ where: { userId: userSeed[1].userId } });
+        const [customer1, created1] = await Customer.findOrCreate({ where: { userId: userSeed[1].userId } });
+        customer1.update({
+            coatMeasurements: measurementSeed[0].coatMeasurements,
+            trouserMeasurements: measurementSeed[0].trouserMeasurements,
+        })
+
 
         // Customer - 2
         await User.findOrCreate({
@@ -60,7 +66,12 @@ const seed = async () => {
             defaults: userSeed[5],
         });
 
-        Customer.findOrCreate({ where: { userId: userSeed[5].userId } });
+        const [customer2, created2] = await Customer.findOrCreate({ where: { userId: userSeed[5].userId } });
+        customer2.update({
+            coatMeasurements: measurementSeed[1].coatMeasurements,
+            trouserMeasurements: measurementSeed[1].trouserMeasurements,
+        })
+
 
         // Customer - 3
         await User.findOrCreate({
