@@ -16,7 +16,7 @@ const Belt = sequelize.define(
             allowNull: false,
         },
         size: {
-            type: DataTypes.STRING(10),
+            type: DataTypes.FLOAT,
             allowNull: false,
         },
     },
