@@ -42,7 +42,7 @@ sequelize
   .then(async () => {
     // if success, log and continue process
     console.log(
-      `${ASCII.bold + ASCII.green}Database connection established${ASCII.reset}`
+      `${ASCII.bold + ASCII.green}\nDatabase connection established${ASCII.reset}`
     );
 
     const port = process.env.PORT || 3333;
@@ -50,7 +50,7 @@ sequelize
     // start server
     app.listen(port, () => {
       console.log(
-        `${ASCII.bold + ASCII.blue}Server running on port ${port}${ASCII.reset}`
+        `${ASCII.bold + ASCII.blue}Server running on port ${port}\n${ASCII.reset}`
       );
     });
   })

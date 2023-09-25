@@ -39,6 +39,38 @@ export const setTrouserMeasurements = async (req, res) => {
     }
 };
 
+export const getCoatMeasurements = async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const customer = await Customer.findOne({ where: { userId } });
+        if (!customer) {
+            res.status(404).json({ message: "Customer not found" });
+        } else {
+            res.status(200).json(customer.coatMeasurements);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const getTrouserMeasurements = async (req, res) => {
+    const { userId } = req.params;
+
+    try {
+        const customer = await Customer.findOne({ where: { userId } });
+        if (!customer) {
+            res.status(404).json({ message: "Customer not found" });
+        } else {
+            res.status(200).json(customer.trouserMeasurements);
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 export const setCartItem = async (req, res) => {
     const userId = req.user.userId;
     const { itemId, description, price, size, quantity } = req.body;
