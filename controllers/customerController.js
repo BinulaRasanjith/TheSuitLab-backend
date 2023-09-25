@@ -80,6 +80,8 @@ export const removeCartItem = async (req, res) => {
             res.status(200).json({ message: "Item removed from cart" });
         }
     } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 
