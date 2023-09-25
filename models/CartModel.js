@@ -21,7 +21,7 @@ const Cart = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        type: {
+        measurementType: {
             type: DataTypes.STRING(10),
             allowNull: true,
         },
