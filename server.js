@@ -6,8 +6,6 @@ import path from "path"; // for working with file and directory paths
 import { fileURLToPath } from "url"; // for getting file path from url
 
 import sequelize from "./db/db.js"; // for connecting to database and creating tables
-import setup from "./db/setup.js"; // for creating sequences
-import seed from "./db/seed.js"; // for seeding data
 import routes from "./routes/routes.js"; // for routing to different endpoints
 
 import { ASCII } from "./config/config.js"; // for ASCII art
@@ -39,16 +37,13 @@ app.use(cookieParser()); // for parsing cookies from request headers
 app.use("/api", routes); // for routing to different endpoints
 
 // connect to database and create tables if not exists and start server if success else exit process if error
-setup();
 sequelize
   .sync()
-  // .sync({ alter: true, force: true }) // for creating tables if not exists and alter tables if exists and force: true for dropping tables if exists and creating new tables
   .then(async () => {
     // if success, log and continue process
     console.log(
       `${ASCII.bold + ASCII.green}Database connection established${ASCII.reset}`
     );
-    // seed();
 
     const port = process.env.PORT || 3333;
 

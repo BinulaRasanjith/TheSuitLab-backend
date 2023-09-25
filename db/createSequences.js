@@ -1,7 +1,7 @@
 import sequelize from "./db.js";
 import { ASCII } from "../config/config.js";
 
-const setup = async () => {
+const createSequences = async () => {
     try {
         // REQUIRED SEQUENCE QUERIES SET
 
@@ -35,4 +35,4 @@ const setup = async () => {
     }
 };
 
-export default setup;
+export default createSequences;
