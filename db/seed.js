@@ -16,6 +16,7 @@ import materialSeed from './seeds/materialSeed.js';
 import hireCostumesSeed from './seeds/hireCostumesSeed.js';
 import cartSeed from './seeds/cartSeed.js';
 import measurementSeed from './seeds/measurementSeed.js';
+import ItemModel from '../models/ItemModel.js';
 
 dotenv.config();
 
@@ -81,10 +82,15 @@ const seed = async () => {
 
         Customer.findOrCreate({ where: { userId: userSeed[6].userId } });
 
-        await Supplier.bulkCreate(supplierSeed);
-        await Material.bulkCreate(materialSeed);
-        await HireCostume.bulkCreate(hireCostumesSeed);
-        await Cart.bulkCreate(cartSeed);
+        // await Supplier.bulkCreate(supplierSeed);
+        // await Material.bulkCreate(materialSeed);
+        hireCostumesSeed.forEach(async hireCostume => {
+            console.log(hireCostume);
+            const {itemId, itemType, price, quantity, ...rest} = hireCostume;
+            await ItemModel.create({itemId, itemType, price, quantity});
+            await HireCostume.create({itemId, ...rest});
+        });
+        // await Cart.bulkCreate(cartSeed);
 
         console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);
     } catch (error) {

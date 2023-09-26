@@ -4,47 +4,55 @@ import { AVAILABLE, UNAVAILABLE } from "../../constants/constants.js";
 
 export default [
     {
-        hireCostumeId: "HC0000000001",
+        
+        itemId: "1",
+        itemType: "hireSuit",
+        price: 1000,
+        quantity: 1,
         name: "Tuxedo Shoe Slip-on Classic Patent Leather Loafers",
         costumeType: JACKET,
-        size: [
-            { size: S, quantity: 2 },
-            { size: M, quantity: 1 },
-            { size: L, quantity: 3 },
-        ],
+        size: {
+            S: 3,
+            M: 1,
+            L: 3,
+        },
         color: "Black",
         price: 1000,
-        status: AVAILABLE,
-        images: ["1.webp"]
+        rentStatus: AVAILABLE,
+        images: ["1.webp"],
     },
     {
-        hireCostumeId: "HC0000000002",
-        name: "Plain Toe Genuine Leather Dress Shoes",
+        itemId: "2",
+        itemType: "hireSuit",
+        price: 2000,
+        quantity: 1,
+        name: "The blue white suit",
         costumeType: JACKET,
-        size: [
-            { size: S, quantity: 3 },
-            { size: M, quantity: 1 },
-            { size: L, quantity: 3 },
-            { size: XL, quantity: 2 },
-        ],
-        color: "Black",
+        size: {
+            S: 3,
+            M: 1,
+            L: 3,
+        },
+        color: "red",
         price: 1000,
-        status: AVAILABLE,
-        images: ["h1.webp"]
+        rentStatus: AVAILABLE,
+        images: ["1.webp"],
     },
     {
-        hireCostumeId: "HC0000000003",
-        name: "Plain Toe Genuine Leather Dress Shoes",
-        costumeType: PANT,
-        size: [
-            { size: S, quantity: 3 },
-            { size: M, quantity: 1 },
-            { size: L, quantity: 3 },
-            { size: XL, quantity: 2 },
-        ],
+        itemId: "3",
+        itemType: "hireSuit",
+        price: 4000,
+        quantity: 1,
+        name: "leathers",
+        costumeType: JACKET,
+        size: {
+            S: 3,
+            M: 1,
+            L: 3,
+        },
         color: "Black",
         price: 1000,
-        status: UNAVAILABLE,
-        images: ["hhb.webp"]
+        rentStatus: AVAILABLE,
+        images: ["1.webp"],
     },
 ];
