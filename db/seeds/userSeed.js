@@ -9,7 +9,7 @@ const userSeed = [
     {
         userId: 'USER0000000001',
         email: 'admin@email.com',
-        mobileNo: '+94712345678',
+        mobileNo: '0712345678',
         password: defaultPassword,
         firstName: 'Admin',
         lastName: 'Test',
@@ -20,7 +20,7 @@ const userSeed = [
     {
         userId: 'USER0000000002',
         email: 'kavisula@email.com',
-        mobileNo: '+94773364290',
+        mobileNo: '0773364290',
         password: defaultPassword,
         firstName: 'Kavishka',
         lastName: 'Sulakshana',
@@ -31,7 +31,7 @@ const userSeed = [
     {
         userId: 'USER0000000003',
         email: 'op_assistant@email.com',
-        mobileNo: '+94778235998',
+        mobileNo: '0778235998',
         password: defaultPassword,
         firstName: 'Bhanuka',
         lastName: 'Rajakaruna',
@@ -43,7 +43,7 @@ const userSeed = [
         userId: 'USER0000000004',
         email: 'mamatailor@email.com',
         password: defaultPassword,
-        mobileNo: '+94753429081',
+        mobileNo: '0753429081',
         firstName: 'John',
         lastName: 'Taylor',
         role: TAILOR,
@@ -53,7 +53,7 @@ const userSeed = [
     {
         userId: 'USER0000000005',
         email: 'manager@email.com',
-        mobileNo: '+94773098124',
+        mobileNo: '0773098124',
         password: defaultPassword,
         firstName: 'Viraj',
         lastName: 'Sandakalum',
@@ -66,7 +66,7 @@ const userSeed = [
         userId: 'USER0000000006',
         email: 'sunil@email.com',
         password: defaultPassword,
-        mobileNo: '+947645902431',
+        mobileNo: '07645902431',
         firstName: 'Sunil',
         lastName: 'Perera',
         role: CUSTOMER,
@@ -76,7 +76,7 @@ const userSeed = [
     {
         userId: 'USER0000000007',
         email: 'nimal@email.com',
-        mobileNo: '+94712340991',
+        mobileNo: '0712340991',
         password: defaultPassword,
         firstName: 'Nimal',
         lastName: 'Fernando',

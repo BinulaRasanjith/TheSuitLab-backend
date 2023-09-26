@@ -15,8 +15,8 @@ import {
 const router = Router();
 
 // /api/customer
-router.post("/set-coat-measurements", setCoatMeasurements);
-router.post("/set-trouser-measurements", setTrouserMeasurements);
+router.post("/set-coat-measurements", authJWT, setCoatMeasurements);
+router.post("/set-trouser-measurements", authJWT, setTrouserMeasurements);
 router.get("/coat-measurements/:userId", getCoatMeasurements);
 router.get("/trouser-measurements/:userId", getTrouserMeasurements);
 router.post("/add-to-cart", authJWT, setCartItem);
