@@ -84,12 +84,20 @@ const seed = async () => {
 
         // await Supplier.bulkCreate(supplierSeed);
         // await Material.bulkCreate(materialSeed);
-        hireCostumesSeed.forEach(async hireCostume => {
-            console.log(hireCostume);
-            const {itemId, itemType, price, quantity, ...rest} = hireCostume;
-            await ItemModel.create({itemId, itemType, price, quantity});
-            await HireCostume.create({itemId, ...rest});
-        });
+        for (let i = 0; i < hireCostumesSeed.length; i++) {
+            const hireCostume = hireCostumesSeed[i];
+            const { itemId, itemType, price, quantity, ...rest } = hireCostume;
+
+            const item = await ItemModel.create({
+                itemType,
+                price,
+                quantity,
+            });
+            await HireCostume.create({
+                itemId: item.itemId,
+                ...rest,
+            });
+        }
         // await Cart.bulkCreate(cartSeed);
 
         console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);

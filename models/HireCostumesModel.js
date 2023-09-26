@@ -13,7 +13,7 @@ const HireCostume = sequelize.define(
             allowNull: false,
         },
         size: {
-            type: DataTypes.ARRAY(DataTypes.JSON),
+            type: DataTypes.JSONB,
             allowNull: false,
         },
         color: {

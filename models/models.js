@@ -168,4 +168,5 @@ export {
 	Zipper,
 	Interlining,
 	User,
+	ItemModel,
 };
