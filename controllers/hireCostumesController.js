@@ -2,13 +2,13 @@ import HireCostume from "../models/HireCostumesModel.js";
 
 export const getHireCostumes = async (req, res) => {
     try {
-        const { costumeType, status } = req.query;
+        const { costumeType, rentStatus } = req.query;
         let hireCostumes;
         if (costumeType || available) {
             hireCostumes = await HireCostume.findAll({
                 where: {
                     costumeType,
-                    status,
+                    rentStatus,
                 },
             });
         } else {
@@ -25,7 +25,7 @@ export const getHireCostumes = async (req, res) => {
 export const getHireCostumeById = async (req, res) => {
     try {
         const { id } = req.params;
-        const hireCostume = await HireCostume.findOne({ where: { hireCostumeId: id } });
+        const hireCostume = await HireCostume.findOne({ where: { itemId: id } });
         if (hireCostume) {
             res.status(200).json(hireCostume);
         } else {
