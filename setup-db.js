@@ -5,7 +5,7 @@ import sequelize from "./db/db.js";
 sequelize.sync({ alter: true, force: true })
     .then(async () => {
         await createSequences();
-        await seed();
+        // await seed();
         process.exit(0);
     })
     .catch((error) => {

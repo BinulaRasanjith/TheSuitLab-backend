@@ -13,13 +13,15 @@ const Costume = sequelize.define(
     'Costume',
     {
         costumeId: {
-            type: DataTypes.TEXT,
+            type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
-            unique: true,
-            defaultValue: sequelize.literal(`'COST' || LPAD(nextval('costume_code_seq')::TEXT, 10, '0')`), // COST0000000001
         },
         costumeName: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        costumeType: { // COAT, TROUSER
             type: DataTypes.STRING,
             allowNull: false,
         },
@@ -27,30 +29,17 @@ const Costume = sequelize.define(
             type: DataTypes.JSON,
             allowNull: false,
         },
+        measurementType: { // STANDARD OR CUSTOMIZED
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         measurements: {
             type: DataTypes.JSON,
             allowNull: false,
         },
-        costumeType: { // COAT, SHIRT, TROUSER
-            type: DataTypes.STRING,
+        quantity: {
+            type: DataTypes.INTEGER,
             allowNull: false,
-        },
-        designType: { // PRE-DESIGNED OR CUSTOMIZED
-            type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: PRE_DESIGNED,
-        },
-        rentalPrice: { // FOR CUSTOMIZED COSTUMES THERE IS NO RENTAL PRICE
-            type: DataTypes.FLOAT,
-            allowNull: true,
-        },
-        salePrice: { // FOR CUSTOMIZED COSTUMES SALE-PRICE WILL CALCULATED AND ADDED TO THIS FIELD
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        image: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: true,
         },
     },
     {

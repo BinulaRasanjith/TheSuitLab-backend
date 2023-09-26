@@ -14,15 +14,12 @@ const PurchaseOrder = sequelize.define(
             primaryKey: true,
             defaultValue: sequelize.literal(`'##' || LPAD(nextval('order_code_seq')::TEXT, 15, '0')`), // ##000000000000001
         },
-        customerId: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
+        // customerId is the foreign key
         description: {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        itemCount: {
+        quantity: {
             type: DataTypes.INTEGER,
             allowNull: false,
         },
@@ -38,14 +35,9 @@ const PurchaseOrder = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        requestedDate: {
+        orderedDate: {
             type: DataTypes.DATE,
-            defaultValue: DataTypes.NOW,
             allowNull: false,
-        },
-        fitOnDate: {
-            type: DataTypes.DATE,
-            allowNull: true,
         },
         collectedDate: {
             type: DataTypes.DATE,
