@@ -7,9 +7,8 @@ const Accessory = sequelize.define(
     {
         itemId: {
             type: DataTypes.INTEGER,
-            autoIncrement: true,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
         },
         brand: {
             type: DataTypes.STRING,

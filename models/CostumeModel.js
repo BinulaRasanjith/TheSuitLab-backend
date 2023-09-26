@@ -12,7 +12,7 @@ import { PRE_DESIGNED } from "../constants/constants.js";
 const Costume = sequelize.define(
     'Costume',
     {
-        costumeId: {
+        itemId: {
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,

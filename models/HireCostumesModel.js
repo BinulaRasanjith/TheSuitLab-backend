@@ -4,6 +4,11 @@ import sequelize from "../db/db.js";
 const HireCostume = sequelize.define(
     'HireCostume',
     {
+        itemId: { // COSTUME CODE
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+        },
         name: { // COSTUME NAME
             type: DataTypes.TEXT,
             allowNull: false,
