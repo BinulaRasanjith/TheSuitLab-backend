@@ -9,7 +9,8 @@ import {
     getTrouserMeasurements,
     setCartItem,
     setCartItemForCustomSuit,
-    getCartItems
+    getCartItems,
+    setNewCostumeToItemModel
 } from "../controllers/customerController.js";
 
 const router = Router();
@@ -22,5 +23,6 @@ router.get("/trouser-measurements/:userId", getTrouserMeasurements);
 router.post("/add-to-cart", authJWT, setCartItem);
 router.post("/add-custom-suit-to-cart", authJWT, setCartItemForCustomSuit);
 router.get("/cart", authJWT, getCartItems);
+router.post("/add-new-costume-to-item-model", authJWT, setNewCostumeToItemModel);
 
 export default router;
