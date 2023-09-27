@@ -71,20 +71,20 @@ export const getTrouserMeasurements = async (req, res) => {
     }
 };
 
-export const setCartItem = async (req, res) => {
-    try {
-        const userId = req.user.userId;
-        const { itemId, description, price, size, quantity } = req.body;
+// export const setCartItem = async (req, res) => {
+//     try {
+//         const userId = req.user.userId;
+//         const { itemId, description, price, size, quantity } = req.body;
 
-        // TODO: check if item is already in cart
-        const cartItem = new Cart({ customerId: userId, itemId, description, size, quantity, price });
-        await cartItem.save();
-        res.status(201).json({ message: "Item added to cart" });
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Internal server error" });
-    }
-};
+//         // TODO: check if item is already in cart
+//         const cartItem = new Cart({ customerId: userId, itemId, description, size, quantity, price });
+//         await cartItem.save();
+//         res.status(201).json({ message: "Item added to cart" });
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ message: "Internal server error" });
+//     }
+// };
 
 export const setNewCostumeToItemModel = async (req, res) => {
     try {
@@ -106,9 +106,10 @@ export const setNewCostumeToItemModel = async (req, res) => {
 export const setCartItemForCustomSuit = async (req, res) => {
     try {
         const userId = req.user.userId;
-        const { customerId,itemId, price, quantity,status,description } = req.body;
+        const { customerId,itemId, price, quantity,status,description,measurement } = req.body;
 
-        const cartItem = new Cart({ customerId,itemId, price, quantity,status,description });
+        const cartItem = new Cart({ customerId,itemId, price, quantity,status,description,measurement });
+        console.log(cartItem.toJSON());
         await cartItem.save();
 
         res.status(201).json({ message: "Item added to cart" });
