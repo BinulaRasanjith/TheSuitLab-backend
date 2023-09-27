@@ -102,13 +102,34 @@ export const setNewCostumeToItemModel = async (req, res) => {
     }
 };
 
+export const setCartItemForHireCostume = async (req, res) => {
+    try {
+        const { customerId, itemId, price, quantity, status, description } = req.body;
+        /*
+            description = {
+                type: "hire",
+                size: "M",
+                fromDate: "2021-05-01",
+                toDate: "2021-05-10"
+            }
+        */
+        const cartItem = new Cart({ customerId, itemId, price, quantity, status, description });
+        console.log(cartItem.toJSON());
+        await cartItem.save();
+
+        res.status(201).json({ message: "Item added to cart" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 
 export const setCartItemForCustomSuit = async (req, res) => {
     try {
-        const userId = req.user.userId;
-        const { customerId,itemId, price, quantity,status,description,measurement } = req.body;
+        const { customerId, itemId, price, quantity, status, description, measurement } = req.body;
 
-        const cartItem = new Cart({ customerId,itemId, price, quantity,status,description,measurement });
+        const cartItem = new Cart({ customerId, itemId, price, quantity, status, description, measurement });
         console.log(cartItem.toJSON());
         await cartItem.save();
 
