@@ -1,4 +1,4 @@
-import HireCostume from "../models/HireCostumesModel.js";
+import { HireCostume, ItemModel } from "../models/models.js";
 
 export const getHireCostumes = async (req, res) => {
     try {
@@ -25,9 +25,16 @@ export const getHireCostumes = async (req, res) => {
 export const getHireCostumeById = async (req, res) => {
     try {
         const { id } = req.params;
-        const hireCostume = await HireCostume.findOne({ where: { itemId: id } });
+        const hireCostume = await HireCostume.findOne({
+            where: { itemId: id },
+        });
+
+        const itemModel = await ItemModel.findOne({
+            where: { itemId: id },
+        });
+
         if (hireCostume) {
-            res.status(200).json(hireCostume);
+            res.status(200).json({ ...hireCostume.toJSON(), ...itemModel.toJSON() });
         } else {
             res.status(404).json({ message: "Hire costume not found" });
         }

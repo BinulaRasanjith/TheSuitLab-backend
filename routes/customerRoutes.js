@@ -9,6 +9,7 @@ import {
     getTrouserMeasurements,
     setCartItemForCustomSuit,
     getCartItems,
+    setCartItemForHireCostume,
     setNewCostumeToItemModel,
     removeCartItem
 } from "../controllers/customerController.js";
@@ -20,7 +21,7 @@ router.post("/set-coat-measurements", authJWT, setCoatMeasurements);
 router.post("/set-trouser-measurements", authJWT, setTrouserMeasurements);
 router.get("/coat-measurements/:userId", getCoatMeasurements);
 router.get("/trouser-measurements/:userId", getTrouserMeasurements);
-// router.post("/add-to-cart", authJWT, setCartItem);
+router.post("/add-hire-costume-to-cart", authJWT, setCartItemForHireCostume);
 router.post("/add-custom-suit-to-cart", authJWT, setCartItemForCustomSuit);
 router.get("/cart", authJWT, getCartItems);
 router.post("/add-new-costume-to-item-model", authJWT, setNewCostumeToItemModel);
