@@ -9,6 +9,7 @@ import {
     Supplier,
     HireCostume,
     Cart,
+    PurchaseOrder,
 } from "../models/models.js";
 import userSeed from './seeds/userSeed.js';
 import supplierSeed from './seeds/supplierSeed.js';
@@ -17,6 +18,7 @@ import hireCostumesSeed from './seeds/hireCostumesSeed.js';
 import cartSeed from './seeds/cartSeed.js';
 import measurementSeed from './seeds/measurementSeed.js';
 import ItemModel from '../models/ItemModel.js';
+import purchaseOrderSeed from './seeds/purchaseOrderSeed.js';
 
 dotenv.config();
 
@@ -84,6 +86,7 @@ const seed = async () => {
 
         await Supplier.bulkCreate(supplierSeed);
         await Material.bulkCreate(materialSeed);
+        await PurchaseOrder.bulkCreate(purchaseOrderSeed);
         for (let i = 0; i < hireCostumesSeed.length; i++) {
             const hireCostume = hireCostumesSeed[i];
             const { itemId, itemType, price, quantity, ...rest } = hireCostume;
