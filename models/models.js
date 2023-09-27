@@ -88,7 +88,6 @@ Customer.hasMany(Rent, { foreignKey: 'customerId', sourceKey: 'userId', onDelete
 Rent.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 // ! TODO: HAS TO RESTRICT DELETING CUSTOMER IF THERE ARE ANY INCOMPLETED RENTS
 
-
 // RENT - HANDOVER RELATIONSHIP (ONE TO MANY RELATIONSHIP) CAN HAVE MANY HANDOVERS BY COSTUMES
 Rent.hasMany(Handover, { foreignKey: 'rentalId', sourceKey: 'rentalId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Handover.belongsTo(Rent, { foreignKey: 'rentalId', targetKey: 'rentalId', });
