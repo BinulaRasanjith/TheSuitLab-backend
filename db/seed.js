@@ -86,7 +86,8 @@ const seed = async () => {
 
         await Supplier.bulkCreate(supplierSeed);
         await Material.bulkCreate(materialSeed);
-        await PurchaseOrder.bulkCreate(purchaseOrderSeed);
+
+        const items = []
         for (let i = 0; i < hireCostumesSeed.length; i++) {
             const hireCostume = hireCostumesSeed[i];
             const { itemId, itemType, price, quantity, ...rest } = hireCostume;
@@ -96,12 +97,20 @@ const seed = async () => {
                 price,
                 quantity,
             });
+            items.push(item)
             await HireCostume.create({
                 itemId: item.itemId,
                 ...rest,
             });
         }
-        // await Cart.bulkCreate(cartSeed);
+
+        const purchaseOrder1 = await PurchaseOrder.create({ ...purchaseOrderSeed[0], customerId: customer1.userId });
+        const purchaseOrder2 = await PurchaseOrder.create({ ...purchaseOrderSeed[1], customerId: customer2.userId });
+        const purchaseOrder3 = await PurchaseOrder.create({ ...purchaseOrderSeed[2], customerId: customer1.userId });
+
+        await purchaseOrder1.addItemModels([items[0], items[1], items[2]]);
+        await purchaseOrder2.addItemModels([items[1]]);
+        await purchaseOrder3.addItemModels([items[2]]);
 
         console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);
     } catch (error) {
