@@ -6,7 +6,7 @@ const Cart = sequelize.define(
     'Cart',
     {
         description: {
-            type: DataTypes.TEXT,
+            type: DataTypes.JSONB,
             allowNull: true,
         },
         price: {
@@ -17,9 +17,13 @@ const Cart = sequelize.define(
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        status: {
+        status: { // not available or else
             type: DataTypes.TEXT,
             allowNull: false,
+        },
+        measurement: { // measurement of the customer
+            type: DataTypes.JSONB,
+            allowNull: true,
         },
     },
     {

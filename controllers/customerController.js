@@ -1,4 +1,4 @@
-import { Customer, Cart } from "../models/models.js";
+import { Customer, Cart, ItemModel } from "../models/models.js";
 import { CoatMeasurements, TrouserMeasurements } from "../models/CustomerModel.js";
 
 export const setCoatMeasurements = async (req, res) => {
@@ -86,12 +86,29 @@ export const setCartItem = async (req, res) => {
     }
 };
 
+export const setNewCostumeToItemModel = async (req, res) => {
+    try {
+        const { itemType, price, quantity, status } = req.body;
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+            status,
+        });
+        res.status(201).json({ itemId: item.itemId });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+
 export const setCartItemForCustomSuit = async (req, res) => {
     try {
         const userId = req.user.userId;
-        const { description, price, quantity, type, size, selection } = req.body;
+        const { customerId,itemId, price, quantity,status,description } = req.body;
 
-        const cartItem = new Cart({ customerId: userId, description, quantity, price, selection, type, size });
+        const cartItem = new Cart({ customerId,itemId, price, quantity,status,description });
         await cartItem.save();
 
         res.status(201).json({ message: "Item added to cart" });

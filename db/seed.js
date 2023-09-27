@@ -82,8 +82,8 @@ const seed = async () => {
 
         Customer.findOrCreate({ where: { userId: userSeed[6].userId } });
 
-        // await Supplier.bulkCreate(supplierSeed);
-        // await Material.bulkCreate(materialSeed);
+        await Supplier.bulkCreate(supplierSeed);
+        await Material.bulkCreate(materialSeed);
         for (let i = 0; i < hireCostumesSeed.length; i++) {
             const hireCostume = hireCostumesSeed[i];
             const { itemId, itemType, price, quantity, ...rest } = hireCostume;
