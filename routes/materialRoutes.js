@@ -11,7 +11,7 @@ import { materialImageUpload } from "../middlewares/imageUpload.js";
 
 const router = Router();
 
-router.post("/", getMaterials);
+router.get("/", getMaterials);
 router.post("/add", materialImageUpload.single("image"), addMaterial);
 router.post("/remove", removeMaterial);
 router.patch("/add-quantity", addMaterialQuantity);

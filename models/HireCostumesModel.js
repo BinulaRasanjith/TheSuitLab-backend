@@ -20,12 +20,17 @@ const HireCostume = sequelize.define(
             allowNull: false,
         },
         size: {
-            type: DataTypes.ARRAY(DataTypes.JSON),
+            type: DataTypes.JSONB,
+            // type: DataTypes.ARRAY(DataTypes.JSON),
             allowNull: false,
         },
         color: {
             type: DataTypes.TEXT,
             allowNull: true,
+        },
+        style: { // GET THE DETAILS ABOUT THE STYLE
+            type: DataTypes.JSONB,
+            allowNull: false,
         },
         price: {
             type: DataTypes.FLOAT,
@@ -34,6 +39,7 @@ const HireCostume = sequelize.define(
         status: {
             type: DataTypes.TEXT,
             allowNull: false,
+            defaultValue: 'Available',
         },
         images: { // TODO: CHECK THIS
             type: DataTypes.ARRAY(DataTypes.TEXT),

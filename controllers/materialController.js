@@ -5,6 +5,7 @@ import Fabric from "../models/FabricModel.js";
 import Interlining from "../models/InterliningModel.js";
 import Strings from "../models/StringModel.js";
 import Zipper from "../models/ZipperModel.js";
+import sequelize from "../db/db.js";
 
 // VIEW ALL MATERIALS
 export const getMaterials = async (req, res) => {
