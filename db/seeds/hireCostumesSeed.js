@@ -5,9 +5,9 @@ import { AVAILABLE, UNAVAILABLE } from "../../constants/constants.js";
 export default [
     {
         itemType: "hireSuit",
-        price: 1000,
+        price: 3500,
         quantity: 1,
-        name: "Tuxedo Shoe Slip-on Classic Patent Leather Loafers",
+        name: "The black paisley suit with design",
         costumeType: JACKET,
         size: {
             [S]: 3,
@@ -15,15 +15,15 @@ export default [
             [L]: 3,
         },
         color: "Black",
-        price: 1000,
+        price: 4000,
         rentStatus: AVAILABLE,
-        images: ["1.webp"],
+        images: ["1.webp", "3.webp","4.webp","5.webp"],
     },
     {
         itemType: "hireSuit",
-        price: 2000,
+        price: 3200,
         quantity: 1,
-        name: "The blue white suit",
+        name: "Carmel color high lapel suit",
         costumeType: JACKET,
         size: {
             [S]: 3,
@@ -32,13 +32,13 @@ export default [
         },
         color: "red",
         rentStatus: AVAILABLE,
-        images: ["1.webp"],
+        images: ["carmel.webp"],
     },
     {
         itemType: "hireSuit",
         price: 4000,
         quantity: 1,
-        name: "leathers",
+        name: "burgundy color rounded lapel suit",
         costumeType: JACKET,
         size: {
             [S]: 3,
@@ -47,6 +47,6 @@ export default [
         },
         color: "Black",
         rentStatus: AVAILABLE,
-        images: ["1.webp"],
+        images: ["hhb.webp"],
     },
 ];
