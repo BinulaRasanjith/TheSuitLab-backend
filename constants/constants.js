@@ -34,6 +34,11 @@ export const CUSTOMIZED = 'customized';
 export const STANDARD = 'standard';
 export const CUSTOM = 'custom';
 
+// item types
+export const HIRE_COSTUME = 'hireSuit';
+export const COSTUME = 'customSuit';
+export const ACCESSORY = 'accessory';
+
 // sizes
 export const S = 'S';
 export const M = 'M';

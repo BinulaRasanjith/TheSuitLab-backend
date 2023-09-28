@@ -1,5 +1,6 @@
 export default [
     {
+        orderId: "PO000000000000001",
         description: "Order description Leather Loafers",
         quantity: 1,
         totalAmount: 15000,
@@ -9,6 +10,7 @@ export default [
         collectedDate: null,
     },
     {
+        orderId: "PO000000000000002",
         description: "Order 2",
         quantity: 1,
         totalAmount: 20000,
@@ -16,9 +18,9 @@ export default [
         status: "done",
         orderedDate: "2021-09-01",
         collectedDate: null,
-    }
-    ,
+    },
     {
+        orderId: "PO000000000000003",
         description: "Order 3",
         quantity: 1,
         totalAmount: 50000,
