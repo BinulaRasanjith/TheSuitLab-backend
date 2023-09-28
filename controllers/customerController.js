@@ -1,5 +1,33 @@
-import { Customer, Cart } from "../models/models.js";
+import { Customer, Cart, User } from "../models/models.js";
 import { CoatMeasurements, TrouserMeasurements } from "../models/CustomerModel.js";
+
+export const getCustomers = async (req, res) => {
+    try {
+        const { id } = req.body;
+
+        let customers;
+        if (id) { // IF ID IS SPECIFIED
+            customers = await User.findAll({
+                where: {
+                    userId: id,
+                    role: 'customer'
+                }
+            });
+        } else { // IF ID IS NOT SPECIFIED
+            customers = await User.findAll({
+                where: {
+                    role: 'customer'
+                }
+            });
+        }
+
+        return res.status(200).json({ customers });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+
+}
 
 export const setCoatMeasurements = async (req, res) => {
     const { userId } = req.user;

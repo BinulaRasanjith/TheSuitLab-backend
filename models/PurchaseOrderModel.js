@@ -12,7 +12,7 @@ const PurchaseOrder = sequelize.define(
             allowNull: false,
             unique: true,
             primaryKey: true,
-            defaultValue: sequelize.literal(`'##' || LPAD(nextval('order_code_seq')::TEXT, 15, '0')`), // ##000000000000001
+            defaultValue: sequelize.literal(`'PO' || LPAD(nextval('order_code_seq')::TEXT, 15, '0')`), // PO000000000000001
         },
         customerId: {
             type: DataTypes.TEXT,

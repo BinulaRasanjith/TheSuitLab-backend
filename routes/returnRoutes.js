@@ -6,10 +6,9 @@ import { addReturn, getReturns,updateReturn,removeReturn } from "../controllers/
 
 const router = Router();
 
-router.post("/add-return", addReturn);
 router.get("/get-returns", getReturns);
+router.post("/add-return", addReturn);
 router.post("/update-return", updateReturn);
 router.delete("/remove-return/:id", removeReturn);
-// router.post("/get-returns", getUsers);
 
 export default router;
