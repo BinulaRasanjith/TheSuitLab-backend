@@ -1,11 +1,15 @@
 import twilio from 'twilio';
 import speakeasy from 'speakeasy';
+import Redis from 'ioredis'; // IMPORT THE IOREDIS LIBRARY
 
 import { OTPModel } from '../models/models.js';
 import { setup } from '../config/twilioConfig.js';
 
 const client = twilio(setup.accountSid, setup.authToken);
 const twilioNumber = setup.phoneNumber;
+
+// CREATE A REDIS CLIENT INSTANCE
+const redis = new Redis();
 
 export const sendOTP = async (req, res) => {
     try {
@@ -19,6 +23,9 @@ export const sendOTP = async (req, res) => {
             window: 5,
             step: 60,
         });
+
+        // Store the OTP in Redis with an expiration time (e.g., 5 minutes)
+        await redis.set(`otp:${mobileNo}`, otp, 'EX', 300);
 
         OTPModel.create({ mobileNo, otp }); // SAVE OTP TO DATABASE
 
@@ -49,10 +56,17 @@ export const verifyOTP = async (req, res) => {
         // GET RECEIVER AND OTP FROM REQUEST BODY
         const { mobileNo, otp } = req.body;
 
-        // CHECK IF OTP IS VALID
-        const isValid = await OTPModel.findOne({ where: { mobileNo, otp } });
+        // Retrieve the stored OTP from Redis
+        const storedOTP = await redis.get(`otp:${mobileNo}`);
 
-        if (!isValid) {
+        // CHECK IF OTP IS VALID
+        // const isValid = await OTPModel.findOne({ where: { mobileNo, otp } });
+
+        // if (!isValid) {
+
+        // Compare the stored OTP with the user's input
+        if (storedOTP === userInputOTP) {
+            // OTP is valid
             console.error('Invalid OTP');
             return res.status(401).json({ message: 'Invalid OTP' }); // SEND ERROR RESPONSE
         }
@@ -67,5 +81,27 @@ export const verifyOTP = async (req, res) => {
         // HANDLE ANY ERRORS THAT OCCUR DURING OTP VERIFICATION
         console.error('Error verifying OTP:', error);
         return res.status(500).json({ message: error.message }); // SEND ERROR RESPONSE
+    }
+};
+
+export const verifyOTP = async (req, res) => {
+    try {
+        // GET MOBILE NUMBER AND USER INPUT FROM REQUEST BODY
+        const { mobileNo, userInputOTP } = req.body;
+
+        // Retrieve the stored OTP from Redis
+        const storedOTP = await redis.get(`otp:${mobileNo}`);
+
+        // Compare the stored OTP with the user's input
+        if (storedOTP === userInputOTP) {
+            // OTP is valid
+            return res.status(200).json({ message: 'OTP is valid' });
+        } else {
+            // OTP is invalid
+            return res.status(401).json({ message: 'Invalid OTP' });
+        }
+    } catch (error) {
+        console.error('Error verifying OTP:', error);
+        return res.status(500).json({ message: error.message });
     }
 };
