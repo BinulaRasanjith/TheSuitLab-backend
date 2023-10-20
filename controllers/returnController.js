@@ -26,12 +26,30 @@ export const addReturn = async (req, res) => {
 }
 
 // READING FUNCTION
+// export const getReturns = async (req, res) => {
+//     try {
+//         const returns = await Return.findAll();
+//         res.status(200).json(returns);
+//     } catch (error) {
+//         res.status(403).json({ message: error.message });
+//     }
+// }
+
 export const getReturns = async (req, res) => {
     try {
-        const returns = await Return.findAll();
-        res.status(200).json(returns);
+        const { id } = req.body;
+
+        let returns;
+        if (id) { // IF ID IS SPECIFIED
+            returns = await Return.findAll({ where: { orderId: id } });
+        } else { // IF ID IS NOT SPECIFIED
+            returns = await Return.findAll();
+        }
+
+        return res.status(200).json({ returns });
     } catch (error) {
-        res.status(403).json({ message: error.message });
+        console.log(error);
+        return res.status(500).json({ message: error.message });
     }
 }
 

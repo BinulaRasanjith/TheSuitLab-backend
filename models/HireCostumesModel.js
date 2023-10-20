@@ -28,6 +28,7 @@ const HireCostume = sequelize.define(
         rentStatus: {
             type: DataTypes.TEXT,
             allowNull: false,
+            defaultValue: 'Available',
         },
         images: { // TODO: CHECK THIS
             type: DataTypes.ARRAY(DataTypes.TEXT),

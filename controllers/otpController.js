@@ -1,11 +1,15 @@
 import twilio from 'twilio';
 import speakeasy from 'speakeasy';
+import Redis from 'ioredis'; // IMPORT THE IOREDIS LIBRARY
 
 import { OTPModel } from '../models/models.js';
 import { setup } from '../config/twilioConfig.js';
 
 const client = twilio(setup.accountSid, setup.authToken);
 const twilioNumber = setup.phoneNumber;
+
+// CREATE A REDIS CLIENT INSTANCE
+const redis = new Redis();
 
 export const sendOTP = async (req, res) => {
     try {
@@ -19,6 +23,9 @@ export const sendOTP = async (req, res) => {
             window: 5,
             step: 60,
         });
+
+        // STORE THE OTP IN REDIS WITH AN EXPIRATION TIME (300 -> 5 MINUTES)
+        await redis.set(`otp:${mobileNo}`, otp, 'EX', 300);
 
         OTPModel.create({ mobileNo, otp }); // SAVE OTP TO DATABASE
 
@@ -49,16 +56,22 @@ export const verifyOTP = async (req, res) => {
         // GET RECEIVER AND OTP FROM REQUEST BODY
         const { mobileNo, otp } = req.body;
 
-        // CHECK IF OTP IS VALID
-        const isValid = await OTPModel.findOne({ where: { mobileNo, otp } });
+        // RETRIEVE THE STORED OTP FROM REDIS
+        const storedOTP = await redis.get(`otp:${mobileNo}`);
 
-        if (!isValid) {
+        // CHECK IF OTP IS VALID
+        // const isValid = await OTPModel.findOne({ where: { mobileNo, otp } });
+
+        // if (!isValid) {
+
+        // COMPARE THE STORED OTP WITH THE USER'S INPUT
+        if (storedOTP != userInputOTP) {
             console.error('Invalid OTP');
             return res.status(401).json({ message: 'Invalid OTP' }); // SEND ERROR RESPONSE
         }
 
         // DELETE OTP FROM DATABASE
-        OTPModel.destroy({ where: { mobileNo, otp } });
+        // OTPModel.destroy({ where: { mobileNo, otp } });
 
         // SEND SUCCESS RESPONSE
         console.log('OTP verified successfully');
