@@ -24,7 +24,7 @@ export const sendOTP = async (req, res) => {
             step: 60,
         });
 
-        // Store the OTP in Redis with an expiration time (e.g., 5 minutes)
+        // STORE THE OTP IN REDIS WITH AN EXPIRATION TIME (300 -> 5 MINUTES)
         await redis.set(`otp:${mobileNo}`, otp, 'EX', 300);
 
         OTPModel.create({ mobileNo, otp }); // SAVE OTP TO DATABASE
@@ -56,7 +56,7 @@ export const verifyOTP = async (req, res) => {
         // GET RECEIVER AND OTP FROM REQUEST BODY
         const { mobileNo, otp } = req.body;
 
-        // Retrieve the stored OTP from Redis
+        // RETRIEVE THE STORED OTP FROM REDIS
         const storedOTP = await redis.get(`otp:${mobileNo}`);
 
         // CHECK IF OTP IS VALID
@@ -64,15 +64,14 @@ export const verifyOTP = async (req, res) => {
 
         // if (!isValid) {
 
-        // Compare the stored OTP with the user's input
-        if (storedOTP === userInputOTP) {
-            // OTP is valid
+        // COMPARE THE STORED OTP WITH THE USER'S INPUT
+        if (storedOTP != userInputOTP) {
             console.error('Invalid OTP');
             return res.status(401).json({ message: 'Invalid OTP' }); // SEND ERROR RESPONSE
         }
 
         // DELETE OTP FROM DATABASE
-        OTPModel.destroy({ where: { mobileNo, otp } });
+        // OTPModel.destroy({ where: { mobileNo, otp } });
 
         // SEND SUCCESS RESPONSE
         console.log('OTP verified successfully');
@@ -81,27 +80,5 @@ export const verifyOTP = async (req, res) => {
         // HANDLE ANY ERRORS THAT OCCUR DURING OTP VERIFICATION
         console.error('Error verifying OTP:', error);
         return res.status(500).json({ message: error.message }); // SEND ERROR RESPONSE
-    }
-};
-
-export const verifyOTP = async (req, res) => {
-    try {
-        // GET MOBILE NUMBER AND USER INPUT FROM REQUEST BODY
-        const { mobileNo, userInputOTP } = req.body;
-
-        // Retrieve the stored OTP from Redis
-        const storedOTP = await redis.get(`otp:${mobileNo}`);
-
-        // Compare the stored OTP with the user's input
-        if (storedOTP === userInputOTP) {
-            // OTP is valid
-            return res.status(200).json({ message: 'OTP is valid' });
-        } else {
-            // OTP is invalid
-            return res.status(401).json({ message: 'Invalid OTP' });
-        }
-    } catch (error) {
-        console.error('Error verifying OTP:', error);
-        return res.status(500).json({ message: error.message });
     }
 };
