@@ -4,39 +4,28 @@ import sequelize from "../db/db.js";
 const HireCostume = sequelize.define(
     'HireCostume',
     {
-        hireCostumeId: {
-            type: DataTypes.TEXT,
+        itemId: { // COSTUME CODE
+            type: DataTypes.INTEGER,
             allowNull: false,
-            unique: true,
-            PrimaryKey: true,
-            defaultValue: sequelize.literal(`'HC' || LPAD(nextval('hire_costume_code_seq')::TEXT, 10, '0')`), // HC0000000001
+            primaryKey: true,
         },
         name: { // COSTUME NAME
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        costumeType: {
+        costumeType: { // JACKETS OR PANTS 
             type: DataTypes.TEXT,
             allowNull: false,
         },
         size: {
             type: DataTypes.JSONB,
-            // type: DataTypes.ARRAY(DataTypes.JSON),
             allowNull: false,
         },
         color: {
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        style: { // GET THE DETAILS ABOUT THE STYLE
-            type: DataTypes.JSONB,
-            allowNull: false,
-        },
-        price: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        status: {
+        rentStatus: {
             type: DataTypes.TEXT,
             allowNull: false,
             defaultValue: 'Available',
