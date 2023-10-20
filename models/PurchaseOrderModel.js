@@ -2,8 +2,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE order_code_seq;`);
-
 const PurchaseOrder = sequelize.define(
     'PurchaseOrder',
     {
@@ -14,7 +12,6 @@ const PurchaseOrder = sequelize.define(
             primaryKey: true,
             defaultValue: sequelize.literal(`'PO' || LPAD(nextval('order_code_seq')::TEXT, 15, '0')`), // PO000000000000001
         },
-        // customerId is the foreign key
         description: {
             type: DataTypes.STRING,
             allowNull: false,

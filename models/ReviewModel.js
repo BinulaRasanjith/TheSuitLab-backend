@@ -2,8 +2,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE review_code_seq;`);
-
 const Review = sequelize.define(
     'Review',
     {

@@ -1,4 +1,4 @@
-// TABLE FOR COAT ORDERS
+// TABLE FOR COSTUME ORDERS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 

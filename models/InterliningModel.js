@@ -1,4 +1,4 @@
-// TABLE FOR STRINGS
+// TABLE FOR INTERLININGS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 

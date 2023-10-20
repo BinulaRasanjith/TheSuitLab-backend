@@ -2,8 +2,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE payment_invoice_seq;`);
-
 const Payment = sequelize.define(
     'Payment',
     {

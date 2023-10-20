@@ -2,8 +2,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE material_code_seq;`);
-
 const Material = sequelize.define(
     'Material',
     {

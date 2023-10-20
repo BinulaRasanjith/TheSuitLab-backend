@@ -3,8 +3,6 @@
 import { DataTypes } from 'sequelize'
 import sequelize from '../db/db.js'
 
-// sequelize.query(`CREATE SEQUENCE staff_code_seq;`);
-
 const StaffUser = sequelize.define(
     'StaffUser',
     {

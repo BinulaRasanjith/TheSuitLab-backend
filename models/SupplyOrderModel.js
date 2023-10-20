@@ -2,8 +2,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE supply_code_seq;`);
-
 const SupplyOrder = sequelize.define(
     'SupplyOrder',
     {

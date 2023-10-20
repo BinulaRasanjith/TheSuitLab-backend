@@ -1,4 +1,4 @@
-// TABLE FOR BELTS
+// TABLE FOR ALL ACCESSORIES
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 

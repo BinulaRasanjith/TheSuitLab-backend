@@ -1,5 +1,5 @@
+// TABLE FOR ITEMS
 import { DataTypes } from "sequelize";
-
 import sequelize from "../db/db.js";
 
 const ItemModel = sequelize.define(

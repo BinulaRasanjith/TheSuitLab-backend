@@ -1,10 +1,7 @@
 // TABLE FOR COSTUMES
 import { DataTypes } from "sequelize";
-
 import sequelize from "../db/db.js";
 import { PRE_DESIGNED } from "../constants/constants.js";
-
-// sequelize.query(`CREATE SEQUENCE costume_code_seq;`);
 
 // ? WHEN CUSTOMER CUSTOMIZING A NEW COSTUME, THE COSTUME WILL BE ADDED TO THIS TABLE AND THE PARTICULAR ORDER TABLE
 // ? WHEN SHOP MEMBER ADDING A NEW COSTUME, THE COSTUME WILL BE ADDED TO THIS TABLE ONLY

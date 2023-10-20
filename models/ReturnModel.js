@@ -2,8 +2,6 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE return_code_seq;`);
-
 const Return = sequelize.define(
     'Return',
     {

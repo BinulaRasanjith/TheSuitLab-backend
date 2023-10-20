@@ -1,4 +1,4 @@
-// TABLE FOR STRINGS
+// TABLE FOR ZIPPERS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
