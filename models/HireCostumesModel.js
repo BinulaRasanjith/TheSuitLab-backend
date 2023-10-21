@@ -19,13 +19,56 @@ const HireCostume = sequelize.define(
             allowNull: false,
         },
         size: {
-            type: DataTypes.JSONB,
+            type: DataTypes.TEXT,
             allowNull: false,
         },
         color: {
             type: DataTypes.TEXT,
+            allowNull: false,
+        },
+        fabric: {
+            type: DataTypes.TEXT,
             allowNull: true,
         },
+        price: {
+            type: DataTypes.FLOAT,
+            allowNull: false,
+        },
+        buttons: { // FOR JACKETS -> COUNT && FOR PANTS -> 0 OR 1
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        buttonColor: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        // FOR JACKETS
+        lapel: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        pockets: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        pocketColor: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        sleeveButton: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        // FOR PANTS
+        vent: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        backPocket: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        // FOR BOTH
         rentStatus: {
             type: DataTypes.TEXT,
             allowNull: false,

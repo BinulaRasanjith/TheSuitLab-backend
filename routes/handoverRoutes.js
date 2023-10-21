@@ -1,15 +1,16 @@
 import { Router } from "express";
 
-// import { authUserRole } from "../middlewares/authUser.js";
-// import { ADMIN } from "../constants/constants.js";
+import { authJWT, authUserRole } from "../middlewares/authUser.js";
+import { OPERATION_ASSISTANT } from "../constants/constants.js";
 import { addReturn, getReturns, removeReturn, updateReturn } from "../controllers/returnController.js";
 
 const router = Router();
 
-router.post("/add-return", addReturn);
-router.get("/get-returns", getReturns);
-router.post("/update-return", updateReturn);
-router.delete("/remove-return/:id", removeReturn);
-// router.post("/get-returns", getUsers);
+const allowedRoles = [ OPERATION_ASSISTANT ];
+
+router.post("/", authJWT, authUserRole(allowedRoles), addReturn);
+router.get("/", authJWT, authUserRole(allowedRoles), getReturns);
+router.put("/", authJWT, authUserRole(allowedRoles), updateReturn);
+router.delete("/:id", authJWT, authUserRole(allowedRoles), removeReturn);
 
 export default router;

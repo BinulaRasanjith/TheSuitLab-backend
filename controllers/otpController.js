@@ -58,6 +58,7 @@ export const verifyOTP = async (req, res) => {
 
         // RETRIEVE THE STORED OTP FROM REDIS
         const storedOTP = await redis.get(`otp:${mobileNo}`);
+        const userInputOTP = otp;
 
         // CHECK IF OTP IS VALID
         // const isValid = await OTPModel.findOne({ where: { mobileNo, otp } });
