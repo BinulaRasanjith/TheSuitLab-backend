@@ -14,7 +14,7 @@ const HireCostume = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        costumeType: { // JACKETS OR PANTS 
+        costumeType: { // JACKET OR PANT
             type: DataTypes.TEXT,
             allowNull: false,
         },
@@ -74,7 +74,7 @@ const HireCostume = sequelize.define(
             allowNull: false,
             defaultValue: 'Available',
         },
-        images: { // TODO: CHECK THIS
+        images: { // ADD IMAGES AS AN ARRAY
             type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: true,
         },
