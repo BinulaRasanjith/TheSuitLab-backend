@@ -36,7 +36,32 @@ export const addUser = async (req, res) => {
     }
 }
 
-// get users by role
+export const addNewCustomer = async (req, res) => {
+
+    const {
+        mobileNo,
+        firstName,
+        lastName,
+    } = req.body;
+    console.log(req.body);
+
+    try {
+        const user = await User.create({
+            mobileNo: mobileNo,
+            firstName: firstName,
+            lastName: lastName,
+            role: "CUSTOMER",
+            password: mobileNo,
+            progress: true,
+        });
+        res.status(201).json({ user });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: error.message });
+    }
+}
+
+// GET USERS BY ROLE
 export const getUsers = async (req, res) => {
     try {
         const roles = req.body.roles;
