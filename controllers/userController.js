@@ -43,7 +43,6 @@ export const addNewCustomer = async (req, res) => {
         firstName,
         lastName,
     } = req.body;
-    console.log(req.body);
 
     try {
         const user = await User.create({
@@ -56,8 +55,11 @@ export const addNewCustomer = async (req, res) => {
         });
         res.status(201).json({ user });
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: error.message });
+        if(error.errors[0].message === "mobileNo must be unique") {
+            res.status(500).json({ error: "Mobile number already exists!" });
+        } else {
+            res.status(500).json({ error: error.message });
+        }
     }
 }
 
