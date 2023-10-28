@@ -36,6 +36,27 @@ export const getPurchaseOrders = async (req, res) => {
   }
 };
 
+export const createPurchaseOrder = async (req, res) => {
+  try {
+    const { customerId, itemModels } = req.body;
+    const purchaseOrder = new PurchaseOrder({ customerId });
+    await purchaseOrder.save();
+
+    const purchaseOrderId = purchaseOrder.orderId;
+
+    const itemModelsArray = itemModels.map((itemModel) => {
+      return { ...itemModel, orderId: purchaseOrderId };
+    });
+
+    await ItemModel.bulkCreate(itemModelsArray);
+
+    res.status(201).json({ message: "Purchase order created" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const getPurchaseOrder = async (req, res) => {
   try {
     const { orderId } = req.params;
@@ -112,10 +133,10 @@ export const getPrice = async (req, res) => {
       });
 
       pocketUnitPrice = pocketMaterial.unitPrice;
-      //   console.log(pocketUnitPrice);
+      console.log(pocketUnitPrice);
     } else {
       pocketUnitPrice = 0;
-      //   console.log(pocketUnitPrice);
+      console.log(pocketUnitPrice);
     }
 
     if (selectedCategory === "jacket") {
@@ -167,7 +188,7 @@ export const getPrice = async (req, res) => {
       );
     }
 
-    // console.log(price);
+    console.log(price);
     res.status(200).json({ price });
   } catch (error) {
     console.log(error);
