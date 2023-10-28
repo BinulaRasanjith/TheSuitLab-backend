@@ -67,3 +67,24 @@ export const getPurchaseOrder = async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 }
+
+export const createPurchaseOrder = async (req, res) => {
+    try {
+        const { customerId, itemModels } = req.body;
+        const purchaseOrder = new PurchaseOrder({ customerId });
+        await purchaseOrder.save();
+
+        const purchaseOrderId = purchaseOrder.orderId;
+
+        const itemModelsArray = itemModels.map((itemModel) => {
+            return { ...itemModel, orderId: purchaseOrderId };
+        })
+
+        await ItemModel.bulkCreate(itemModelsArray);
+
+        res.status(201).json({ message: "Purchase order created" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
