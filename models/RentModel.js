@@ -1,4 +1,4 @@
-// TABLE FOR RENTS
+// TABLE FOR HIRINGS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
@@ -22,6 +22,7 @@ const Rent = sequelize.define(
         },
         rentedDate: {
             type: DataTypes.DATE,
+            defaultValue: DataTypes.NOW,
             allowNull: false,
         },
         willHandover: {

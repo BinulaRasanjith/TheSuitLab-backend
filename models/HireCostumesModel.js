@@ -1,4 +1,4 @@
-// TABLE FOR HIRING COSTUMES
+// TABLE FOR HIRING COSTUME DETAILS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
