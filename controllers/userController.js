@@ -36,6 +36,7 @@ export const addUser = async (req, res) => {
     }
 }
 
+// ADD NEW CUSTOMER BY OPERATION ASSISTANT
 export const addNewCustomer = async (req, res) => {
 
     const {
