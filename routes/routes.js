@@ -18,20 +18,20 @@ import purchaseOrderRoutes from './purchaseOrderRoutes.js';
 
 const router = Router(); // for creating router
 
-router.use('/auth', authRoutes);
-router.use('/accessory', accessoryRoutes);
-router.use('/otp', otpRoutes);
-router.use('/user', userRoutes);
-router.use('/material', materialRoutes);
-router.use('/supplier', supplierRoutes);
-router.use('/returns', returnRoutes);
-router.use('/hiring', handoverRoutes);
-router.use('/customer', customerRoutes);
-router.use('/notify', smsRoutes);
-router.use('/dashboard', dashboardRoutes); // TODO: TO GET DASHBOARD DATA USING SINGLE ENDPOINT
-router.use('/odb', odbRoutes); // TODO: CURRENTLY USING MULTIPLE ENDPOINTS
-router.use('/costumes-for-hire', hireCostumesRoutes);
-router.use('/purchase-order', purchaseOrderRoutes);
 
+router.use("/auth", authRoutes);
+router.use('/accessory', accessoryRoutes);
+router.use("/otp", otpRoutes);
+router.use("/user", userRoutes);
+router.use("/material", materialRoutes);
+router.use("/supplier", supplierRoutes);
+router.use("/returns", returnRoutes);
+router.use("/hiring", handoverRoutes);
+router.use("/customer", customerRoutes);
+router.use("/notify", smsRoutes);
+router.use("/dashboard", dashboardRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
+router.use("/odb", odbRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
+router.use("/costume-hiring", hireCostumesRoutes);
+router.use("/purchase-order", purchaseOrderRoutes);
 
 export default router;

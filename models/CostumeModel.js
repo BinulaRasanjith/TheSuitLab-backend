@@ -1,13 +1,12 @@
 // TABLE FOR CUSTOM COSTUMES
 import { DataTypes } from "sequelize";
-
 import sequelize from "../db/db.js";
 
 const Costume = sequelize.define(
     'Costume',
     {
         itemId: { // GLOBAL ID
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
         },

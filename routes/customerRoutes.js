@@ -3,16 +3,17 @@ import { Router } from "express";
 import { authUserRole, authJWT } from "../middlewares/authUser.js";
 // import { ADMIN } from "../constants/constants.js";
 import {
-    getCustomers,
-    setCoatMeasurements,
-    setTrouserMeasurements,
-    getCoatMeasurements,
-    getTrouserMeasurements,
-    setCartItemForCustomSuit,
-    getCartItems,
-    setCartItemForHireCostume,
-    setNewCostumeToItemModel,
-    removeCartItem
+  setCoatMeasurements,
+  setTrouserMeasurements,
+  getCoatMeasurements,
+  getTrouserMeasurements,
+  setCartItemForCustomSuit,
+  getCartItems,
+  setCartItemForHireCostume,
+  setNewCostumeToItemModel,
+  removeCartItem,
+  paymentInfo,
+  setPaymentInfo,
 } from "../controllers/customerController.js";
 
 const router = Router();
@@ -26,7 +27,13 @@ router.get("/trouser-measurements/:userId", getTrouserMeasurements);
 router.post("/add-hire-costume-to-cart", authJWT, setCartItemForHireCostume);
 router.post("/add-custom-suit-to-cart", authJWT, setCartItemForCustomSuit);
 router.get("/cart", authJWT, getCartItems);
-router.post("/add-new-costume-to-item-model", authJWT, setNewCostumeToItemModel);
+router.post(
+  "/add-new-costume-to-item-model",
+  authJWT,
+  setNewCostumeToItemModel
+);
 router.delete("/remove-cart-item/:id", authJWT, removeCartItem);
+router.get("/payment-info", authJWT, paymentInfo);
+router.post("/set-payment-info", authJWT, setPaymentInfo);
 
 export default router;

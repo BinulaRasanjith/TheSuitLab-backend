@@ -1,5 +1,5 @@
 import Return from "../models/ReturnModel.js";
-import CostumeOrder from "../models/CostumeOrderModel.js";
+import CostumeOrder from "../models/PurchaseOrderModel.js";
 
 // ADDING FUNCTION
 export const addReturn = async (req, res) => {
