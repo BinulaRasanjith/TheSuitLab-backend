@@ -4,12 +4,12 @@ import CostumeOrder from "../models/PurchaseOrderModel.js";
 
 export const addNewCostume = async (req, res) => {
     try {
-        const { costumeName, customization, measurements, costumeType, designType, rentalPrice, salePrice, image } = req.body;
+        const { costumeId,costumeName,costumeType, customization,measurementType, measurements, quantity} = req.body;
 
         // const costumeExist = await Costume.findOne({ where: { costumeId } });
         const costumeExist = await Costume.findOne({
             where: {
-                costumeName: costumeName,
+                costumeId: costumeId,
             }
         });
 
@@ -17,17 +17,17 @@ export const addNewCostume = async (req, res) => {
             return res.status(409).json({ message: "Costume already exists" });
         }
 
-        const imageFiles = req.files.map((file) => file.originalname);
+       // const imageFiles = req.files.map((file) => file.originalname);
 
         const costume = await Costume.create({
+            
+            costumeId,
             costumeName,
+            costumeType, 
             customization,
-            measurements,
-            costumeType,
-            designType,
-            rentalPrice,
-            salePrice,
-            image: imageFiles,
+            measurementType, 
+            measurements, 
+            quantity
         });
 
         return res.status(201).json({ costume });
