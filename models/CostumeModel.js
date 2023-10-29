@@ -1,4 +1,4 @@
-// TABLE FOR COSTUMES
+// TABLE FOR CUSTOM COSTUMES
 import { DataTypes } from "sequelize";
 
 import sequelize from "../db/db.js";
