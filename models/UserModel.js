@@ -3,48 +3,43 @@ import bcrypt from 'bcrypt'; // import bcrypt for hashing password
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE user_code_seq;`);
+sequelize.query(`CREATE SEQUENCE IF NOT EXISTS user_code_seq;`);
 
 const User = sequelize.define(
     'User',
     {
-        userId: {
+        userId: { // WHEN USER IS CREATED, THIS WILL BE GENERATED
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
             defaultValue: sequelize.literal(`'USER' || LPAD(nextval('user_code_seq')::TEXT, 10, '0')`), // USER0000000001
         },
-        mobileNo: {
+        mobileNo: { // MOBILE NUMBER OF THE USER
             type: DataTypes.STRING(15),
             allowNull: false,
             unique: true,
         },
-        email: {
-            type: DataTypes.STRING,
-            allowNull: true,
-            unique: true,
-        },
-        firstName: {
+        firstName: { // FIRST NAME OF THE USER
             type: DataTypes.STRING,
             allowNull: false,
         },
-        lastName: {
+        lastName: { // LAST NAME OF THE USER
             type: DataTypes.STRING,
             allowNull: false,
         },
-        password: {
+        password: { // PASSWORD OF THE USER INITIALLY THIS CAN BE THE SAME AS MOBILE NUMBER
             type: DataTypes.STRING,
             allowNull: false,
         },
-        role: {
+        role: { // ROLE OF THE USER
             type: DataTypes.STRING(25),
             allowNull: false,
         },
-        progress: {
+        progress: { // 1 FOR CURRENTLY USING THE SYSTEM, 0 FOR NOT USING THE SYSTEM
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
-        image: {
+        image: { // Avatar.jpeg
             type: DataTypes.TEXT,
             allowNull: true,
         },

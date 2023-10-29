@@ -2,7 +2,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE return_code_seq;`);
+// sequelize.query(`CREATE SEQUENCE IF NOT EXISTS return_code_seq;`);
 
 const Return = sequelize.define(
     'Return',
@@ -12,27 +12,27 @@ const Return = sequelize.define(
             allowNull: false,
             unique: true,
             PrimaryKey: true,
-            defaultValue: sequelize.literal(`'RTN' || LPAD(nextval('return_code_seq')::TEXT, 10, '0')`), // RTN0000000001
+            defaultValue: sequelize.literal(`'RET' || LPAD(nextval('return_code_seq')::TEXT, 10, '0')`), // RET0000000001
         },
-        orderId: { // TODO: CHECK, THIS CAN BE GET FROM `itemId`
+        orderId: { // GET THIS FROM THE ORDER TABLE
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        itemId: { // TODO: NO RELATIONSHIP ADDED
+        itemId: { // GET THIS FROM THE GLOBAL ITEM TABLE
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
         },
-        returnedDate: {
+        returnedDate: { // DATE WHEN THE RETURN IS PLACED
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
             allowNull: false,
         },
-        reason: {
+        reason: { // REASON FOR RETURN
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        status: {
+        status: { // 'Fixed' OR 'Pending'
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },

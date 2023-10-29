@@ -5,13 +5,13 @@ import sequelize from "../db/db.js";
 const Strings = sequelize.define(
     'Strings',
     {
-        materialCode: {
+        materialCode: { // MATERIAL CODE FROM THE PARENT
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             primaryKey: true,
         },
-        quantity: {
+        quantity: { // NO OF ROLLS
             type: DataTypes.FLOAT,
             allowNull: false,
         },

@@ -5,23 +5,26 @@ import sequelize from "../db/db.js";
 const Cart = sequelize.define(
     'Cart',
     {
-        description: {
+        // CUSTOMER ID GOT FROM RELATIONSHIPS
+        // ITEM ID GOT FROM RELATIONSHIPS
+
+        description: { // ITEM TYPE + REQUIRED DATA
             type: DataTypes.JSONB,
             allowNull: true,
         },
-        price: {
+        price: { // PRICE OF THE ITEM
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        quantity: {
+        quantity: { // NUMBER OF ITEMS IN THIS ITEM
             type: DataTypes.INTEGER,
             allowNull: false,
         },
-        status: { // not available or else
+        status: { // TODO: IS THIS NEEDED?
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
-        measurement: { // measurement of the customer
+        measurement: { // MEASUREMENT OF THE CUSTOMER 
             type: DataTypes.JSONB,
             allowNull: true,
         },

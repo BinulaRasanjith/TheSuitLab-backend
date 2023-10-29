@@ -4,7 +4,7 @@ import sequelize from "../db/db.js";
 const HireCostume = sequelize.define(
     'HireCostume',
     {
-        itemId: { // COSTUME CODE
+        itemId: { // GLOBAL ITEM ID
             type: DataTypes.INTEGER,
             allowNull: false,
             primaryKey: true,
@@ -13,23 +13,23 @@ const HireCostume = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        costumeType: { // JACKETS OR PANTS 
+        costumeType: { // 'JACKETS' OR 'PANTS' 
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        size: {
+        size: { // {"L": 3, "M": 1, "S": 3}
             type: DataTypes.JSONB,
             allowNull: false,
         },
-        color: {
+        color: { // COLOR OF COSTUME ENTERED BY ASSISTANT
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        rentStatus: {
+        rentStatus: { // 'AVAILABLE' OR 'UNAVAILABLE'
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        images: { // TODO: CHECK THIS
+        images: { // [1.webp, 3.webp, 4.webp, 5.webp]
             type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: true,
         },

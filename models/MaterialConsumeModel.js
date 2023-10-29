@@ -5,18 +5,18 @@ import sequelize from "../db/db.js";
 const MaterialConsume = sequelize.define(
     'MaterialConsume',
     {
-        costumeId: { // COSTUME ID
+        costumeId: { // GLOBAL ITEM ID
             type: DataTypes.TEXT,
             allowNull: false,
             compositePrimaryKey: true,
         },
-        materialCode: { // MATERIAL CODE
+        materialCode: { // MATERIAL ID
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             compositePrimaryKey: true,
         },
-        units: { // NUMBER OF CONSUMED UNITS (METERS OR UNITS)
+        units: { // NUMBER OF CONSUMED UNITS (YARDS OR NUMBER)
             type: DataTypes.FLOAT,
             allowNull: false,
         },

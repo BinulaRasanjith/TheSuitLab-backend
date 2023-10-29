@@ -5,13 +5,13 @@ import sequelize from "../db/db.js";
 const Interlining = sequelize.define(
     'Interlining',
     {
-        materialCode: {
+        materialCode: { // MATERIAL CODE FROM THE PARENT
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             primaryKey: true,
         },
-        quantity: {
+        quantity: { // QUANTITY IN YARDS
             type: DataTypes.FLOAT,
             allowNull: false,
         },
