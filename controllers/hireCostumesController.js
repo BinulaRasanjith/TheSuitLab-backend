@@ -1,4 +1,7 @@
-import { HireCostume, ItemModel } from "../models/models.js";
+import HireCostume from "../models/AccessoryModel.js";
+import ItemModel from "../models/BeltModel.js";
+import Shoe from "../models/ShoeModel.js";
+import Tie from "../models/TieModel.js";
 
 export const getHireCostumes = async (req, res) => {
     try {
@@ -26,7 +29,7 @@ export const getHireCostumeById = async (req, res) => {
     try {
         const { id } = req.params;
         const hireCostume = await HireCostume.findOne({
-            where: { itemId: id },
+            where: { hireCostumeId: id },
         });
 
         const itemModel = await ItemModel.findOne({

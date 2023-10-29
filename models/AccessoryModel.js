@@ -26,17 +26,17 @@ const Accessory = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        size: {
-            type: DataTypes.STRING(5),
-            allowNull: false,
-        },
+        // size: {
+        //     type: DataTypes.STRING(5),
+        //     allowNull: false,
+        // },
         accessoryType: {
             type: DataTypes.STRING,
             allowNull: false,
         },
         image: {
             type: DataTypes.ARRAY(DataTypes.TEXT),
-            allowNull: false,
+            allowNull: true,
         },
     },
     {

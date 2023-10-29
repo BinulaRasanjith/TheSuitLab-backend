@@ -1,6 +1,7 @@
 import { Router } from 'express'; // for creating router
 
 import authRoutes from './authRoutes.js'; // for routing to auth endpoints
+import accessoryRoutes from './accessoryRoutes.js';
 import otpRoutes from './otpRoutes.js'; // for routing to otp endpoints
 import materialRoutes from './materialRoutes.js'; // for routing to material endpoints
 import userRoutes from './userRoutes.js'; // for routing to user endpoints
@@ -18,6 +19,7 @@ import purchaseOrderRoutes from './purchaseOrderRoutes.js';
 const router = Router(); // for creating router
 
 router.use('/auth', authRoutes);
+router.use('/accessory', accessoryRoutes);
 router.use('/otp', otpRoutes);
 router.use('/user', userRoutes);
 router.use('/material', materialRoutes);
