@@ -3,6 +3,7 @@ import {
   getPurchaseOrders,
   getPurchaseOrder,
   getPrice,
+  updateToCollected,
 } from "../controllers/purchaseOrderController.js";
 
 const router = Router();
