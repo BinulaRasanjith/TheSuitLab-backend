@@ -7,7 +7,7 @@ const PDCostume = sequelize.define(
     'PDCostume',
     {
         itemId: { // GLOBAL ITEM ID
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
         },

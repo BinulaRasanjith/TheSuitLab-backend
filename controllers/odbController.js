@@ -1,5 +1,5 @@
 import Payment from "../models/PaymentModel.js";
-import CostumeOrder from "../models/CostumeOrderModel.js";
+import CostumeOrder from "../models/PurchaseOrderModel.js";
 import PurchaseOrder from "../models/PurchaseOrderModel.js";
 
 import Button from "../models/ButtonModel.js";

@@ -68,7 +68,8 @@ Customer.hasMany(Cart, { foreignKey: 'customerId', sourceKey: 'userId', onDelete
 Cart.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
 // CART - ITEM RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-ItemModel.belongsToMany(Cart, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
+ItemModel.hasMany(Cart, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
+Cart.belongsTo(ItemModel, { foreignKey: 'itemId', targetKey: 'itemId',});
 
 // ACCESSORY - ITEM RELATIONSHIP (ONE TO ONE RELATIONSHIP)
 ItemModel.hasOne(Accessory, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });

@@ -10,7 +10,6 @@ const ItemModel = sequelize.define(
     {
         itemId: {
             type: DataTypes.TEXT,
-            autoIncrement: true,
             allowNull: false,
             primaryKey: true,
             defaultValue: sequelize.literal(`'ITEM' || LPAD(nextval('item_code_seq')::TEXT, 20, '0')`),

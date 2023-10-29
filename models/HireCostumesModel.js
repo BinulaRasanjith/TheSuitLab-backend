@@ -5,7 +5,7 @@ const HireCostume = sequelize.define(
     'HireCostume',
     {
         itemId: { // GLOBAL ITEM ID
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
         },

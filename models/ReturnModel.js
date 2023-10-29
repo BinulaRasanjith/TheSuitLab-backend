@@ -2,7 +2,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE IF NOT EXISTS return_code_seq;`);
+sequelize.query(`CREATE SEQUENCE IF NOT EXISTS return_code_seq;`);
 
 const Return = sequelize.define(
     'Return',
