@@ -1,91 +1,125 @@
-import Hires from "../models/HireCostumesModel.js";
+import HireCostumes from "../models/HireCostumesModel.js";
+import Hires from "../models/RentModel.js";
 import Handovers from "../models/HandoverModel.js";
 
 import { Op } from "sequelize";
 
-// ADDING FUNCTION
+// HAND-OVERING FUNCTION
 export const handoverCostume = async (req, res) => {
     try {
         const {
-            costumeId,
-            handoveredTo,
+            rentalId,
+            costume,
             damages,
             balance,
             penalties,
-            total
+            total,
         } = req.body;
 
-        const handoveredObject = await Return.create({
-            costumeId,
-            handoveredTo,
-            damages,
-            balance,
-            penalties,
-            total
-        });
+        const requestedCostume = await HireCostumes.findOne({ where: { itemId: costume, } });
 
-        res.status(201).json(handoveredObject);
+        if (!requestedCostume) {
+            return res.status(404).json({ message: "Requested costume could not be found!" });
+        } else {
+            // SETTING THE STATUS OF THE COSTUME TO AVAILABLE
+            requestedCostume.rentStatus = 'Available';
+            await requestedCostume.save();
+
+            // ADDING THE HANDOVER RECORD
+            await Handovers.create({
+                rentalId: rentalId,
+                costumeId: costume,
+                handoveredTo: req.user.name,
+                damages: damages,
+                balance: balance,
+                penalties: penalties,
+                total: total,
+            });
+        }
+
+        res.status(201).json({ message: "Handovered successfully!" });
+
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 }
 
-// RENTED ITEM LISTING FUNCTION
+// RENTED ITEMS DISPLAYING FUNCTION
 export const getHiredItems = async (req, res) => {
     try {
 
-        const { find } = req.body;
+        const { id } = req.params;
+        const today = new Date();
 
-        const returns = await Hires.findAll({
+        const notHandovered = await HireCostumes.findAll({
             where: {
-                status: 'status',
+                rentStatus: 'Hired',
+            },
+            attributes: ['itemId'],
+        });
+
+        const hires = await Hires.findAll({
+            where: {
                 [Op.or]: [
-                    { status: 'Hired' },
-                    { hireCostumeId: find }
+                    { willHandover: { [Op.gt]: today } },
+                    { itemId: { [Op.in]: notHandovered } },
+                ],
+                [Op.or]: [
+                    { customerId: { [Op.like]: `%${id}%` } },
+                    { costume: { [Op.like]: `%${id}%` } },
+                    { mobileNo: { [Op.like]: `%${id}%` } }
                 ]
             }
         });
-        res.status(200).json(returns);
+        res.status(200).json(hires);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }
 }
 
-// REMOVING FUNCTION
+// HANDOVER CANCELLING FUNCTION (REMOVE FROM HANDOVERS TABLE AS WELL AS SET THE STATUS OF THE COSTUME TO NOT-AVAILABLE)
 export const cancelHandover = async (req, res) => {
     try {
-        const { referenceNo } = req.body;
+        const { id, costume } = req.body;
 
-        const returnsuit = await Return.findOne({ where: { referenceNo } });
-        if (!returnsuit) {
-            return res.status(404).json({ message: "Returned suit not found" });
+        const requestedHandover = await Handovers.findOne({ where: { rentalId: id, } });
+        if (!requestedHandover) {
+            return res.status(404).json({ message: "Requested handover could not be found!" });
         }
 
-        await Return.destroy({ where: { referenceNo } });
+        // SETTING THE STATUS OF THE COSTUME TO NOT-AVAILABLE
+        const requestedHire = await HireCostumes.findOne({ where: { itemId: costume, } });
+        requestedHire.rentStatus = 'Hired';
+        await requestedHire.save();
+
+        // DELETING THE HANDOVER RECORD
+        await Handovers.destroy({ where: { rentalId: id, } });
+
         return res.status(200).json({ message: "Return record deleted" });
+
     } catch (error) {
         return res.status(500).json({ message: error.message });
     }
 }
 
-// UPDATING FUNCTION
-export const updateReturn = async (req, res) => {
+// UPDATING FUNCTION // TODO: DO THIS NEEDED? CZ UPDATION SAME TO THE CANCLE HANDOVER
+export const updateHandover = async (req, res) => {
     try {
-        const { referenceNo } = req.params; // Assuming you pass the return ID in the URL
-        const { reason } = req.body;
+        const { id } = req.params; // ASSUMING YOU PASS THE RETURN ID IN THE URL
+        const { damages } = req.body;
 
-        // Find the return by ID
-        const returnObj = await Return.findByPk(referenceNo);
+        // FIND THE RETURN BY ID
+        const requestedHandover = await Handovers.findByPk(id);
 
-        if (!returnObj) {
-            return res.status(404).json({ message: "Return not found" });
+        if (!requestedHandover) {
+            return res.status(404).json({ message: "Handover not found" });
         }
 
-        // Update the reason field
-        returnObj.reason = reason;
-        await returnObj.save();
+        // UPDATE THE REASON FIELD
+        requestedHandover.damages = damages;
+        await requestedHandover.save();
 
-        res.status(200).json(returnObj);
+        res.status(200).json(requestedHandover);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }

@@ -5,6 +5,7 @@ import Fabric from "../models/FabricModel.js";
 import Interlining from "../models/InterliningModel.js";
 import Strings from "../models/StringModel.js";
 import Zipper from "../models/ZipperModel.js";
+import sequelize from "../db/db.js";
 
 // VIEW ALL MATERIALS
 export const getMaterials = async (req, res) => {
@@ -12,9 +13,9 @@ export const getMaterials = async (req, res) => {
         const { type } = req.body;
 
         let materials;
-        if (type) { // if type is specified
+        if (type) { // IF TYPE IS SPECIFIED
             materials = await Material.findAll({ where: { materialType: type } });
-        } else { // if type is not specified
+        } else { // IF TYPE IS NOT SPECIFIED
             materials = await Material.findAll();
         }
 
@@ -141,11 +142,12 @@ export const addMaterialQuantity = async (req, res) => {
             isolationLevel: Transaction.ISOLATION_LEVELS.SERIALIZABLE,
         });
 
-        const { materialCode, quantity } = req.body;
+        const { material_id, quantity } = req.body;
         const material = await Material.findOne({
-            where: { materialCode },
+            where: { materialCode: material_id },
             transaction,
         });
+        console.log(req.body);
 
         if (!material) { // IF MATERIAL DOES NOT EXIST
             return res.status(404).json({ message: "Material not found" });
@@ -155,7 +157,7 @@ export const addMaterialQuantity = async (req, res) => {
         const newQuantity = material.quantity + quantity;
         await Material.update(
             { quantity: newQuantity },
-            { where: { materialCode } },
+            { where: { materialCode: material_id } },
             { transaction }
         );
 

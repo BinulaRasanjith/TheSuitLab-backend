@@ -83,11 +83,26 @@ export const getAccessories = async (req, res) => {
 
 export const getAccessory = async (req, res) => {
     try {
-        const { itemId } = req.params;
-        const accessory = await Accessory.findOne({ where: { itemId } });
+        const { id } = req.params;
+
+        const accessory = await Accessory.findOne({ where: { itemId: id } });
         if (!accessory) {
-            return res.status(404).json({ message: "Accessory not found" });
+            return res.status(404).json({ message: "Accessory not found with "+id });
         }
+
+        if(accessory.accessoryType.toLowerCase() === "belt") {
+            const belt = await Belt.findOne({ where: { itemId: id } });
+            return res.status(200).json({ accessory, belt });
+        }
+        if(accessory.accessoryType.toLowerCase() === "shoe") {
+            const shoe = await Shoe.findOne({ where: { itemId: id } });
+            return res.status(200).json({ accessory, shoe });
+        }
+        if(accessory.accessoryType.toLowerCase() === "tie") {
+            const tie = await Tie.findOne({ where: { itemId: id } });
+            return res.status(200).json({ accessory, tie });
+        }
+
         return res.status(200).json(accessory);
     } catch (error) {
         return res.status(500).json({ message: error.message });
