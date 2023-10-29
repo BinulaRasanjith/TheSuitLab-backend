@@ -2,39 +2,35 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE payment_invoice_seq;`);
+sequelize.query(`CREATE SEQUENCE IF NOT EXISTS payment_invoice_seq;`);
 
 const Payment = sequelize.define(
     'Payment',
     {
-        invoiceNo: {
+        invoiceNo: { // WHEN PAYMENT IS DONE, THIS WILL BE GENERATED
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             primaryKey: true,
-            defaultValue: sequelize.literal(`'PMT' || LPAD(nextval('payment_invoice_seq')::TEXT, 10, '0')`), // PMT0000000001
+            defaultValue: sequelize.literal(`'PAY' || LPAD(nextval('payment_invoice_seq')::TEXT, 10, '0')`), // PAY0000000001
         },
-        customerId: { // TODO: CHECK, THIS CAN BE GET FROM `orderId`
+        customerId: { // THIS WILL BE COMES FROM THE LOGGED IN USER ID
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        orderId: {
-            type: DataTypes.TEXT,
-            allowNull: false,
-        },
-        method: {
+        method: { // 'Cash' OR 'Card'
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
-        amountPaid: {
+        amountPaid: { // TOTAL AMOUNT OF THE ORDER
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        status: {
+        status: { // TODO: IS THIS NEEDED?
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
-        date: {
+        date: { // DATE WHEN THE ORDER IS PLACED
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
         },

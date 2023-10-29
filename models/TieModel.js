@@ -11,11 +11,11 @@ const Tie = sequelize.define(
             unique: true,
             PrimaryKey: true,
         },
-        Pattern: {
+        Pattern: { // 'Plain', 'Striped', 'Checked', 'Dotted'
             type: DataTypes.STRING,
             allowNull: false,
         },
-        width: {
+        width: { // 3.5, 4.0, 4.5 
             type: DataTypes.FLOAT,
             allowNull: false,
         },

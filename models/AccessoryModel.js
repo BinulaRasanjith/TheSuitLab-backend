@@ -2,47 +2,39 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE accessory_code_seq;`);
-
 const Accessory = sequelize.define(
     'Accessory',
     {
-        itemId: {
+        itemId: { // ITEM ID GOT FROM ITEM MODEL
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
-            unique: true,
-            defaultValue: sequelize.literal(`'ITEM' || LPAD(nextval('accessory_code_seq')::TEXT, 10, '0')`), // ITEM0000000001
         },
-        brand: {
+        brand: { // BRAND NAME
             type: DataTypes.STRING,
             allowNull: false,
         },
-        itemName: { // TODO: GET THE QUANTITY AND CREATE RECORDS FOR EACH ITEM WITH SAME NAME
+        itemName: { // ITEM NAME
             type: DataTypes.STRING,
             allowNull: false,
         },
-        material: {
+        quantity: { // NUMBER OF ITEMS IN THIS ITEM
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        material: { // MATERIAL FROM ASSISTANT INPUT
             type: DataTypes.STRING,
             allowNull: false,
         },
-        color: {
+        color: { // COLOR GOT FROM ASSISTANT INPUT
             type: DataTypes.STRING,
             allowNull: false,
         },
-        price: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        accessoryType: {
+        accessoryType: { // 'belt', 'tie' or 'shoe'
             type: DataTypes.STRING,
             allowNull: false,
         },
-        // quantity: {
-        //     type: DataTypes.INTEGER,
-        //     allowNull: false,
-        // },
-        image: {
+        image: { // [image1.jpg, image2.jpg, image3.jpg]
             type: DataTypes.ARRAY(DataTypes.TEXT),
             allowNull: false,
         },

@@ -2,40 +2,40 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
-// sequelize.query(`CREATE SEQUENCE supplier_code_seq;`);
+sequelize.query(`CREATE SEQUENCE IF NOT EXISTS supplier_code_seq;`);
 
 const Supplier = sequelize.define(
     'Supplier',
     {
-        supplierId: {
+        supplierId: { // UNIQUE ID FOR SUPPLIER
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             primaryKey: true,
             defaultValue: sequelize.literal(`'SUP' || LPAD(nextval('supplier_code_seq')::TEXT, 10, '0')`), // SUP0000000001
         },
-        supplierName: {
+        supplierName: { // NAME OF THE SUPPLIER
             type: DataTypes.STRING,
             allowNull: false,
         },
-        bankName: {
+        bankName: { // NAME OF THE BANK
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        accountNo: {
+        accountNo: { // BANK ACCOUNT NUMBER
             type: DataTypes.STRING,
             allowNull: true,
         },
-        mobileNo: {
+        mobileNo: { // MOBILE NUMBER OF THE SUPPLIER
             type: DataTypes.STRING,
             unique: true,
             allowNull: false,
         },
-        progress: {
+        progress: { // 1 FOR CURRENTLY SUPPLYING, 0 FOR NOT SUPPLYING
             type: DataTypes.BOOLEAN,
             allowNull: false,
         },
-        image: {
+        image: { // Supplier.jpg
             type: DataTypes.TEXT,
             allowNull: true,
         },

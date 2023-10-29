@@ -1,8 +1,10 @@
+// TABLE FOR PRE DESIGNED COSTUMES
 import { DataTypes } from "sequelize";
+
 import sequelize from "../db/db.js";
 
-const HireCostume = sequelize.define(
-    'HireCostume',
+const PDCostume = sequelize.define(
+    'PDCostume',
     {
         itemId: { // GLOBAL ITEM ID
             type: DataTypes.TEXT,
@@ -13,7 +15,7 @@ const HireCostume = sequelize.define(
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        costumeType: { // 'JACKETS' OR 'PANTS' 
+        costumeType: { // 'JACKET' OR 'PANT' 
             type: DataTypes.TEXT,
             allowNull: false,
         },
@@ -35,8 +37,8 @@ const HireCostume = sequelize.define(
         },
     },
     {
-        tableName: 'hire_costumes',
+        tableName: 'pre_design_costumes',
     }
 );
 
-export default HireCostume;
+export default PDCostume;

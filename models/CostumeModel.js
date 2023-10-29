@@ -1,55 +1,45 @@
-// TABLE FOR COSTUMES
+// TABLE FOR CUSTOM COSTUMES
 import { DataTypes } from "sequelize";
-
 import sequelize from "../db/db.js";
-import { PRE_DESIGNED } from "../constants/constants.js";
-
-// sequelize.query(`CREATE SEQUENCE costume_code_seq;`);
-
-// ? WHEN CUSTOMER CUSTOMIZING A NEW COSTUME, THE COSTUME WILL BE ADDED TO THIS TABLE AND THE PARTICULAR ORDER TABLE
-// ? WHEN SHOP MEMBER ADDING A NEW COSTUME, THE COSTUME WILL BE ADDED TO THIS TABLE ONLY
 
 const Costume = sequelize.define(
     'Costume',
     {
-        costumeId: {
+        itemId: { // GLOBAL ID
             type: DataTypes.TEXT,
             allowNull: false,
             primaryKey: true,
-            unique: true,
-            defaultValue: sequelize.literal(`'COST' || LPAD(nextval('costume_code_seq')::TEXT, 10, '0')`), // COST0000000001
         },
-        costumeName: {
+        costumeName: { // NAME OF THE COSTUME
             type: DataTypes.STRING,
             allowNull: false,
         },
-        customization: {
+        costumeType: { // 'JACKET' OR 'PANT'
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        customization: { // JSON OBJECT WITH SELECTED STYLES
             type: DataTypes.JSON,
             allowNull: false,
         },
-        measurements: {
+        measurementType: { // STANDARD OR CUSTOMIZED
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+
+        // STANDARD => { SIZE: S, SHOULDER: 25, CHEST: 30, WAIST: 30, HIP: 30, SLEEVE: 30, LENGTH: 30 }
+        // CUSTOM => { SHOULDER: 25, CHEST: 30, WAIST: 30, HIP: 30, SLEEVE: 30, LENGTH: 30 }
+
+        measurements: { // IF STANDARD SIZE USED, THERE WILL BE A ADDITIONAL KEY FOR S, M, L, XL, XXL
             type: DataTypes.JSON,
             allowNull: false,
         },
-        costumeType: { // COAT, SHIRT, TROUSER
-            type: DataTypes.STRING,
+        quantity: { // NUMBER OF ITEMS REQUIRED
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
-        designType: { // PRE-DESIGNED OR CUSTOMIZED
-            type: DataTypes.STRING,
-            allowNull: false,
-            defaultValue: PRE_DESIGNED,
-        },
-        rentalPrice: { // FOR CUSTOMIZED COSTUMES THERE IS NO RENTAL PRICE
-            type: DataTypes.FLOAT,
-            allowNull: true,
-        },
-        salePrice: { // FOR CUSTOMIZED COSTUMES SALE-PRICE WILL CALCULATED AND ADDED TO THIS FIELD
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        image: {
-            type: DataTypes.ARRAY(DataTypes.TEXT),
+        tailor: { // TAILOR IDS FOR THIS COSTUME (THERE CAN BE ONE OR MORE)
+            type: DataTypes.JSON,
             allowNull: true,
         },
     },

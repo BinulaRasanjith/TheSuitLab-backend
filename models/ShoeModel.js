@@ -11,11 +11,11 @@ const Shoe = sequelize.define(
             unique: true,
             PrimaryKey: true,
         },
-        style: {
+        style: { // 'Oxford', 'Derby', 'Desert', 'Loafer', 'Boat'
             type: DataTypes.STRING,
             allowNull: false,
         },
-        size: {
+        size: { // 4-12 FLOAT SIZE
             type: DataTypes.FLOAT,
             allowNull: false,
         },

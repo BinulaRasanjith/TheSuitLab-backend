@@ -18,7 +18,15 @@ const Customer = sequelize.define(
         trouserMeasurements: {
             type: DataTypes.JSONB,
             allowNull: true,
-        }
+        },
+        email: { // ONLY FOR PAYMENT PROCESS
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
+        address: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
     },
     {
         tableName: 'customers',
