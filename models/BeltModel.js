@@ -11,11 +11,11 @@ const Belt = sequelize.define(
             unique: true,
             PrimaryKey: true,
         },
-        buckleType: {
+        buckleType: { // 'Frame', 'Box', 'Plate', 'D-ring'
             type: DataTypes.STRING,
             allowNull: false,
         },
-        size: {
+        size: { // 'S', 'M', 'L'
             type: DataTypes.FLOAT,
             allowNull: false,
         },

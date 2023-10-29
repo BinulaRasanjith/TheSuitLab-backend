@@ -1,31 +1,35 @@
-// TABLE FOR ITEMS
+// CENTER POINT TO ADD UNIQUE IDs FOR ALL ITEMS
 import { DataTypes } from "sequelize";
+
 import sequelize from "../db/db.js";
+
+sequelize.query(`CREATE SEQUENCE IF NOT EXISTS item_code_seq;`);
 
 const ItemModel = sequelize.define(
     'ItemModel',
     {
         itemId: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.TEXT,
             autoIncrement: true,
             allowNull: false,
-            primaryKey: true
+            primaryKey: true,
+            defaultValue: sequelize.literal(`'ITEM' || LPAD(nextval('item_code_seq')::TEXT, 20, '0')`),
         },
         itemType: {
             type: DataTypes.STRING,
-            allowNull: false
+            allowNull: false // 'CustomSuit', 'HireCostume', 'Accessory', PreDesigned
         },
         price: {
             type: DataTypes.FLOAT,
-            allowNull: false
+            allowNull: false // Prices for both hires and sales
         },
         quantity: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: true // Not considered now
         },
         status: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true // This item deleted or not
         },
     },
     {

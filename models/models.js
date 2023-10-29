@@ -1,18 +1,18 @@
 import Accessory from "./AccessoryModel.js";
-import AccessoryOrder from "./AccessoryOrderModel.js";
 import Belt from "./BeltModel.js";
 import Buttons from "./ButtonModel.js";
 import Cart from "./CartModel.js";
-import CostumeOrder from "./CostumeOrderModel.js";
 import Costume from "./CostumeModel.js";
 import Customer from "./CustomerModel.js";
 import Fabric from "./FabricModel.js";
 import Handover from "./HandoverModel.js";
-import MaterialConsume from "./MaterialConsumeModel.js";
+import HireCostume from "./HireCostumesModel.js";
+import Interlining from "./InterliningModel.js";
+import ItemModel from "./ItemModel.js";
 import MaterialConsumption from "./MaterialConsumeModel.js";
 import Material from "./MaterialModel.js";
-import OTPModel from "./OTPModel.js";
 import Payment from "./PaymentModel.js";
+import PreDesignCostume from "./PreDesignCostumeModel.js";
 import PurchaseOrder from "./PurchaseOrderModel.js";
 import RefreshToken from "./RefreshTokenModel.js";
 import Rent from "./RentModel.js";
@@ -25,11 +25,8 @@ import Supplier from "./SupplierModel.js";
 import SupplierPayment from "./SupplierPaymentModel.js"
 import SupplyOrder from "./SupplyOrderModel.js";
 import Tie from "./TieModel.js";
-import Zipper from "./ZipperModel.js";
-import Interlining from "./InterliningModel.js";
 import User from "./UserModel.js";
-import HireCostume from "./HireCostumesModel.js";
-import ItemModel from "./ItemModel.js";
+import Zipper from "./ZipperModel.js";
 
 /*
 User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId' });
@@ -70,6 +67,9 @@ Payment.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 Customer.hasMany(Cart, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 Cart.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
+// CART - ITEM RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+ItemModel.belongsToMany(Cart, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
+
 // ACCESSORY - ITEM RELATIONSHIP (ONE TO ONE RELATIONSHIP)
 ItemModel.hasOne(Accessory, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 
@@ -78,6 +78,9 @@ ItemModel.hasOne(HireCostume, { foreignKey: 'itemId', sourceKey: 'itemId', onDel
 
 // COSTUME - ITEM RELATIONSHIP (ONE TO ONE RELATIONSHIP)
 ItemModel.hasOne(Costume, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
+
+// COSTUME - ITEM RELATIONSHIP (ONE TO ONE RELATIONSHIP)
+ItemModel.hasOne(PreDesignCostume, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 
 // PURCHASE_ORDER - ITEM RELATIONSHIP (MANY TO MANY RELATIONSHIP)
 ItemModel.belongsToMany(PurchaseOrder, { through: 'purchase_order_items', foreignKey: 'itemId', otherKey: 'orderId' });
@@ -124,8 +127,8 @@ Material.hasOne(Interlining, { foreignKey: 'materialCode', sourceKey: 'materialC
 Interlining.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode', });
 
 // MATERIAL - MATERIAL_CONSUME RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-Material.hasMany(MaterialConsume, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
-MaterialConsume.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode' });
+Material.hasMany(MaterialConsumption, { foreignKey: 'materialCode', sourceKey: 'materialCode', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+MaterialConsumption.belongsTo(Material, { foreignKey: 'materialCode', targetKey: 'materialCode' });
 
 // MATERIAL - SUPPLY_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 Material.hasMany(SupplyOrder, { foreignKey: 'material', sourceKey: 'materialCode', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
@@ -138,20 +141,20 @@ SupplierPayment.belongsTo(SupplyOrder, { foreignKey: 'supplyID', targetKey: 'sup
 
 export {
 	Accessory,
-	AccessoryOrder,
 	Belt,
 	Buttons,
 	Cart,
-	CostumeOrder,
 	Costume,
 	Customer,
 	Fabric,
 	Handover,
 	HireCostume,
+	Interlining,
+	ItemModel,
 	MaterialConsumption,
 	Material,
-	OTPModel,
 	Payment,
+	PreDesignCostume,
 	PurchaseOrder,
 	RefreshToken,
 	Rent,
@@ -164,8 +167,6 @@ export {
 	SupplierPayment,
 	SupplyOrder,
 	Tie,
-	Zipper,
-	Interlining,
 	User,
-	ItemModel,
+	Zipper,
 };

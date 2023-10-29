@@ -2,29 +2,31 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
 
+sequelize.query(`CREATE SEQUENCE IF NOT EXISTS supply_code_seq;`);
+
 const SupplyOrder = sequelize.define(
     'SupplyOrder',
     {
-        supplyID: {
+        supplyID: { // GENERATED WHEN SUPPLIER PLACES AN ORDER
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             primaryKey: true,
             defaultValue: sequelize.literal(`'SPL' || LPAD(nextval('supply_code_seq')::TEXT, 10, '0')`), // SPL0000000001
         },
-        material: {
+        material: { // MATERIAL ID FROM THE MATERIAL TABLE
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        supplier: {
+        supplier: { // SUPPLIER ID FROM THE SUPPLIER TABLE
             type: DataTypes.TEXT,
             allowNull: false,
         },
-        unitPrice: {
+        unitPrice: { // UNIT PRICE USER ADDED OR THE PRICE FROM THE MATERIAL TABLE
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        quantity: {
+        quantity: { // QUANTITY OF THE MATERIAL
             type: DataTypes.FLOAT,
             allowNull: false,
         },
@@ -32,11 +34,11 @@ const SupplyOrder = sequelize.define(
             type: DataTypes.STRING,
             allowNull: false,
         },
-        price: {
+        price: { // TOTAL PRICE OF THE ORDER
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        date: {
+        date: { // DATE WHEN THE ORDER IS PLACED
             type: DataTypes.DATE,
             defaultValue: DataTypes.NOW,
         },
