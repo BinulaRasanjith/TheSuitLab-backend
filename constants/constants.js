@@ -21,6 +21,11 @@ export const TAILOR = 'tailor';
 export const JACKET = 'jacket';
 export const PANT = 'pant';
 
+// accessory types
+export const BELT = 'belt';
+export const SHOE = 'shoe';
+export const TIE = 'tie';
+
 // material types
 export const FABRIC_SOLID = 'fabric-solid';
 export const FABRIC_PATTERN = 'fabric-pattern';

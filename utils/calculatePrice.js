@@ -7,7 +7,7 @@ export const calculateFabricAmount = (measurements, unit, costumeType) => {
 
   for (const [measurement, value] of Object.entries(measurements)) {
     convertedMeasurements[measurement] =
-      unit === "inch" ? value : value * inchToCm; // Convert to inches if in cm
+      unit === "inch" ? parseFloat(value) : parseFloat(value) * inchToCm; // Convert to inches if in cm
   }
   //---------------------------------------------------------------------------------------------------
 

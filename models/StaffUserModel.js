@@ -3,18 +3,18 @@
 import { DataTypes } from 'sequelize'
 import sequelize from '../db/db.js'
 
-// sequelize.query(`CREATE SEQUENCE staff_code_seq;`);
+sequelize.query(`CREATE SEQUENCE IF NOT EXISTS staff_code_seq;`);
 
 const StaffUser = sequelize.define(
     'StaffUser',
     {
-        userId: {
+        userId: { // GET THE USER ID FROM THE USER TABLE
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             primaryKey: true,
         },
-        staffId: {
+        staffId: { // UNIQUE ID FOR STAFF
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,

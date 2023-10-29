@@ -5,13 +5,13 @@ import sequelize from "../db/db.js";
 const Fabric = sequelize.define(
     'Fabric',
     {
-        materialCode: { // MATERIAL CODE
+        materialCode: { // MATERIAL ID FROM THE PARENT
             type: DataTypes.TEXT,
             allowNull: false,
             unique: true,
             primaryKey: true,
         },
-        quantity: { // LENGTH IN METERS
+        quantity: { // LENGTH IN YARDS
             type: DataTypes.FLOAT,
             allowNull: false,
         },

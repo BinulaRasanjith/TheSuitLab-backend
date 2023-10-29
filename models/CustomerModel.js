@@ -19,9 +19,7 @@ const Customer = sequelize.define(
             type: DataTypes.JSONB,
             allowNull: true,
         },
-
-        // for payment details
-        email: {
+        email: { // ONLY FOR PAYMENT PROCESS
             type: DataTypes.TEXT,
             allowNull: true,
         },

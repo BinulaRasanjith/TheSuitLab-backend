@@ -5,13 +5,13 @@ import sequelize from "../db/db.js";
 const Handover = sequelize.define(
     'Handover',
     {
-        rentalId: {
+        rentalId: { // RENTAL ID GET FROM RENT MODEL
             type: DataTypes.TEXT,
             allowNull: false,
-            // unique: true,
+            unique: true,
             PrimaryKey: true,
         },
-        costumeId: { // COSTUME ID
+        costumeId: { // GLOBAL ITEM ID
             type: DataTypes.TEXT,
             allowNull: false,
         },
@@ -25,10 +25,10 @@ const Handover = sequelize.define(
             allowNull: true,
         },
         damages: { // DAMAGES TO THE COSTUME
-            type: DataTypes.ARRAY(DataTypes.STRING),
+            type: DataTypes.JSON,
             allowNull: false,
         },
-        balance: { // BALANCE AFTER INITIAL PAYMENT
+        cost: { // INITIAL CHARGE
             type: DataTypes.FLOAT,
             allowNull: true,
         },
@@ -36,7 +36,7 @@ const Handover = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        total: { // TOTAL COST FOR HIRE
+        total: { // TOTAL = PENALTIES + BALANCE
             type: DataTypes.FLOAT,
             allowNull: false,
         },
