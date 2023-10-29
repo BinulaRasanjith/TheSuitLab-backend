@@ -1,4 +1,4 @@
-import { Customer, Cart, ItemModel } from "../models/models.js";
+import { Customer, Cart, ItemModel, User } from "../models/models.js";
 import { CoatMeasurements, TrouserMeasurements } from "../models/CustomerModel.js";
 
 export const setCoatMeasurements = async (req, res) => {
@@ -168,7 +168,6 @@ export const getCartItems = async (req, res) => {
     }
 };
 
-
 export const hireCostume = async (req, res) => {
     const { userId } = req.user;
     const { costumeId, costumeName, size, quantity } = req.body;
@@ -181,6 +180,50 @@ export const hireCostume = async (req, res) => {
             const cartItem = new Cart({ customerId: userId, itemId: costumeId, description, size, quantity });
             await cartItem.save();
             res.status(200).json({ message: "Item added to cart" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const paymentInfo = async (req, res) => {
+    const { userId } = req.user;
+
+    try {
+        const customer = await Customer.findOne({ where: { userId }, include: { model: User, attributes: ['firstName', 'lastName', 'mobileNo'] } });
+        if (!customer) {
+            res.status(404).json({ message: "Customer not found" });
+        } else {
+            console.log(customer.toJSON());
+            res.status(200).json({
+                firstName: customer.User.firstName,
+                lastName: customer.User.lastName,
+                email: customer.email,
+                phone: customer.User.mobileNo,
+                address: customer.address,
+            });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const setPaymentInfo = async (req, res) => {
+    const { userId } = req.user;
+    const { email, address } = req.body;
+
+    console.log(req.body);
+    try {
+        const customer = await Customer.findOne({ where: { userId } });
+        if (!customer) {
+            res.status(404).json({ message: "Customer not found" });
+        } else {
+            customer.email = email;
+            customer.address = address;
+            await customer.save();
+            res.status(200).json({ message: "Payment info saved" });
         }
     } catch (error) {
         console.log(error);

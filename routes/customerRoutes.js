@@ -12,6 +12,8 @@ import {
   setCartItemForHireCostume,
   setNewCostumeToItemModel,
   removeCartItem,
+  paymentInfo,
+  setPaymentInfo,
 } from "../controllers/customerController.js";
 
 const router = Router();
@@ -30,5 +32,7 @@ router.post(
   setNewCostumeToItemModel
 );
 router.delete("/remove-cart-item/:id", authJWT, removeCartItem);
+router.get("/payment-info", authJWT, paymentInfo);
+router.post("/set-payment-info", authJWT, setPaymentInfo);
 
 export default router;
