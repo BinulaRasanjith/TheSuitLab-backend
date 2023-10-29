@@ -14,6 +14,7 @@ import {
   removeCartItem,
   paymentInfo,
   setPaymentInfo,
+  getCartItemById,
 } from "../controllers/customerController.js";
 
 const router = Router();
@@ -31,6 +32,7 @@ router.post(
   authJWT,
   setNewCostumeToItemModel
 );
+router.get("/cart-item/:id", authJWT, getCartItemById);
 router.delete("/remove-cart-item/:id", authJWT, removeCartItem);
 router.get("/payment-info", authJWT, paymentInfo);
 router.post("/set-payment-info", authJWT, setPaymentInfo);
