@@ -30,12 +30,14 @@ export const calculateFabricAmount = (measurements, unit, costumeType) => {
         } = convertedMeasurements;
 
         const totalFabricRequired =
-          (fullShoulderWidth + sleeves) * frontJacketLength +
-          fullChest * 2 +
-          waist * 2 +
-          hips * 2 +
-          frontShoulderWidth * 2 +
-          backShoulderWidth * 2 +
+          fullShoulderWidth +
+          sleeves +
+          frontJacketLength +
+          fullChest +
+          waist +
+          hips +
+          frontShoulderWidth +
+          backShoulderWidth +
           neck;
 
         // Return the calculated fabric amount (you may adjust units as needed)
@@ -48,8 +50,7 @@ export const calculateFabricAmount = (measurements, unit, costumeType) => {
         // This is a simplified calculation; replace it with your own logic
         const { waist, crotch, thigh, length, cuff } = convertedMeasurements;
 
-        const totalFabricRequired =
-          waist * 2 + crotch * 2 + thigh * 2 + length + cuff * 2;
+        const totalFabricRequired = waist + crotch + thigh + length + cuff;
 
         // Return the calculated fabric amount (you may adjust units as needed)
         return totalFabricRequired;
@@ -92,13 +93,13 @@ export const calculateTotalFabricPrice = (
 
   if (costumeType === "jacket") {
     totalFabricPrice =
-      unitPriceOfWhole * wholeFabricAmount + unitPriceOfPocket * 30;
+      unitPriceOfWhole * wholeFabricAmount + unitPriceOfPocket * 20;
   } else if (costumeType === "pant") {
     totalFabricPrice =
       unitPriceOfWhole * wholeFabricAmount + unitPriceOfPocket * 20;
   } else if (costumeType === "both") {
     totalFabricPrice =
-      unitPriceOfWhole * wholeFabricAmount + unitPriceOfPocket * 50;
+      unitPriceOfWhole * wholeFabricAmount + unitPriceOfPocket * 30;
   }
 
   return totalFabricPrice;
