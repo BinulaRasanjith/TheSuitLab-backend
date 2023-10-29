@@ -1,4 +1,4 @@
-import createSequences from "./db/createSequences.js";
+// import createSequences from "./db/createSequences.js";
 import seed from "./db/seed.js";
 import sequelize from "./db/db.js";
 

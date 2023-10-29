@@ -1,6 +1,6 @@
 // import { Transaction } from "sequelize";
 import Costume from "../models/CostumeModel.js";
-import CostumeOrder from "../models/CostumeOrderModel.js";
+import CostumeOrder from "../models/PurchaseOrderModel.js";
 
 export const addNewCostume = async (req, res) => {
     try {
