@@ -118,10 +118,10 @@ export const cancelHire = async (req, res) => {
 export const updateHire = async (req, res) => {
     try {
         // const { id } = req.params; // Assuming you pass the return ID in the URL
-        const { id, customer, costume, advance, willHandover, mobile } = req.body; // Fields available in the request body
+        const { id, customer, costume, advance, willHandover, mobile } = req.body;
 
         // FIND THE RETURN BY ID
-        const requestedHire = await Hires.findByPk(id);
+        const requestedHire = await Hires.findByPk(id); // TODO: CHECK THIS UPDATE OR NOT
 
         if (!requestedHire) {
             return res.status(404).json({ message: "Return not found" });

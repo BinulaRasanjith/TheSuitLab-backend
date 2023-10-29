@@ -1,5 +1,6 @@
 import { ACCESSORY, COSTUME, HIRE_COSTUME } from "../constants/constants.js";
 import { PurchaseOrder, User, ItemModel, HireCostume, Accessory, Costume } from "../models/models.js";
+import { notifyFitOn } from "./smsController.js"
 
 export const getPurchaseOrders = async (req, res) => {
     try {
@@ -62,6 +63,28 @@ export const getPurchaseOrder = async (req, res) => {
         poJSON.ItemModels = itemModelsWithData;
 
         res.status(200).json(poJSON);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+export const updateToCollected = async (req, res) => {
+    try {
+        const { orderId } = req.body;
+        const purchaseOrder = await PurchaseOrder.findOne({ where: { orderId } });
+        if (!purchaseOrder) {
+            return res.status(404).json({ message: "Purchase order not found" });
+        }
+
+        // TODO: FIND THE CUSTOMER AND SEND SMS
+        const customer = await User.findOne({ where: { userId: purchaseOrder.customerId } });
+        await notifyFitOn(customer.mobileNo);
+
+        purchaseOrder.status = "Collected";
+        await purchaseOrder.save();
+
+        res.status(200).json({ message: "Purchase order updated" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
