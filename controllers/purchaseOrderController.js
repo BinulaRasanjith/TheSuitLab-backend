@@ -234,9 +234,11 @@ export const reverseUpdateToCollected = async (req, res) => {
         await purchaseOrder.save();
 
         res.status(200).json({ message: "Collection cancelled" });
-
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
 };
-  
-export const setPurchaseOrder = async (req, res) => {
 
+export const setPurchaseOrder = async (req, res) => {
 };
