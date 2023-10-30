@@ -1,5 +1,8 @@
 import { ACTIVE } from '../constants/constants.js';
-import User from '../models/UserModel.js';
+import { Customer, User } from '../models/models.js';
+
+import { CUSTOMER } from '../constants/constants.js';
+import { sendAuthDetails } from './smsController.js';
 
 export const addUser = async (req, res) => {
 
@@ -46,20 +49,30 @@ export const addNewCustomer = async (req, res) => {
     } = req.body;
 
     try {
-        const user = await User.create({
+
+        const user = await User.create({ // ADD USER
             mobileNo: mobileNo,
             firstName: firstName,
             lastName: lastName,
-            role: "CUSTOMER",
+            role: CUSTOMER,
             password: mobileNo,
             progress: true,
         });
+
+        const customer = await Customer.create({ // ADD USER ID TO CUSTOMER TABLE
+            userId: user.userId,
+        });
+
+        // SEND SMS TO CUSTOMER WITH LOGIN DETAILS
+        // const status = await sendAuthDetails(mobileNo);
+
         res.status(201).json({ user });
+
     } catch (error) {
         if(error.errors[0].message === "mobileNo must be unique") {
             res.status(500).json({ error: "Mobile number already exists!" });
         } else {
-            res.status(500).json({ error: error.message });
+            res.status(500).json({ error: "error.message" });
         }
     }
 }

@@ -40,7 +40,8 @@ const calculateProcessingOrderCount = async () => {
 
         // CALCULATING THIS WEEK PROCESSING ORDERS AND PERCENTAGE
         const processingCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, }, status: 'Processing' } });
-        const totalCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
+        // const totalCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
+        const totalCount = await PurchaseOrder.getItemModels({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         const percentageChange = processingCount / totalCount * 100;
 
         const result = {
@@ -49,6 +50,7 @@ const calculateProcessingOrderCount = async () => {
             percentageChange: percentageChange.toFixed(2),
         };
         return result; // SEND CORRECTLY CALCULATED VALUES TO THE INITIAL FUNCTION
+        
     } catch (error) {
         console.log(error);
         const result = {
