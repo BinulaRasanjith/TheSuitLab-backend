@@ -8,7 +8,7 @@ const defaultPassword = process.env.DEFAULT_PASSWORD
 const userSeed = [
     {
         userId: 'USER0000000001',
-        email: 'admin@email.com',
+        // email: 'admin@email.com',
         mobileNo: '0712345678',
         password: defaultPassword,
         firstName: 'Admin',
@@ -19,7 +19,7 @@ const userSeed = [
     },
     {
         userId: 'USER0000000002',
-        email: 'kavisula@email.com',
+        // email: 'kavisula@email.com',
         mobileNo: '0773364290',
         password: defaultPassword,
         firstName: 'Kavishka',
@@ -30,7 +30,7 @@ const userSeed = [
     },
     {
         userId: 'USER0000000003',
-        email: 'op_assistant@email.com',
+        // email: 'op_assistant@email.com',
         mobileNo: '0778235998',
         password: defaultPassword,
         firstName: 'Bhanuka',
@@ -41,7 +41,7 @@ const userSeed = [
     },
     {
         userId: 'USER0000000004',
-        email: 'mamatailor@email.com',
+        // email: 'mamatailor@email.com',
         password: defaultPassword,
         mobileNo: '0753429081',
         firstName: 'John',
@@ -52,7 +52,7 @@ const userSeed = [
     },
     {
         userId: 'USER0000000005',
-        email: 'manager@email.com',
+        // email: 'manager@email.com',
         mobileNo: '0773098124',
         password: defaultPassword,
         firstName: 'Viraj',
@@ -64,7 +64,7 @@ const userSeed = [
 
     {
         userId: 'USER0000000006',
-        email: 'sunil@email.com',
+        // email: 'sunil@email.com',
         password: defaultPassword,
         mobileNo: '07645902431',
         firstName: 'Sunil',
@@ -75,7 +75,7 @@ const userSeed = [
     },
     {
         userId: 'USER0000000007',
-        email: 'nimal@email.com',
+        // email: 'nimal@email.com',
         mobileNo: '0712340991',
         password: defaultPassword,
         firstName: 'Nimal',

@@ -27,6 +27,7 @@ import SupplyOrder from "./SupplyOrderModel.js";
 import Tie from "./TieModel.js";
 import User from "./UserModel.js";
 import Zipper from "./ZipperModel.js";
+import PaymentDone from "./PaymentDoneModel.js";
 
 /*
 User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId' });
@@ -48,8 +49,7 @@ User.hasOne(StaffUser, { foreignKey: 'userId', sourceKey: 'userId', onDelete: 'C
 StaffUser.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 
 // PURCHASE_ORDER - PAYMENT RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-PurchaseOrder.hasMany(Payment, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
-Payment.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
+Payment.hasOne(PurchaseOrder, { foreignKey: 'paymentId', sourceKey: 'invoiceNo', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 
 // CUSTOMER - PURCHASE_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
@@ -69,7 +69,7 @@ Cart.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
 // CART - ITEM RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 ItemModel.hasMany(Cart, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
-Cart.belongsTo(ItemModel, { foreignKey: 'itemId', targetKey: 'itemId',});
+Cart.belongsTo(ItemModel, { foreignKey: 'itemId', targetKey: 'itemId', });
 
 // ACCESSORY - ITEM RELATIONSHIP (ONE TO ONE RELATIONSHIP)
 ItemModel.hasOne(Accessory, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
@@ -170,4 +170,5 @@ export {
 	Tie,
 	User,
 	Zipper,
+	PaymentDone,
 };

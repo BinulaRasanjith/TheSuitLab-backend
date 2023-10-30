@@ -93,13 +93,13 @@ const seed = async () => {
         const costumeItems = await costumeSeeding();
         const hireCostumeItems = await hireCostumeSeeding();
 
-        const purchaseOrder1 = await PurchaseOrder.create({ ...purchaseOrderSeed[0], customerId: customer1.userId });
-        const purchaseOrder2 = await PurchaseOrder.create({ ...purchaseOrderSeed[1], customerId: customer2.userId });
-        const purchaseOrder3 = await PurchaseOrder.create({ ...purchaseOrderSeed[2], customerId: customer1.userId });
+        // const purchaseOrder1 = await PurchaseOrder.create({ ...purchaseOrderSeed[0], customerId: customer1.userId });
+        // const purchaseOrder2 = await PurchaseOrder.create({ ...purchaseOrderSeed[1], customerId: customer2.userId });
+        // const purchaseOrder3 = await PurchaseOrder.create({ ...purchaseOrderSeed[2], customerId: customer1.userId });
 
-        await purchaseOrder1.addItemModels([costumeItems[0]]);
-        await purchaseOrder2.addItemModels([hireCostumeItems[1]]);
-        await purchaseOrder3.addItemModels([hireCostumeItems[2]]);
+        // await purchaseOrder1.addItemModels([costumeItems[0]]);
+        // await purchaseOrder2.addItemModels([hireCostumeItems[1]]);
+        // await purchaseOrder3.addItemModels([hireCostumeItems[2]]);
 
         console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);
     } catch (error) {

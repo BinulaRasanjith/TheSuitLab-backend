@@ -12,6 +12,9 @@ import {
     Accessory,
     Costume,
     Material,
+    Payment,
+    PaymentDone,
+    Cart,
 } from "../models/models.js";
 
 export const getPurchaseOrders = async (req, res) => {
@@ -38,19 +41,51 @@ export const getPurchaseOrders = async (req, res) => {
 
 export const createPurchaseOrder = async (req, res) => {
     try {
-        const { customerId, itemModels } = req.body;
-        const purchaseOrder = new PurchaseOrder({ customerId });
-        await purchaseOrder.save();
+        const { paymentDoneId, customerId, items, amount, method } = req.body;
+        const quantity = items.length;
 
-        const purchaseOrderId = purchaseOrder.orderId;
+        const paymentDone = await PaymentDone.findByPk(paymentDoneId);
 
-        const itemModelsArray = itemModels.map((itemModel) => {
-            return { ...itemModel, orderId: purchaseOrderId };
-        });
+        if (paymentDone && paymentDone.done) {
 
-        await ItemModel.bulkCreate(itemModelsArray);
 
-        res.status(201).json({ message: "Purchase order created" });
+            const payment = await Payment.create({
+                customerId,
+                method,
+                amountPaid: amount,
+            });
+            console.log("payment created");
+
+            const purchaseOrder = new PurchaseOrder({
+                customerId,
+                quantity,
+                totalAmount: amount,
+                paymentMethod: method,
+                paymentId: payment.invoiceNo,
+                orderedDate: payment.date,
+            });
+            await purchaseOrder.save();
+
+            console.log("purchase order created");
+
+            for (const item of items) {
+                const { itemId } = item;
+                const itemModel = await ItemModel.findByPk(itemId);
+                if (itemModel) {
+                    Cart.destroy({
+                        where: { itemId },
+                    });
+
+                    await purchaseOrder.addItemModel(itemModel);
+                    console.log("item added to purchase order");
+                }
+            }
+
+
+            res.status(201).json({ message: "Purchase order created" });
+        } else {
+            res.status(404).json({ message: "Payment done not found" });
+        }
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
