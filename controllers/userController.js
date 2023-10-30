@@ -2,19 +2,13 @@ import { ACTIVE } from '../constants/constants.js';
 import User from '../models/UserModel.js';
 
 export const addUser = async (req, res) => {
-
-    if (!req.file) {
-        console.log(req.file);
-        return res.status(405).json({ error: 'Please upload an image' });
-    }
-
     const {
         mobileNo,
         firstName,
         lastName,
         role,
         password,
-        image
+        image,
     } = req.body;
     const imagePath = req.file ? req.file.filename : null;
 
