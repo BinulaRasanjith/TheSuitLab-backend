@@ -4,10 +4,12 @@ import {
   getPurchaseOrder,
   createPurchaseOrder,
   getPrice,
+  getCustomersPurchaseOrders,
 } from "../controllers/purchaseOrderController.js";
 
 const router = Router();
 
+router.get("/customer/:customerId", getCustomersPurchaseOrders);
 router.get("/", getPurchaseOrders);
 router.get("/:orderId", getPurchaseOrder);
 router.post("/", createPurchaseOrder);
