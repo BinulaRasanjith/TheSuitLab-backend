@@ -1,4 +1,4 @@
-import { Customer, Cart, ItemModel, User } from "../models/models.js";
+import { Customer, Cart, ItemModel, User, PurchaseOrder } from "../models/models.js";
 import {
   CoatMeasurements,
   TrouserMeasurements,
@@ -279,6 +279,40 @@ export const setPaymentInfo = async (req, res) => {
       await customer.save();
       res.status(200).json({ message: "Payment info saved" });
     }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getAllCustomersWithOrderCount = async (req, res) => {
+  try {
+    const customers = await Customer.findAll({
+      include: {
+        model: User,
+        attributes: ["firstName", "lastName", "mobileNo", "progress"],
+      },
+    });
+
+    const customersWithNames = customers.map((customer) => {
+      return {
+        userId: customer.userId,
+        name: `${customer.User.firstName} ${customer.User.lastName}`,
+        mobileNo: customer.User.mobileNo,
+        status: customer.User.progress,
+      };
+    });
+
+    const customersWithOrderCount = await Promise.all(
+      customersWithNames.map(async (customer) => {
+        const orderCount = await PurchaseOrder.count({
+          where: { customerId: customer.userId },
+        });
+        return { ...customer, orderCount };
+      })
+    );
+
+    res.status(200).json(customersWithOrderCount);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
