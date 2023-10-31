@@ -11,6 +11,7 @@ import {
     Costume,
     Cart,
     PurchaseOrder,
+    Payment,
 } from "../models/models.js";
 import userSeed from './seeds/userSeed.js';
 import supplierSeed from './seeds/supplierSeed.js';
@@ -21,6 +22,7 @@ import measurementSeed from './seeds/measurementSeed.js';
 import ItemModel from '../models/ItemModel.js';
 import purchaseOrderSeed from './seeds/purchaseOrderSeed.js';
 import costumeSeed from './seeds/costumeSeed.js';
+import paymentSeed from './seeds/paymentSeed.js';
 import { COSTUME } from '../constants/constants.js';
 
 dotenv.config();
@@ -93,13 +95,19 @@ const seed = async () => {
         const costumeItems = await costumeSeeding();
         const hireCostumeItems = await hireCostumeSeeding();
 
-        // const purchaseOrder1 = await PurchaseOrder.create({ ...purchaseOrderSeed[0], customerId: customer1.userId });
-        // const purchaseOrder2 = await PurchaseOrder.create({ ...purchaseOrderSeed[1], customerId: customer2.userId });
-        // const purchaseOrder3 = await PurchaseOrder.create({ ...purchaseOrderSeed[2], customerId: customer1.userId });
+        // await Cart.bulkCreate(cartSeed);
 
-        // await purchaseOrder1.addItemModels([costumeItems[0]]);
-        // await purchaseOrder2.addItemModels([hireCostumeItems[1]]);
-        // await purchaseOrder3.addItemModels([hireCostumeItems[2]]);
+        const payment1 = await Payment.create({ ...paymentSeed[0], customerId: customer1.userId });
+        const payment2 = await Payment.create({ ...paymentSeed[1], customerId: customer1.userId });
+        const payment3 = await Payment.create({ ...paymentSeed[2], customerId: customer1.userId });
+
+        const purchaseOrder1 = await PurchaseOrder.create({ ...purchaseOrderSeed[0], customerId: customer1.userId, paymentId: payment1.invoiceNo, totalAmount: payment1.amountPaid });
+        const purchaseOrder2 = await PurchaseOrder.create({ ...purchaseOrderSeed[1], customerId: customer2.userId, paymentId: payment2.invoiceNo, totalAmount: payment2.amountPaid });
+        const purchaseOrder3 = await PurchaseOrder.create({ ...purchaseOrderSeed[2], customerId: customer1.userId, paymentId: payment3.invoiceNo, totalAmount: payment3.amountPaid });
+
+        await purchaseOrder1.addItemModels([costumeItems[0]]);
+        await purchaseOrder2.addItemModels([hireCostumeItems[1]]);
+        await purchaseOrder3.addItemModels([hireCostumeItems[2]]);
 
         console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);
     } catch (error) {

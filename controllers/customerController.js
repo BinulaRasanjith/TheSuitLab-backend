@@ -1,4 +1,4 @@
-import { Customer, Cart, ItemModel, User, PurchaseOrder } from "../models/models.js";
+import { Customer, Cart, ItemModel, User, PurchaseOrder, Costume } from "../models/models.js";
 import {
   CoatMeasurements,
   TrouserMeasurements,
@@ -91,13 +91,22 @@ export const getTrouserMeasurements = async (req, res) => {
 
 export const setNewCostumeToItemModel = async (req, res) => {
   try {
-    const { itemType, price, quantity, status } = req.body;
+    const { itemType, price, quantity, status, costumeType, measurementType, measurements, customization } = req.body;
     const item = await ItemModel.create({
       itemType,
       price,
       quantity,
       status,
     });
+
+    await Costume.create({
+      itemId: item.itemId,
+      costumeType,
+      customization,
+      measurementType,
+      measurements,
+      quantity,
+    })
     res.status(201).json({ itemId: item.itemId });
   } catch (error) {
     console.log(error);

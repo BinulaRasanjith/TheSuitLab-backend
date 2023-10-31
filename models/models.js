@@ -145,6 +145,9 @@ ItemModel.hasOne(Review, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 
 // REVIEW - PURCHASE_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 PurchaseOrder.hasMany(Review, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 
+// REVIEW - CUSTOMER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+Customer.hasMany(Review, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+
 
 export {
 	Accessory,
