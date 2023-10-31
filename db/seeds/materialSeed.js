@@ -9,7 +9,7 @@ export default [
     unitPrice: 80.0,
     color: "White",
     colorCode: "#FFFFFF",
-    image: "solid - grey suit.jpg",
+    image: "pattern-white small square textured.jpg",
   },
   {
     materialCode: "MAT0000000001",
