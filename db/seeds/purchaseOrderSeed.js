@@ -14,9 +14,9 @@ export default [
         orderId: "PO000000000000002",
         quantity: 1,
         paymentMethod: PaymentType.CARD,
-        status: PurchaseOrderStatus.PLACED,
+        status: PurchaseOrderStatus.COLLECTED,
         orderedDate: "2021-09-01",
-        collectedDate: null,
+        collectedDate: "2021-09-10",
     },
     {
         orderId: "PO000000000000003",

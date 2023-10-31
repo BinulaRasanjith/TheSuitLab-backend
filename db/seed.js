@@ -12,6 +12,7 @@ import {
     Cart,
     PurchaseOrder,
     Payment,
+    Review,
 } from "../models/models.js";
 import userSeed from './seeds/userSeed.js';
 import supplierSeed from './seeds/supplierSeed.js';
@@ -23,6 +24,7 @@ import ItemModel from '../models/ItemModel.js';
 import purchaseOrderSeed from './seeds/purchaseOrderSeed.js';
 import costumeSeed from './seeds/costumeSeed.js';
 import paymentSeed from './seeds/paymentSeed.js';
+import reviewSeed from './seeds/reviewSeed.js';
 import { COSTUME } from '../constants/constants.js';
 
 dotenv.config();
@@ -106,8 +108,10 @@ const seed = async () => {
         const purchaseOrder3 = await PurchaseOrder.create({ ...purchaseOrderSeed[2], customerId: customer1.userId, paymentId: payment3.invoiceNo, totalAmount: payment3.amountPaid });
 
         await purchaseOrder1.addItemModels([costumeItems[0]]);
-        await purchaseOrder2.addItemModels([hireCostumeItems[1]]);
+        await purchaseOrder2.addItemModels([costumeItems[1]]);
         await purchaseOrder3.addItemModels([hireCostumeItems[2]]);
+
+        await Review.create({ ...reviewSeed[0], customerId: customer1.userId, orderId: purchaseOrder2.orderId, itemId: costumeItems[1].itemId });
 
         console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);
     } catch (error) {
