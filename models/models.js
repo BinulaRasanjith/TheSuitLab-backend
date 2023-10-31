@@ -139,6 +139,12 @@ SupplyOrder.belongsTo(Material, { foreignKey: 'material', targetKey: 'materialCo
 SupplyOrder.hasMany(SupplierPayment, { foreignKey: 'supplyID', sourceKey: 'supplyID', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 SupplierPayment.belongsTo(SupplyOrder, { foreignKey: 'supplyID', targetKey: 'supplyID' });
 
+// REVIEW - ITEM RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+ItemModel.hasOne(Review, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+
+// REVIEW - PURCHASE_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+PurchaseOrder.hasMany(Review, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+
 
 export {
 	Accessory,
