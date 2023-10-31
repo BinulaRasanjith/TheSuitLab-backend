@@ -31,6 +31,11 @@ const Supplier = sequelize.define(
             unique: true,
             allowNull: false,
         },
+        email: {
+            type: DataTypes.STRING,
+            unique: true,
+            allowNull: true,
+        },
         progress: { // 1 FOR CURRENTLY SUPPLYING, 0 FOR NOT SUPPLYING
             type: DataTypes.BOOLEAN,
             allowNull: false,
