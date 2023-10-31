@@ -45,3 +45,21 @@ export const getUsers = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+export const setUserProgress = async (req, res) => {
+    const { id, progress } = req.body;
+
+    try {
+        const user = await User.findOne({ where: { userId: id } });
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+        } else {
+            user.progress = progress;
+            await user.save();
+            res.status(200).json({ message: "User activated" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
