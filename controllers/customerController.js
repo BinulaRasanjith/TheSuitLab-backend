@@ -1,4 +1,4 @@
-import { Customer, Cart, ItemModel, User } from "../models/models.js";
+import { Customer, Cart, ItemModel, User, PurchaseOrder, Costume } from "../models/models.js";
 import {
   CoatMeasurements,
   TrouserMeasurements,
@@ -91,13 +91,22 @@ export const getTrouserMeasurements = async (req, res) => {
 
 export const setNewCostumeToItemModel = async (req, res) => {
   try {
-    const { itemType, price, quantity, status } = req.body;
+    const { itemType, price, quantity, status, costumeType, measurementType, measurements, customization } = req.body;
     const item = await ItemModel.create({
       itemType,
       price,
       quantity,
       status,
     });
+
+    await Costume.create({
+      itemId: item.itemId,
+      costumeType,
+      customization,
+      measurementType,
+      measurements,
+      quantity,
+    })
     res.status(201).json({ itemId: item.itemId });
   } catch (error) {
     console.log(error);
@@ -279,6 +288,40 @@ export const setPaymentInfo = async (req, res) => {
       await customer.save();
       res.status(200).json({ message: "Payment info saved" });
     }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const getAllCustomersWithOrderCount = async (req, res) => {
+  try {
+    const customers = await Customer.findAll({
+      include: {
+        model: User,
+        attributes: ["firstName", "lastName", "mobileNo", "progress"],
+      },
+    });
+
+    const customersWithNames = customers.map((customer) => {
+      return {
+        userId: customer.userId,
+        name: `${customer.User.firstName} ${customer.User.lastName}`,
+        mobileNo: customer.User.mobileNo,
+        status: customer.User.progress,
+      };
+    });
+
+    const customersWithOrderCount = await Promise.all(
+      customersWithNames.map(async (customer) => {
+        const orderCount = await PurchaseOrder.count({
+          where: { customerId: customer.userId },
+        });
+        return { ...customer, orderCount };
+      })
+    );
+
+    res.status(200).json(customersWithOrderCount);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

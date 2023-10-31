@@ -2,19 +2,13 @@ import { ACTIVE } from '../constants/constants.js';
 import User from '../models/UserModel.js';
 
 export const addUser = async (req, res) => {
-
-    if (!req.file) {
-        console.log(req.file);
-        return res.status(405).json({ error: 'Please upload an image' });
-    }
-
     const {
         mobileNo,
         firstName,
         lastName,
         role,
         password,
-        image
+        image,
     } = req.body;
     const imagePath = req.file ? req.file.filename : null;
 
@@ -51,3 +45,21 @@ export const getUsers = async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 }
+
+export const setUserProgress = async (req, res) => {
+    const { id, progress } = req.body;
+
+    try {
+        const user = await User.findOne({ where: { userId: id } });
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+        } else {
+            user.progress = progress;
+            await user.save();
+            res.status(200).json({ message: "User activated" });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};

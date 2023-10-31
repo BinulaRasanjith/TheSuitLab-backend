@@ -15,6 +15,8 @@ import odbRoutes from "./odbRoutes.js"; // TODO: IF USING DASHBOARD, UNCOMMENT T
 import hireCostumesRoutes from "./hireCostumeRoutes.js";
 import purchaseOrderRoutes from "./purchaseOrderRoutes.js";
 import { dashboardData } from "../controllers/dashboardController.js";
+import paymentRoute from "./paymentRoute.js";
+import reviewRoutes from "./reviewRoutes.js";
 
 const router = Router(); // for creating router
 
@@ -30,8 +32,11 @@ router.use("/notify", smsRoutes);
 router.use("/dashboard", dashboardRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
 router.use("/odb", odbRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
 router.use("/costume-hiring", hireCostumesRoutes);
+router.use("/payment", paymentRoute);
 router.use("/purchase-order", purchaseOrderRoutes);
 router.use("/accessories", accessoryRoutes);
+router.use("/review", reviewRoutes);
+
 router.get("/assistant", dashboardData);
 
 export default router;

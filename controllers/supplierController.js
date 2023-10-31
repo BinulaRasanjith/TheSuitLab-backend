@@ -3,20 +3,27 @@ import Supplier from "../models/SupplierModel.js";
 // create supplier
 export const createSupplier = async (req, res) => {
     try {
-        const supplier = req.body;
-        const newSupplier = await Supplier.create(supplier);
+        const { name, email, contactNo } = req.body;
+        const newSupplier = await Supplier.create({
+            supplierName: name,
+            email,
+            mobileNo: contactNo,
+            progress: true,
+        });
         res.status(201).json(newSupplier);
     } catch (error) {
-        res.json({ message: error.message });
+        console.log(error);
+        res.status(500).json({ message: error.message });
     }
 };
 
 // get all suppliers
 export const getSuppliers = async (req, res) => {
     try {
-        const suppliers = await Supplier.find();
+        const suppliers = await Supplier.findAll();
         res.status(200).json(suppliers);
     } catch (error) {
+        console.log(error);
         res.status(500).json({ message: error.message });
     }
 };
@@ -26,7 +33,7 @@ export const getSupplier = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const supplier = await Supplier.findByPk(id);
+        const supplier = await Supplier.findOne({ where: { id } });
         res.status(200).json(supplier);
     } catch (error) {
         res.status(500).json({ message: error.message });

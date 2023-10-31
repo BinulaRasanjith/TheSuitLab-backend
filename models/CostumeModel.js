@@ -1,6 +1,7 @@
 // TABLE FOR CUSTOM COSTUMES
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
+import CostumeProgress from "../constants/CostumeProgress.js";
 
 const Costume = sequelize.define(
     'Costume',
@@ -12,7 +13,7 @@ const Costume = sequelize.define(
         },
         costumeName: { // NAME OF THE COSTUME
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         costumeType: { // 'JACKET' OR 'PANT'
             type: DataTypes.STRING,
@@ -41,6 +42,11 @@ const Costume = sequelize.define(
         tailor: { // TAILOR IDS FOR THIS COSTUME (THERE CAN BE ONE OR MORE)
             type: DataTypes.JSON,
             allowNull: true,
+        },
+        progress: {
+            type: DataTypes.STRING(20),
+            allowNull: true,
+            defaultValue: CostumeProgress.PLACED,
         },
     },
     {
