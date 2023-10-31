@@ -14,6 +14,7 @@ import {
   removeCartItem,
   paymentInfo,
   setPaymentInfo,
+  getAllCustomersWithOrderCount,
   getCartItemById,
 } from "../controllers/customerController.js";
 
@@ -36,5 +37,6 @@ router.get("/cart-item/:id", authJWT, getCartItemById);
 router.delete("/remove-cart-item/:id", authJWT, removeCartItem);
 router.get("/payment-info", authJWT, paymentInfo);
 router.post("/set-payment-info", authJWT, setPaymentInfo);
+router.get("/include-order-count", authJWT, getAllCustomersWithOrderCount);
 
 export default router;
