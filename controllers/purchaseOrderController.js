@@ -17,6 +17,31 @@ import {
     Cart,
 } from "../models/models.js";
 
+export const getCustomersPurchaseOrders = async (req, res) => {
+    try {
+        const { customerId } = req.params;
+        const purchaseOrders = await PurchaseOrder.findAll({
+            where: { customerId },
+        });
+
+        // get items for each purchase order
+        const purchaseOrdersWithItems = await Promise.all(
+            purchaseOrders.map(async (purchaseOrder) => {
+                const itemModels = await purchaseOrder.getItemModels();
+                purchaseOrder = purchaseOrder.toJSON();
+                purchaseOrder.items = itemModels;
+                console.log(purchaseOrder.items);
+                return purchaseOrder;
+            })
+        );
+
+        res.status(200).json(purchaseOrdersWithItems);
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
 export const getPurchaseOrders = async (req, res) => {
     try {
         const purchaseOrders = await PurchaseOrder.findAll();
