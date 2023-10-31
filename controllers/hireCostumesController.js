@@ -2,20 +2,39 @@ import { HireCostume, ItemModel } from "../models/models.js";
 
 export const getHireCostumes = async (req, res) => {
   try {
-    const { costumeType, rentStatus } = req.query;
+    const { costumeType } = req.query;
     let hireCostumes;
-    if (costumeType || available) {
+    let hireCostumesJson;
+    if (costumeType) {
       hireCostumes = await HireCostume.findAll({
         where: {
           costumeType,
-          rentStatus,
         },
       });
+
+      hireCostumesJson = await Promise.all(
+        hireCostumes.map(async (hireCostume) => {
+          const item = await ItemModel.findOne({
+            where: {
+              itemId: hireCostume.itemId,
+            },
+          });
+          const ret = {
+            itemId: hireCostume.itemId,
+            itemName: hireCostume.name,
+            image: hireCostume.images,
+            color: hireCostume.color,
+            price: item.price,
+            status: hireCostume.rentStatus,
+          };
+          return ret;
+        })
+      );
     } else {
       hireCostumes = await HireCostume.findAll();
     }
 
-    res.status(200).json(hireCostumes);
+    res.status(200).json(hireCostumesJson);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });

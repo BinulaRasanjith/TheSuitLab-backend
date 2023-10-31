@@ -6,6 +6,7 @@ import materialRoutes from "./materialRoutes.js"; // for routing to material end
 import userRoutes from "./userRoutes.js"; // for routing to user endpoints
 import supplierRoutes from "./supplierRoutes.js";
 import returnRoutes from "./returnRoutes.js";
+import accessoryRoutes from "./accessoryRoutes.js";
 import handoverRoutes from "./handoverRoutes.js";
 import customerRoutes from "./customerRoutes.js";
 import smsRoutes from "./smsRoutes.js";
@@ -30,7 +31,7 @@ router.use("/dashboard", dashboardRoutes); // TODO: IF USING DASHBOARD, UNCOMMEN
 router.use("/odb", odbRoutes); // TODO: IF USING DASHBOARD, UNCOMMENT THIS LINE
 router.use("/costume-hiring", hireCostumesRoutes);
 router.use("/purchase-order", purchaseOrderRoutes);
-
+router.use("/accessories", accessoryRoutes);
 router.get("/assistant", dashboardData);
 
 export default router;
