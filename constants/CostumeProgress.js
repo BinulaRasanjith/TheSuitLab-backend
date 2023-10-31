@@ -1,0 +1,7 @@
+export default {
+    PLACED: "PLACED",
+    PROCESSING: "PROCESSING",
+    COMPLETED: "COMPLETED",
+    COLLECTED: "COLLECTED",
+    CANCELED: "CANCELED",
+}
