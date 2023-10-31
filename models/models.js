@@ -28,6 +28,7 @@ import Tie from "./TieModel.js";
 import User from "./UserModel.js";
 import Zipper from "./ZipperModel.js";
 import PaymentDone from "./PaymentDoneModel.js";
+import Notification from "./NotificationModel.js";
 
 /*
 User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId' });
@@ -148,6 +149,8 @@ PurchaseOrder.hasMany(Review, { foreignKey: 'orderId', sourceKey: 'orderId', onD
 // REVIEW - CUSTOMER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 Customer.hasMany(Review, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 
+// CUSTOMER - NOTIFICATION RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+Notification.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId' });
 
 export {
 	Accessory,
@@ -180,4 +183,5 @@ export {
 	User,
 	Zipper,
 	PaymentDone,
+	Notification
 };
