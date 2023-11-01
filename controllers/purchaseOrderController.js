@@ -30,33 +30,39 @@ export const getCustomersPurchaseOrders = async (req, res) => {
         // get items for each purchase order
         const purchaseOrdersWithItems = await Promise.all(
             purchaseOrders.map(async (purchaseOrder) => {
-                const itemModels = await purchaseOrder.getItemModels();
+                let itemModels = await purchaseOrder.getItemModels();
 
-                // get data for each item
-                for (const itemModel of itemModels) {
-                    switch (itemModel.itemType) {
-                        case ItemType.CUSTOM_SUIT:  // CUSTOM SUIT
-                            const costume = await Costume.findOne({
-                                where: { itemId: itemModel.itemId },
-                            });
-                            itemModel.costume = costume.toJSON();
-                            break;
-                        case ItemType.HIRE_SUIT: // HIRE SUIT
-                            const hireCostume = await HireCostume.findOne({
-                                where: { itemId: itemModel.itemId },
-                            });
-                            itemModel.hireCostume = hireCostume.toJSON();
-                            break;
-                        case ItemType.ACCESSORY: // ACCESSORY
-                            const accessory = await Accessory.findOne({
-                                where: { itemId: itemModel.itemId },
-                            });
-                            itemModel.accessory = accessory.toJSON();
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                itemModels = await Promise.all(
+                    itemModels.map(async (itemModel) => {
+                        itemModel = itemModel.toJSON();
+                        switch (itemModel.itemType) {
+                            case ItemType.CUSTOM_SUIT:  // CUSTOM SUIT
+                                const costume = await Costume.findOne({
+                                    where: { itemId: itemModel.itemId },
+                                });
+                                itemModel.costume = costume.toJSON();
+                                break;
+                            case ItemType.HIRE_SUIT: // HIRE SUIT
+
+                                const hireCostume = await HireCostume.findOne({
+                                    where: { itemId: itemModel.itemId },
+
+                                });
+                                itemModel.hireCostume = hireCostume.toJSON();
+                                break;
+                            case ItemType.ACCESSORY: // ACCESSORY
+
+                                const accessory = await Accessory.findOne({
+                                    where: { itemId: itemModel.itemId },
+                                });
+                                itemModel.accessory = accessory.toJSON();
+                                break;
+                            default:
+                                break;
+                        }
+                        return itemModel;
+                    })
+                );
 
                 purchaseOrder = purchaseOrder.toJSON();
                 purchaseOrder.items = itemModels;
