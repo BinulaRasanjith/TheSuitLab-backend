@@ -13,11 +13,18 @@ import {
     PurchaseOrder,
     Payment,
     Review,
+    Tie,
+    Belt,
+    Shoe,
+    Accessory,
 } from "../models/models.js";
 import userSeed from './seeds/userSeed.js';
 import supplierSeed from './seeds/supplierSeed.js';
 import materialSeed from './seeds/materialSeed.js';
 import hireCostumesSeed from './seeds/hireCostumesSeed.js';
+import shoeAccessorySeed from './seeds/shoeAccessorySeed.js';
+import beltSeed from './seeds/beltSeed.js';
+import tieAccessorySeed from './seeds/tieAccessorySeed.js';
 import cartSeed from './seeds/cartSeed.js';
 import measurementSeed from './seeds/measurementSeed.js';
 import ItemModel from '../models/ItemModel.js';
@@ -25,7 +32,6 @@ import purchaseOrderSeed from './seeds/purchaseOrderSeed.js';
 import costumeSeed from './seeds/costumeSeed.js';
 import paymentSeed from './seeds/paymentSeed.js';
 import reviewSeed from './seeds/reviewSeed.js';
-import { COSTUME } from '../constants/constants.js';
 import ItemType from '../constants/ItemType.js';
 
 dotenv.config();
@@ -97,6 +103,9 @@ const seed = async () => {
 
         const costumeItems = await costumeSeeding();
         const hireCostumeItems = await hireCostumeSeeding();
+        const shoeAccessories = await shoeAccessorySeeding();
+        const belts = await beltSeeding();
+        const tieAccessories = await tieAccessorySeeding();
 
         // await Cart.bulkCreate(cartSeed);
 
@@ -171,6 +180,106 @@ async function hireCostumeSeeding() {
         });
     }
     return hireCostumeItems;
+}
+
+async function shoeAccessorySeeding() {
+    const shoeAccessories = [];
+    shoeAccessorySeed.forEach(async (shoeAccessory) => {
+        const { itemId, itemType, price, quantity, ...rest } = shoeAccessory;
+
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+        });
+
+        shoeAccessories.push(item)
+        const { brand, itemName, material, color, accessoryType, image } = rest;
+        await Accessory.create({
+            itemId: item.itemId,
+            brand,
+            itemName,
+            material,
+            color,
+            accessoryType,
+            image,
+            quantity,
+        });
+
+        await Shoe.create({
+            itemId: item.itemId,
+            style: rest.style,
+            size: rest.size,
+        });
+    })
+    return shoeAccessories;
+}
+
+async function beltSeeding() {
+    const belts = [];
+    beltSeed.forEach(async (belt) => {
+        const { itemId, itemType, price, quantity, ...rest } = belt;
+
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+        });
+
+        belts.push(item)
+
+        const { brand, itemName, material, color, accessoryType, image } = rest;
+        await Accessory.create({
+            itemId: item.itemId,
+            brand,
+            itemName,
+            material,
+            color,
+            accessoryType,
+            image,
+            quantity,
+        });
+
+        await Belt.create({
+            itemId: item.itemId,
+            buckleType: rest.buckleType,
+            size: rest.size,
+        });
+    })
+    return belts;
+}
+
+async function tieAccessorySeeding() {
+    const tieAccessories = [];
+    tieAccessorySeed.forEach(async (tieAccessory) => {
+        const { itemId, itemType, price, quantity, ...rest } = tieAccessory;
+
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+        });
+        tieAccessories.push(item)
+
+        const { brand, itemName, material, color, accessoryType, image } = rest;
+        await Accessory.create({
+            itemId: item.itemId,
+            brand,
+            itemName,
+            material,
+            color,
+            accessoryType,
+            image,
+            quantity,
+        });
+
+        await Tie.create({
+            itemId: item.itemId,
+            width: rest.width,
+            pattern: rest.pattern,
+        });
+    })
+    return tieAccessories;
 }
 
 export default seed;
