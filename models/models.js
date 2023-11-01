@@ -156,6 +156,9 @@ Customer.hasMany(Review, { foreignKey: 'customerId', sourceKey: 'userId', onDele
 // CUSTOMER - NOTIFICATION RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 Notification.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId' });
 
+// COSTUME - TAILOR RELATIONSHIP (MANY TO ONE RELATIONSHIP)
+User.hasMany(Costume, { foreignKey: 'tailor', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+
 export {
 	Accessory,
 	Belt,

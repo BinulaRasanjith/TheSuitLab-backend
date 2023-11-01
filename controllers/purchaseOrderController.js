@@ -310,3 +310,5 @@ export const reverseUpdateToCollected = async (req, res) => {
 
 export const setPurchaseOrder = async (req, res) => {
 };
+
+export const assignTailor = async (req, res) => { };
