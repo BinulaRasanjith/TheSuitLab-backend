@@ -1,4 +1,4 @@
-import { ACCESSORY, COSTUME, HIRE_COSTUME } from "../constants/constants.js";
+import { ACCESSORY, COSTUME, HIRE_COSTUME, PRODUCT_MANAGER } from "../constants/constants.js";
 import {
     calculateFabricAmount,
     calculateTotalFabricPrice,
@@ -18,6 +18,8 @@ import {
 } from "../models/models.js";
 import ItemType from "../constants/itemType.js";
 
+import { sendNotification } from '../utils/notificationUtil.js';
+
 export const getCustomersPurchaseOrders = async (req, res) => {
     try {
         const { customerId } = req.params;
@@ -29,9 +31,36 @@ export const getCustomersPurchaseOrders = async (req, res) => {
         const purchaseOrdersWithItems = await Promise.all(
             purchaseOrders.map(async (purchaseOrder) => {
                 const itemModels = await purchaseOrder.getItemModels();
+
+                // get data for each item
+                for (const itemModel of itemModels) {
+                    switch (itemModel.itemType) {
+                        case ItemType.CUSTOM_SUIT:  // CUSTOM SUIT
+                            const costume = await Costume.findOne({
+                                where: { itemId: itemModel.itemId },
+                            });
+                            itemModel.costume = costume.toJSON();
+                            break;
+                        case ItemType.HIRE_SUIT: // HIRE SUIT
+                            const hireCostume = await HireCostume.findOne({
+                                where: { itemId: itemModel.itemId },
+                            });
+                            itemModel.hireCostume = hireCostume.toJSON();
+                            break;
+                        case ItemType.ACCESSORY: // ACCESSORY
+                            const accessory = await Accessory.findOne({
+                                where: { itemId: itemModel.itemId },
+                            });
+                            itemModel.accessory = accessory.toJSON();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 purchaseOrder = purchaseOrder.toJSON();
                 purchaseOrder.items = itemModels;
-                console.log(purchaseOrder.items);
+                // console.log(purchaseOrder.items);
                 return purchaseOrder;
             })
         );
@@ -72,9 +101,7 @@ export const createPurchaseOrder = async (req, res) => {
 
         const paymentDone = await PaymentDone.findByPk(paymentDoneId);
 
-        if (paymentDone && paymentDone.done) {
-
-
+        if (paymentDone) {
             const payment = await Payment.create({
                 customerId,
                 method,
@@ -106,7 +133,14 @@ export const createPurchaseOrder = async (req, res) => {
                     console.log("item added to purchase order");
                 }
             }
+            // send notifications to Product Managers
+            const productManagers = await User.findAll({
+                where: { role: PRODUCT_MANAGER },
+            });
 
+            for (const productManager of productManagers) {
+                await sendNotification(productManager.userId, "New Purchase Order", "New purchase order has been created")
+            }
 
             res.status(201).json({ message: "Purchase order created" });
         } else {
@@ -251,12 +285,71 @@ export const getPrice = async (req, res) => {
 
         console.log(price);
         res.status(200).json({ price });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+
+};
+
+export const updateToCollected = async (req, res) => {
+    try {
+        const { orderId } = req.body;
+        const purchaseOrder = await PurchaseOrder.findOne({ where: { orderId } });
+        if (!purchaseOrder) {
+            return res.status(404).json({ message: "Purchase order not found" });
+        }
+
+        // TODO: FIND THE CUSTOMER AND SEND SMS
+        const customer = await User.findOne({ where: { userId: purchaseOrder.customerId } });
+        await notifyFitOn(customer.mobileNo);
+
+        purchaseOrder.status = "Collected";
+        await purchaseOrder.save();
+
+        res.status(200).json({ message: "Purchase order updated" });
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
     }
 };
 
-export const setPurchaseOrder = async (req, res) => {
+export const reverseUpdateToCollected = async (req, res) => {
+    try {
+        const { orderId } = req.body;
+        const purchaseOrder = await PurchaseOrder.findOne({
+            where: { orderId }
+        });
+        if (!purchaseOrder) {
+            return res.status(404).json({ message: "Purchase order not found" });
+        }
 
+        purchaseOrder.status = "To be collected";
+        await purchaseOrder.save();
+
+        res.status(200).json({ message: "Collection cancelled" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+};
+
+export const assignTailor = async (req, res) => {
+    const { itemId, tailor } = req.body;
+    try {
+        const costume = await Costume.findOne({ where: { itemId } });
+        if (!costume) {
+            return res.status(404).json({ message: "Costume not found" });
+        }
+
+        costume.tailor = tailor;
+        await costume.save();
+
+        sendNotification(tailor, "New Costume", "You have been assigned to a new costume");
+
+        res.status(200).json({ message: "Tailor assigned" });
+    } catch (error) {
+        console.log(error)
+    }
 };

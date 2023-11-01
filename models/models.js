@@ -84,6 +84,10 @@ ItemModel.hasOne(Costume, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete:
 // COSTUME - ITEM RELATIONSHIP (ONE TO ONE RELATIONSHIP)
 ItemModel.hasOne(PreDesignCostume, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
 
+Accessory.hasOne(Belt, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
+Accessory.hasOne(Shoe, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
+Accessory.hasOne(Tie, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
+
 // PURCHASE_ORDER - ITEM RELATIONSHIP (MANY TO MANY RELATIONSHIP)
 ItemModel.belongsToMany(PurchaseOrder, { through: 'purchase_order_items', foreignKey: 'itemId', otherKey: 'orderId' });
 PurchaseOrder.belongsToMany(ItemModel, { through: 'purchase_order_items', foreignKey: 'orderId', otherKey: 'itemId' });
@@ -151,6 +155,9 @@ Customer.hasMany(Review, { foreignKey: 'customerId', sourceKey: 'userId', onDele
 
 // CUSTOMER - NOTIFICATION RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 Notification.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId' });
+
+// COSTUME - TAILOR RELATIONSHIP (MANY TO ONE RELATIONSHIP)
+User.hasMany(Costume, { foreignKey: 'tailor', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 
 export {
 	Accessory,

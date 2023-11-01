@@ -18,7 +18,8 @@ import {
 
 export const addNewAccessory = async (req, res) => {
   try {
-    const { brand, itemName, material, color, price, accessoryType } = req.body;
+    const { brand, itemName, material, color, price, accessoryType, image } =
+      req.body;
 
     // const accessoryExist = await Accessory.findOne({ where: { itemId } });
     const accessoryExist = await Accessory.findOne({
@@ -27,55 +28,62 @@ export const addNewAccessory = async (req, res) => {
       },
     });
 
-    if (accessoryExist) {
-      return res.status(409).json({ message: "Accessory already exists" });
-    }
+    // if (accessoryExist) { // ?
+    //     return res.status(409).json({ message: "Accessory already exists" });
+    // }
 
-    const imageFiles = req.files.map((file) => file.originalname);
+    // const imageFiles = req.files.map((file) => file.originalname);
 
-    const accessory = await Accessory.create({
-      brand,
-      itemName,
-      material,
-      color,
-      price,
-      accessoryType,
-      image: imageFiles,
-    });
+    // const accessory = await Accessory.create({
+    //     brand,
+    //     itemName,
+    //     material,
+    //     color,
+    //     price,
+    //     accessoryType,
+    //     image: imageFiles,
+    // }); //?
 
     // const itemId = await Accessory.findOne({ where: { itemName } });
-    const thisItem = await Accessory.findOne({
-      order: [["createdAt", "DESC"]], // ASSUMING 'CREATEDAT' IS A TIMESTAMP FIELD
-    });
+    // const thisItem = await Accessory.findOne({//?
+    //     order: [['createdAt', 'DESC']] // ASSUMING 'CREATEDAT' IS A TIMESTAMP FIELD
+    // });
 
-    if (accessoryType === "belt") {
-      const { buckleType, size } = req.body;
-      const belt = await Belt.create({
-        itemId: thisItem.itemId,
-        buckleType,
-        size,
-      });
-      return res.status(201).json({ accessory, belt });
+    // if (accessoryType === "belt") {
+    //     const { buckleType, size } = req.body;
+    //     const belt = await Belt.create({
+    //         itemId: thisItem.itemId,
+    //         buckleType,
+    //         size,
+    //     });
+    //     return res.status(201).json({ accessory, belt });
+    // }
+
+    // if (accessoryType === "shoe") {
+    //     const { style, size } = req.body;
+    //     const shoe = await Shoe.create({
+    //         itemId: thisItem.itemId,
+    //         style,
+    //         size,
+    //     });
+    //     return res.status(201).json({ accessory, shoe });
+    // }
+
+    // if (accessoryType === "tie") {
+    //     const { pattern, width } = req.body;
+    //     const tie = await Tie.create({
+    //         itemId: thisItem.itemId,
+    //         pattern,
+    //         width,
+    //     });
+    //     return res.status(201).json({ accessory, tie });
+    // }//?
+    const images = req.files;
+    if (!req.files || req.files.length === 0) {
+      console.log("Nofiles");
     }
-
-    if (accessoryType === "shoe") {
-      const { style, size } = req.body;
-      const shoe = await Shoe.create({
-        itemId: thisItem.itemId,
-        style,
-        size,
-      });
-      return res.status(201).json({ accessory, shoe });
-    }
-
-    if (accessoryType === "tie") {
-      const { pattern, width } = req.body;
-      const tie = await Tie.create({
-        itemId: thisItem.itemId,
-        pattern,
-        width,
-      });
-      return res.status(201).json({ accessory, tie });
+    if (image) {
+      console.log(image);
     }
   } catch (error) {
     return res.status(500).json({ message: error.message });
@@ -129,11 +137,68 @@ export const getAccessories = async (req, res) => {
 
       res.status(200).json(accJson);
     } else {
-      accessories = await Accessory.findAll();
+      accessories = await ItemModel.findAll({
+        where: {
+          itemType: "Accessory",
+        },
+        include: [
+          {
+            model: Accessory,
+            required: true,
+            include: [
+              {
+                model: Belt,
+                required: false,
+              },
+              {
+                model: Shoe,
+                required: false,
+              },
+              {
+                model: Tie,
+                required: false,
+              },
+            ],
+          },
+        ],
+      });
+
       res.status(200).json(accessories);
     }
   } catch (error) {
     console.log(error);
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+export const getAccessory = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const item = await ItemModel.findOne({ where: { itemId: id } });
+    if (!item) {
+      return res
+        .status(404)
+        .json({ message: "Accessory not found with " + id });
+    }
+
+    const accessory = await Accessory.findOne({ where: { itemId: id } });
+
+    if (accessory.accessoryType.toLowerCase() === "belt") {
+      const belt = await Belt.findOne({ where: { itemId: id } });
+      return res.status(200).json({ accessory, belt, item });
+    }
+    if (accessory.accessoryType.toLowerCase() === "shoe") {
+      const shoe = await Shoe.findOne({ where: { itemId: id } });
+      return res.status(200).json({ accessory, shoe, item });
+    }
+    if (accessory.accessoryType.toLowerCase() === "tie") {
+      const tie = await Tie.findOne({ where: { itemId: id } });
+      return res.status(200).json({ accessory, tie, item });
+    }
+
+    return res.status(200).json(accessory);
+  } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };

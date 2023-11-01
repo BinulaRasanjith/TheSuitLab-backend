@@ -1,10 +1,11 @@
 import { JACKET, PANT } from "../../constants/constants.js";
 import { S, M, L, XL, XXL } from "../../constants/constants.js";
 import { AVAILABLE, UNAVAILABLE } from "../../constants/constants.js";
+import itemType from "../../constants/itemType.js";
 
 export default [
   {
-    itemType: "hireSuit",
+    itemType: itemType.HIRE_SUIT,
     price: 3500,
     quantity: 1,
     name: "The black paisley suit with design",
@@ -17,15 +18,10 @@ export default [
     color: "Black",
     price: 4000,
     rentStatus: AVAILABLE,
-    images: [
-      "men's_floral_suit_jacket_1.jpg",
-      "men's_floral_suit_jacket_2.jpg",
-      "men's_floral_suit_jacket_3.jpg",
-      "men's_floral_suit_jacket_4.jpg",
-    ],
+    images: ["1.webp", "3.webp", "4.webp", "5.webp"],
   },
   {
-    itemType: "hireSuit",
+    itemType: itemType.HIRE_SUIT,
     price: 3200,
     quantity: 1,
     name: "Carmel color high lapel suit",
@@ -37,22 +33,16 @@ export default [
     },
     color: "red",
     rentStatus: AVAILABLE,
-    images: [
-      "caremal_color_jacket_1.jpg",
-      "caremal_color_jacket_2.jpg",
-      "caremal_color_jacket_3.jpg",
-      "caremal_color_jacket_4.jpg",
-      "caremal_color_jacket_5.jpg",
-    ],
+    images: ["carmel.webp"],
   },
   {
-    itemType: "hireSuit",
+    itemType: itemType.HIRE_SUIT,
     price: 4000,
     quantity: 1,
     name: "burgundy color rounded lapel suit",
     costumeType: JACKET,
     size: {
-      [S]: 2,
+      [S]: 3,
       [M]: 1,
       [L]: 3,
     },
@@ -66,7 +56,7 @@ export default [
     ],
   },
   {
-    itemType: "hireSuit",
+    itemType: itemType.HIRE_SUIT,
     price: 4200,
     quantity: 1,
     name: "Soojun Men's Classic Fit Flex Waist Flat Front Dress Pant",
@@ -86,7 +76,7 @@ export default [
     ],
   },
   {
-    itemType: "hireSuit",
+    itemType: itemType.HIRE_SUIT,
     price: 4000,
     quantity: 2,
     name: "Van Heusen Men's Slim Fit Flex Flat Front Pant",

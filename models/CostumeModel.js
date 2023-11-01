@@ -40,7 +40,7 @@ const Costume = sequelize.define(
             allowNull: false,
         },
         tailor: { // TAILOR IDS FOR THIS COSTUME (THERE CAN BE ONE OR MORE)
-            type: DataTypes.JSON,
+            type: DataTypes.TEXT,
             allowNull: true,
         },
         progress: {
