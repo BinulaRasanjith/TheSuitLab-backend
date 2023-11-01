@@ -15,6 +15,7 @@ import hireCostumesRoutes from './hireCostumeRoutes.js';
 import purchaseOrderRoutes from './purchaseOrderRoutes.js';
 import paymentRoute from "./paymentRoute.js";
 import reviewRoutes from "./reviewRoutes.js";
+import notificationRoutes from './notificationRoutes.js'; // for routing to notification endpoints
 
 const router = Router(); // for creating router
 
@@ -35,5 +36,6 @@ router.use("/payment", paymentRoute);
 router.use("/purchase-order", purchaseOrderRoutes);
 router.use("/accessories", accessoryRoutes);
 router.use("/review", reviewRoutes);
+router.use("/notification", notificationRoutes);
 
 export default router;

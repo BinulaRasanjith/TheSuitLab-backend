@@ -6,5 +6,6 @@ export const sendNotification = async (userId, subject, message) => {
         subject,
         message,
     });
+
     return notification;
 };

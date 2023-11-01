@@ -308,7 +308,21 @@ export const reverseUpdateToCollected = async (req, res) => {
     }
 };
 
-export const setPurchaseOrder = async (req, res) => {
-};
+export const assignTailor = async (req, res) => {
+    const { itemId, tailor } = req.body;
+    try {
+        const costume = await Costume.findOne({ where: { itemId } });
+        if (!costume) {
+            return res.status(404).json({ message: "Costume not found" });
+        }
 
-export const assignTailor = async (req, res) => { };
+        costume.tailor = tailor;
+        await costume.save();
+
+        sendNotification(tailor, "New Costume", "You have been assigned to a new costume");
+
+        res.status(200).json({ message: "Tailor assigned" });
+    } catch (error) {
+        console.log(error)
+    }
+};
