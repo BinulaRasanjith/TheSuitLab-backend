@@ -1,15 +1,19 @@
-import Payment from "../models/PaymentModel.js";
-import CostumeOrder from "../models/PurchaseOrderModel.js";
-import PurchaseOrder from "../models/PurchaseOrderModel.js";
+// import Payment from "../models/PaymentModel.js";
+// import CostumeOrder from "../models/PurchaseOrderModel.js";
+// import PurchaseOrder from "../models/PurchaseOrderModel.js";
 
-import Button from "../models/ButtonModel.js";
-import Fabric from "../models/FabricModel.js";
-import Strings from "../models/StringModel.js";
-import Interlining from "../models/InterliningModel.js";
-import Zipper from "../models/ZipperModel.js";
+// import Button from "../models/ButtonModel.js";
+// import Fabric from "../models/FabricModel.js";
+// import Strings from "../models/StringModel.js";
+// import Interlining from "../models/InterliningModel.js";
+// import Zipper from "../models/ZipperModel.js";
+
+import { Fabric, Strings, Interlining, Zipper, Payment, PurchaseOrder, Customer, Costume } from "../models/models.js";
 
 import { Op } from "sequelize";
 import moment from "moment";
+import PurchaseOrderStatus from "../constants/PurchaseOrderStatus.js";
+import CostumeProgress from "../constants/CostumeProgress.js";
 
 
 // INITIAL FUNCTION WHICH IS CALLED FROM ROUTES
@@ -28,6 +32,25 @@ export const dashboardData = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 }
+
+export const getPrManagerDashboardData = async (req, res) => {
+    try {
+        const customerCount = await Customer.count();
+        // PLACED, PROCESSING, COMPLETED ORDERS COUNT
+        const placedOrdersCount = await PurchaseOrder.count({ where: { status: PurchaseOrderStatus.PLACED } });
+        const processingOrdersCount = await Costume.count({ where: { progress: CostumeProgress.PROCESSING } });
+        const completedOrdersCount = await PurchaseOrder.count({ where: { status: PurchaseOrderStatus.COMPLETED } });
+
+        const orderCount = placedOrdersCount + processingOrdersCount + completedOrdersCount;
+
+        const income = await findIncomeTotal();
+
+        return res.status(200).json({ customerCount, orderCount, processingOrdersCount, income });
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
+};
 
 
 // CURRENTLY PROCESSING ORDER COUNT CALCULATING FUNCTION - LOCALLY CALLING (WORKING)
@@ -50,7 +73,7 @@ const calculateProcessingOrderCount = async () => {
             percentageChange: percentageChange.toFixed(2),
         };
         return result; // SEND CORRECTLY CALCULATED VALUES TO THE INITIAL FUNCTION
-        
+
     } catch (error) {
         console.log(error);
         const result = {
@@ -110,12 +133,12 @@ const calculateOrderCount = async () => {
         const weekAgo = moment().subtract(7, 'days').toDate();
         // CALCULATE THE START DATE (14 DAYS BEFORE TODAY)
         const twoWeekAgo = moment().subtract(14, 'days').toDate();
-        
+
         // CALCULATING WEEKLY ORDERS AND PERCENTAGE
         const thisWeekOrderCount = await CostumeOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         const lastWeekOrderCount = await CostumeOrder.count({ where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } });
         const orderPresentage = (thisWeekOrderCount - lastWeekOrderCount) / lastWeekOrderCount * 100;
-        
+
         const result = {
             thisWeekOrderCount: thisWeekOrderCount,
             lastWeekOrderCount: lastWeekOrderCount,
@@ -143,12 +166,12 @@ const findIncomeTotal = async () => {
         const weekAgo = moment().subtract(7, 'days').toDate();
         // CALCULATE THE START DATE (14 DAYS BEFORE TODAY)
         const twoWeekAgo = moment().subtract(14, 'days').toDate();
-        
+
         // CALCULATING WEEKLY INCOME AND PERCENTAGE
-        const thisWeekIncome = await Payment.sum( 'amountPaid', { where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
-        const lastWeekIncome = await Payment.sum( 'amountPaid', { where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } });
+        const thisWeekIncome = await Payment.sum('amountPaid', { where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
+        const lastWeekIncome = await Payment.sum('amountPaid', { where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } });
         const incomePercentage = (thisWeekIncome - lastWeekIncome) / lastWeekIncome * 100;
-        
+
         const result = {
             thisWeekIncome: thisWeekIncome,
             lastWeekIncome: lastWeekIncome,
@@ -189,19 +212,19 @@ const getWeeklyPerformance = async (req, res) => {
         // INITIALIZE AN EMPTY ARRAY TO STORE DAILY PERFORMANCE DATA
         const thisWeekPerformance = [];
         const lastWeekPerformance = [];
-        
+
         // CALCULATE THE END DATE (TODAY)
         const today = moment().toDate();
-        
+
         for (let i = 0; i < 7; i++) {
             // CALCULATE THE START DATE FOR THE CURRENT DAY (7 DAYS AGO, 6 DAYS AGO, ETC.)
             const startDate = moment().subtract(i, 'days').toDate();
             const lastWeekStartDate = moment().subtract(i + 7, 'days').toDate();
-            
+
             // CALCULATE THE END DATE FOR THE CURRENT DAY (6 DAYS AGO, 5 DAYS AGO, ETC.)
             const endDate = moment().subtract(i - 1, 'days').toDate();
             const lastWeekEndDate = moment().subtract(i + 6, 'days').toDate();
-            
+
             // RETRIEVE RECORDS FOR THE CURRENT DAY'S DATE RANGE
             const thisWeekCount = await CostumeOrder.count({
                 where: { createdAt: { [Op.gte]: startDate, [Op.lt]: endDate } },
@@ -209,7 +232,7 @@ const getWeeklyPerformance = async (req, res) => {
             const lastWeekCount = await CostumeOrder.count({
                 where: { createdAt: { [Op.gte]: lastWeekStartDate, [Op.lt]: lastWeekEndDate } },
             });
-            
+
             // PUSH THE DAILY PERFORMANCE DATA TO THE ARRAY
             thisWeekPerformance.push({
                 date: startDate, // YOU CAN USE 'STARTDATE' OR 'ENDDATE' AS THE DATE IDENTIFIER

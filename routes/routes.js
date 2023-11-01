@@ -17,6 +17,7 @@ import paymentRoute from "./paymentRoute.js";
 import reviewRoutes from "./reviewRoutes.js";
 import preDesignedItemRoutes from "./preDesignedItemRoutes.js";
 import notificationRoutes from "./notificationRoutes.js"; // for routing to notification endpoints
+import dashBoardRoutes from "./dashboardRoutes.js";
 
 const router = Router(); // for creating router
 
@@ -38,5 +39,6 @@ router.use("/accessories", accessoryRoutes);
 router.use("/review", reviewRoutes);
 router.use("/pre-designed-costumes", preDesignedItemRoutes);
 router.use("/notification", notificationRoutes);
+router.use("/dashboard2", dashBoardRoutes);
 
 export default router;
