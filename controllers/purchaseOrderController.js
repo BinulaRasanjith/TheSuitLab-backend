@@ -112,8 +112,7 @@ export const createPurchaseOrder = async (req, res) => {
             });
 
             for (const productManager of productManagers) {
-                // userId: any, subject: any, message: any, isRead: any
-                await sendNotification(productManager.userId, "New Purchase Order", "New purchase order has been created", false)
+                await sendNotification(productManager.userId, "New Purchase Order", "New purchase order has been created")
             }
 
             res.status(201).json({ message: "Purchase order created" });
