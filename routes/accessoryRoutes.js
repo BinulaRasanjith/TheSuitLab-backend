@@ -1,12 +1,13 @@
 import { Router } from "express";
 
 import {
-  addNewAccessory,
-  getAccessories,
-  getAccessoryById,
-  removeAccessory,
-  updateAccessory,
-  addAccessoryToCart,
+    addNewAccessory,
+    getAccessory,
+    getAccessories,
+    getAccessoryById,
+    removeAccessory,
+    updateAccessory,
+    addAccessoryToCart,
 } from "../controllers/accessoryController.js";
 import { accessoryImagesUpload } from "../middlewares/imageUpload.js";
 
