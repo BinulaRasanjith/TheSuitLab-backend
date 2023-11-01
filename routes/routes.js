@@ -17,6 +17,7 @@ import purchaseOrderRoutes from "./purchaseOrderRoutes.js";
 import { dashboardData } from "../controllers/dashboardController.js";
 import paymentRoute from "./paymentRoute.js";
 import reviewRoutes from "./reviewRoutes.js";
+import preDesignedItemRoutes from "./preDesignedItemRoutes.js";
 
 const router = Router(); // for creating router
 
@@ -36,6 +37,7 @@ router.use("/payment", paymentRoute);
 router.use("/purchase-order", purchaseOrderRoutes);
 router.use("/accessories", accessoryRoutes);
 router.use("/review", reviewRoutes);
+router.use("/pre-designed-costumes", preDesignedItemRoutes);
 
 router.get("/assistant", dashboardData);
 
