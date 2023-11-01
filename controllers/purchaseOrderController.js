@@ -16,6 +16,7 @@ import {
     PaymentDone,
     Cart,
 } from "../models/models.js";
+import ItemType from "../constants/itemType.js";
 
 export const getCustomersPurchaseOrders = async (req, res) => {
     try {
@@ -139,20 +140,20 @@ export const getPurchaseOrder = async (req, res) => {
         const itemModelsWithData = await Promise.all(
             itemModels.map(async (itemModel) => {
                 switch (itemModel.itemType) {
-                    case COSTUME:
+                    case ItemType.CUSTOM_SUIT:
                         const costume = await Costume.findOne({
                             where: { itemId: itemModel.itemId },
                         });
                         itemModel.costume = costume.toJSON();
                         console.log(costume);
                         break;
-                    case HIRE_COSTUME:
+                    case ItemType.HIRE_SUIT:
                         const hireCostume = await HireCostume.findOne({
                             where: { itemId: itemModel.itemId },
                         });
                         itemModel.hireCostume = hireCostume.toJSON();
                         break;
-                    case ACCESSORY:
+                    case ItemType.ACCESSORY:
                         const accessory = await Accessory.findOne({
                             where: { itemId: itemModel.itemId },
                         });

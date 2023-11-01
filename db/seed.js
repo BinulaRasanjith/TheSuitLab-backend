@@ -17,6 +17,7 @@ import {
     Belt,
     Shoe,
     Accessory,
+    PreDesignCostume,
 } from "../models/models.js";
 import userSeed from './seeds/userSeed.js';
 import supplierSeed from './seeds/supplierSeed.js';
@@ -33,6 +34,8 @@ import costumeSeed from './seeds/costumeSeed.js';
 import paymentSeed from './seeds/paymentSeed.js';
 import reviewSeed from './seeds/reviewSeed.js';
 import ItemType from '../constants/ItemType.js';
+import preDesignedItemSeed from './seeds/preDesignedItemSeed.js';
+import { AVAILABLE } from '../constants/constants.js';
 
 dotenv.config();
 
@@ -106,6 +109,7 @@ const seed = async () => {
         const shoeAccessories = await shoeAccessorySeeding();
         const belts = await beltSeeding();
         const tieAccessories = await tieAccessorySeeding();
+        const preDesignedItems = await preDesignedItemSeeding();
 
         // await Cart.bulkCreate(cartSeed);
 
@@ -281,5 +285,26 @@ async function tieAccessorySeeding() {
     })
     return tieAccessories;
 }
+
+const preDesignedItemSeeding = async () => {
+    const preDesignedItems = [];
+    preDesignedItemSeed.forEach(async (preDesignedItem) => {
+        const { itemId, itemType, price, quantity, ...rest } = preDesignedItem;
+
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+        });
+        preDesignedItems.push(item)
+
+        await PreDesignCostume.create({
+            itemId: item.itemId,
+            rentStatus: AVAILABLE,
+            ...rest,
+        });
+    })
+    return preDesignedItems;
+};
 
 export default seed;
