@@ -31,6 +31,10 @@ const Review = sequelize.define(
             defaultValue: DataTypes.NOW,
             allowNull: false,
         },
+        image: {
+            type: DataTypes.TEXT,
+            allowNull: true,
+        },
         rating: { // RATING FROM 1 TO 5
             type: DataTypes.INTEGER,
             allowNull: false,

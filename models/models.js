@@ -27,6 +27,8 @@ import SupplyOrder from "./SupplyOrderModel.js";
 import Tie from "./TieModel.js";
 import User from "./UserModel.js";
 import Zipper from "./ZipperModel.js";
+import PaymentDone from "./PaymentDoneModel.js";
+import Notification from "./NotificationModel.js";
 
 /*
 User.hasMany(RefreshToken, { foreignKey: 'userId', sourceKey: 'userId' });
@@ -48,8 +50,7 @@ User.hasOne(StaffUser, { foreignKey: 'userId', sourceKey: 'userId', onDelete: 'C
 StaffUser.belongsTo(User, { foreignKey: 'userId', targetKey: 'userId' });
 
 // PURCHASE_ORDER - PAYMENT RELATIONSHIP (ONE TO MANY RELATIONSHIP)
-PurchaseOrder.hasMany(Payment, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
-Payment.belongsTo(PurchaseOrder, { foreignKey: 'orderId', targetKey: 'orderId', });
+Payment.hasOne(PurchaseOrder, { foreignKey: 'paymentId', sourceKey: 'invoiceNo', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 
 // CUSTOMER - PURCHASE_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 Customer.hasMany(PurchaseOrder, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
@@ -69,7 +70,7 @@ Cart.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId', });
 
 // CART - ITEM RELATIONSHIP (ONE TO MANY RELATIONSHIP)
 ItemModel.hasMany(Cart, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
-Cart.belongsTo(ItemModel, { foreignKey: 'itemId', targetKey: 'itemId',});
+Cart.belongsTo(ItemModel, { foreignKey: 'itemId', targetKey: 'itemId', });
 
 // ACCESSORY - ITEM RELATIONSHIP (ONE TO ONE RELATIONSHIP)
 ItemModel.hasOne(Accessory, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'CASCADE', onUpdate: 'CASCADE', });
@@ -143,6 +144,17 @@ SupplyOrder.belongsTo(Material, { foreignKey: 'material', targetKey: 'materialCo
 SupplyOrder.hasMany(SupplierPayment, { foreignKey: 'supplyID', sourceKey: 'supplyID', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
 SupplierPayment.belongsTo(SupplyOrder, { foreignKey: 'supplyID', targetKey: 'supplyID' });
 
+// REVIEW - ITEM RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+ItemModel.hasOne(Review, { foreignKey: 'itemId', sourceKey: 'itemId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+
+// REVIEW - PURCHASE_ORDER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+PurchaseOrder.hasMany(Review, { foreignKey: 'orderId', sourceKey: 'orderId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+
+// REVIEW - CUSTOMER RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+Customer.hasMany(Review, { foreignKey: 'customerId', sourceKey: 'userId', onDelete: 'NO ACTION', onUpdate: 'CASCADE', });
+
+// CUSTOMER - NOTIFICATION RELATIONSHIP (ONE TO MANY RELATIONSHIP)
+Notification.belongsTo(Customer, { foreignKey: 'customerId', targetKey: 'userId' });
 
 export {
 	Accessory,
@@ -174,4 +186,6 @@ export {
 	Tie,
 	User,
 	Zipper,
+	PaymentDone,
+	Notification
 };

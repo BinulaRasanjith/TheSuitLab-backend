@@ -38,6 +38,7 @@ const User = sequelize.define(
         progress: { // 1 FOR CURRENTLY USING THE SYSTEM, 0 FOR NOT USING THE SYSTEM
             type: DataTypes.BOOLEAN,
             allowNull: false,
+            defaultValue: true,
         },
         image: { // Avatar.jpeg
             type: DataTypes.TEXT,

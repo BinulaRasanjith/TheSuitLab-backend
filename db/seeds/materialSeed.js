@@ -2,6 +2,16 @@ import { FABRIC_PATTERN, FABRIC_SOLID } from "../../constants/constants.js";
 
 export default [
   {
+    materialCode: "MAT0000000000",
+    materialType: FABRIC_PATTERN,
+    materialName: "White Cotton",
+    supplier: "SUP0000000001",
+    unitPrice: 80.0,
+    color: "White",
+    colorCode: "#FFFFFF",
+    image: "pattern-white small square textured.jpg",
+  },
+  {
     materialCode: "MAT0000000001",
     materialType: FABRIC_PATTERN,
     materialName: "Cotton Grey",

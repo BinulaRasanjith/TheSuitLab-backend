@@ -13,7 +13,8 @@ import customerRoutes from './customerRoutes.js';
 import smsRoutes from './smsRoutes.js';
 import hireCostumesRoutes from './hireCostumeRoutes.js';
 import purchaseOrderRoutes from './purchaseOrderRoutes.js';
-
+import paymentRoute from "./paymentRoute.js";
+import reviewRoutes from "./reviewRoutes.js";
 
 const router = Router(); // for creating router
 
@@ -30,6 +31,9 @@ router.use("/hiring", handoverRoutes);
 router.use("/customer", customerRoutes);
 router.use("/notify", smsRoutes);
 router.use("/costume-hiring", hireCostumesRoutes);
+router.use("/payment", paymentRoute);
 router.use("/purchase-order", purchaseOrderRoutes);
+router.use("/accessories", accessoryRoutes);
+router.use("/review", reviewRoutes);
 
 export default router;

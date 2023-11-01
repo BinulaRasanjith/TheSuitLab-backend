@@ -11,17 +11,31 @@ import {
     Costume,
     Cart,
     PurchaseOrder,
+    Payment,
+    Review,
+    Tie,
+    Belt,
+    Shoe,
+    Accessory,
+    PreDesignCostume,
 } from "../models/models.js";
 import userSeed from './seeds/userSeed.js';
 import supplierSeed from './seeds/supplierSeed.js';
 import materialSeed from './seeds/materialSeed.js';
 import hireCostumesSeed from './seeds/hireCostumesSeed.js';
+import shoeAccessorySeed from './seeds/shoeAccessorySeed.js';
+import beltSeed from './seeds/beltSeed.js';
+import tieAccessorySeed from './seeds/tieAccessorySeed.js';
 import cartSeed from './seeds/cartSeed.js';
 import measurementSeed from './seeds/measurementSeed.js';
 import ItemModel from '../models/ItemModel.js';
 import purchaseOrderSeed from './seeds/purchaseOrderSeed.js';
 import costumeSeed from './seeds/costumeSeed.js';
-import { COSTUME } from '../constants/constants.js';
+import paymentSeed from './seeds/paymentSeed.js';
+import reviewSeed from './seeds/reviewSeed.js';
+import ItemType from '../constants/ItemType.js';
+import preDesignedItemSeed from './seeds/preDesignedItemSeed.js';
+import { AVAILABLE } from '../constants/constants.js';
 
 dotenv.config();
 
@@ -92,14 +106,26 @@ const seed = async () => {
 
         const costumeItems = await costumeSeeding();
         const hireCostumeItems = await hireCostumeSeeding();
+        const shoeAccessories = await shoeAccessorySeeding();
+        const belts = await beltSeeding();
+        const tieAccessories = await tieAccessorySeeding();
+        const preDesignedItems = await preDesignedItemSeeding();
 
-        const purchaseOrder1 = await PurchaseOrder.create({ ...purchaseOrderSeed[0], customerId: customer1.userId });
-        const purchaseOrder2 = await PurchaseOrder.create({ ...purchaseOrderSeed[1], customerId: customer2.userId });
-        const purchaseOrder3 = await PurchaseOrder.create({ ...purchaseOrderSeed[2], customerId: customer1.userId });
+        // await Cart.bulkCreate(cartSeed);
+
+        const payment1 = await Payment.create({ ...paymentSeed[0], customerId: customer1.userId });
+        const payment2 = await Payment.create({ ...paymentSeed[1], customerId: customer1.userId });
+        const payment3 = await Payment.create({ ...paymentSeed[2], customerId: customer1.userId });
+
+        const purchaseOrder1 = await PurchaseOrder.create({ ...purchaseOrderSeed[0], customerId: customer1.userId, paymentId: payment1.invoiceNo, totalAmount: payment1.amountPaid });
+        const purchaseOrder2 = await PurchaseOrder.create({ ...purchaseOrderSeed[1], customerId: customer2.userId, paymentId: payment2.invoiceNo, totalAmount: payment2.amountPaid });
+        const purchaseOrder3 = await PurchaseOrder.create({ ...purchaseOrderSeed[2], customerId: customer1.userId, paymentId: payment3.invoiceNo, totalAmount: payment3.amountPaid });
 
         await purchaseOrder1.addItemModels([costumeItems[0]]);
-        await purchaseOrder2.addItemModels([hireCostumeItems[1]]);
+        await purchaseOrder2.addItemModels([costumeItems[1]]);
         await purchaseOrder3.addItemModels([hireCostumeItems[2]]);
+
+        await Review.create({ ...reviewSeed[0], customerId: customer1.userId, orderId: purchaseOrder2.orderId, itemId: costumeItems[1].itemId });
 
         console.log(`${ASCII.cyan}Seeding completed${ASCII.reset}\n`);
     } catch (error) {
@@ -120,7 +146,7 @@ async function costumeSeeding() {
         } = costume;
 
         const item = await ItemModel.create({
-            itemType: COSTUME,
+            itemType: ItemType.CUSTOM_SUIT,
             price: 1000,
             quantity,
         });
@@ -159,5 +185,126 @@ async function hireCostumeSeeding() {
     }
     return hireCostumeItems;
 }
+
+async function shoeAccessorySeeding() {
+    const shoeAccessories = [];
+    shoeAccessorySeed.forEach(async (shoeAccessory) => {
+        const { itemId, itemType, price, quantity, ...rest } = shoeAccessory;
+
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+        });
+
+        shoeAccessories.push(item)
+        const { brand, itemName, material, color, accessoryType, image } = rest;
+        await Accessory.create({
+            itemId: item.itemId,
+            brand,
+            itemName,
+            material,
+            color,
+            accessoryType,
+            image,
+            quantity,
+        });
+
+        await Shoe.create({
+            itemId: item.itemId,
+            style: rest.style,
+            size: rest.size,
+        });
+    })
+    return shoeAccessories;
+}
+
+async function beltSeeding() {
+    const belts = [];
+    beltSeed.forEach(async (belt) => {
+        const { itemId, itemType, price, quantity, ...rest } = belt;
+
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+        });
+
+        belts.push(item)
+
+        const { brand, itemName, material, color, accessoryType, image } = rest;
+        await Accessory.create({
+            itemId: item.itemId,
+            brand,
+            itemName,
+            material,
+            color,
+            accessoryType,
+            image,
+            quantity,
+        });
+
+        await Belt.create({
+            itemId: item.itemId,
+            buckleType: rest.buckleType,
+            size: rest.size,
+        });
+    })
+    return belts;
+}
+
+async function tieAccessorySeeding() {
+    const tieAccessories = [];
+    tieAccessorySeed.forEach(async (tieAccessory) => {
+        const { itemId, itemType, price, quantity, ...rest } = tieAccessory;
+
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+        });
+        tieAccessories.push(item)
+
+        const { brand, itemName, material, color, accessoryType, image } = rest;
+        await Accessory.create({
+            itemId: item.itemId,
+            brand,
+            itemName,
+            material,
+            color,
+            accessoryType,
+            image,
+            quantity,
+        });
+
+        await Tie.create({
+            itemId: item.itemId,
+            width: rest.width,
+            pattern: rest.pattern,
+        });
+    })
+    return tieAccessories;
+}
+
+const preDesignedItemSeeding = async () => {
+    const preDesignedItems = [];
+    preDesignedItemSeed.forEach(async (preDesignedItem) => {
+        const { itemId, itemType, price, quantity, ...rest } = preDesignedItem;
+
+        const item = await ItemModel.create({
+            itemType,
+            price,
+            quantity,
+        });
+        preDesignedItems.push(item)
+
+        await PreDesignCostume.create({
+            itemId: item.itemId,
+            rentStatus: AVAILABLE,
+            ...rest,
+        });
+    })
+    return preDesignedItems;
+};
 
 export default seed;
