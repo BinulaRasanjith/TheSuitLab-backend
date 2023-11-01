@@ -1,5 +1,8 @@
 import { ACTIVE } from '../constants/constants.js';
-import User from '../models/UserModel.js';
+import { Customer, User } from '../models/models.js';
+
+import { CUSTOMER } from '../constants/constants.js';
+import { sendAuthDetails } from './smsController.js';
 
 export const addUser = async (req, res) => {
     const {
@@ -30,7 +33,45 @@ export const addUser = async (req, res) => {
     }
 }
 
-// get users by role
+// ADD NEW CUSTOMER BY OPERATION ASSISTANT
+export const addNewCustomer = async (req, res) => {
+
+    const {
+        mobileNo,
+        firstName,
+        lastName,
+    } = req.body;
+
+    try {
+
+        const user = await User.create({ // ADD USER
+            mobileNo: mobileNo,
+            firstName: firstName,
+            lastName: lastName,
+            role: CUSTOMER,
+            password: mobileNo,
+            progress: true,
+        });
+
+        const customer = await Customer.create({ // ADD USER ID TO CUSTOMER TABLE
+            userId: user.userId,
+        });
+
+        // SEND SMS TO CUSTOMER WITH LOGIN DETAILS
+        // const status = await sendAuthDetails(mobileNo);
+
+        res.status(201).json({ user });
+
+    } catch (error) {
+        if(error.errors[0].message === "mobileNo must be unique") {
+            res.status(500).json({ error: "Mobile number already exists!" });
+        } else {
+            res.status(500).json({ error: "error.message" });
+        }
+    }
+}
+
+// GET USERS BY ROLE
 export const getUsers = async (req, res) => {
     try {
         const roles = req.body.roles;

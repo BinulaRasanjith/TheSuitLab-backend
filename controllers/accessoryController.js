@@ -1,82 +1,77 @@
 // import { Transaction } from "sequelize";
-// import Accessory from "../models/AccessoryModel.js";
-// import ItemModel from "../models/ItemModel.js";
-// import Belt from "../models/BeltModel.js";
-// import Shoe from "../models/ShoeModel.js";
-// import Tie from "../models/TieModel.js";
-import sequelize from "../db/db.js";
-import {
-  Cart,
-  ItemModel,
-  Accessory,
-  Belt,
-  Shoe,
-  Tie,
-} from "../models/models.js";
-// import { QueryTypes } from "sequelize";
+
+import { Cart, ItemModel, Accessory, Belt, Shoe, Tie } from "../models/models.js";
 
 export const addNewAccessory = async (req, res) => {
-  try {
-    const { brand, itemName, material, color, price, accessoryType } = req.body;
+    try {
+        const { brand, itemName, material, color, price, accessoryType, image } = req.body;
 
-    // const accessoryExist = await Accessory.findOne({ where: { itemId } });
-    const accessoryExist = await Accessory.findOne({
-      where: {
-        itemName: itemName,
-      },
-    });
+        // const accessoryExist = await Accessory.findOne({ where: { itemId } });
+        const accessoryExist = await Accessory.findOne({
+            where: {
+                itemName: itemName,
+            }
+        });
 
-    if (accessoryExist) {
-      return res.status(409).json({ message: "Accessory already exists" });
-    }
+        // if (accessoryExist) { // ?
+        //     return res.status(409).json({ message: "Accessory already exists" });
+        // }
 
-    const imageFiles = req.files.map((file) => file.originalname);
+        // const imageFiles = req.files.map((file) => file.originalname);
 
-    const accessory = await Accessory.create({
-      brand,
-      itemName,
-      material,
-      color,
-      price,
-      accessoryType,
-      image: imageFiles,
-    });
+        // const accessory = await Accessory.create({
+        //     brand,
+        //     itemName,
+        //     material,
+        //     color,
+        //     price,
+        //     accessoryType,
+        //     image: imageFiles,
+        // }); //?
 
-    // const itemId = await Accessory.findOne({ where: { itemName } });
-    const thisItem = await Accessory.findOne({
-      order: [["createdAt", "DESC"]], // ASSUMING 'CREATEDAT' IS A TIMESTAMP FIELD
-    });
+        // const itemId = await Accessory.findOne({ where: { itemName } });
+        // const thisItem = await Accessory.findOne({//?
+        //     order: [['createdAt', 'DESC']] // ASSUMING 'CREATEDAT' IS A TIMESTAMP FIELD
+        // });
 
-    if (accessoryType === "belt") {
-      const { buckleType, size } = req.body;
-      const belt = await Belt.create({
-        itemId: thisItem.itemId,
-        buckleType,
-        size,
-      });
-      return res.status(201).json({ accessory, belt });
-    }
+        // if (accessoryType === "belt") {
+        //     const { buckleType, size } = req.body;
+        //     const belt = await Belt.create({
+        //         itemId: thisItem.itemId,
+        //         buckleType,
+        //         size,
+        //     });
+        //     return res.status(201).json({ accessory, belt });
+        // }
 
-    if (accessoryType === "shoe") {
-      const { style, size } = req.body;
-      const shoe = await Shoe.create({
-        itemId: thisItem.itemId,
-        style,
-        size,
-      });
-      return res.status(201).json({ accessory, shoe });
-    }
+        // if (accessoryType === "shoe") {
+        //     const { style, size } = req.body;
+        //     const shoe = await Shoe.create({
+        //         itemId: thisItem.itemId,
+        //         style,
+        //         size,
+        //     });
+        //     return res.status(201).json({ accessory, shoe });
+        // }
 
-    if (accessoryType === "tie") {
-      const { pattern, width } = req.body;
-      const tie = await Tie.create({
-        itemId: thisItem.itemId,
-        pattern,
-        width,
-      });
-      return res.status(201).json({ accessory, tie });
-    }
-  } catch (error) {
+        // if (accessoryType === "tie") {
+        //     const { pattern, width } = req.body;
+        //     const tie = await Tie.create({
+        //         itemId: thisItem.itemId,
+        //         pattern,
+        //         width,
+        //     });
+        //     return res.status(201).json({ accessory, tie });
+        // }//?
+        const images = req.files;
+        if (!req.files || req.files.length === 0) {
+            console.log("Nofiles");
+        }
+        if (image) {
+            console.log(image);
+        }
+
+    } catch (error) {
     return res.status(500).json({ message: error.message });
   }
 };
@@ -122,6 +117,36 @@ export const getAccessories = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
+export const getAccessory = async (req, res) => {
+    try {
+        const { id } = req.params;
+
+        const item = await ItemModel.findOne({ where: { itemId: id } });
+        if (!item) {
+            return res.status(404).json({ message: "Accessory not found with " + id });
+        }
+
+        const accessory = await Accessory.findOne({ where: { itemId: id } });
+
+        if (accessory.accessoryType.toLowerCase() === "belt") {
+            const belt = await Belt.findOne({ where: { itemId: id } });
+            return res.status(200).json({ accessory, belt, item });
+        }
+        if (accessory.accessoryType.toLowerCase() === "shoe") {
+            const shoe = await Shoe.findOne({ where: { itemId: id } });
+            return res.status(200).json({ accessory, shoe, item });
+        }
+        if (accessory.accessoryType.toLowerCase() === "tie") {
+            const tie = await Tie.findOne({ where: { itemId: id } });
+            return res.status(200).json({ accessory, tie, item });
+        }
+
+        return res.status(200).json(accessory);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+}
 
 export const getAccessoryById = async (req, res) => {
   try {

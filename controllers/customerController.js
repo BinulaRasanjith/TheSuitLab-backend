@@ -4,6 +4,36 @@ import {
   TrouserMeasurements,
 } from "../models/CustomerModel.js";
 
+export const getCustomers = async (req, res) => {
+    try {
+        const { id } = req.body;
+
+        let customers;
+        if (id) { // IF ID IS SPECIFIED
+            customers = await User.findAll({
+                where: {
+                    userId: id,
+                    role: 'customer',
+                },
+                include: Customer,
+            });
+        } else { // IF ID IS NOT SPECIFIED
+            customers = await User.findAll({
+                where: {
+                    role: 'customer',
+                },
+                include: Customer,
+            });
+        }
+        return res.status(200).json({ customers });
+
+    } catch (error) {
+        console.log(error); // TODO: REMOVE AFTER TESTING
+        return res.status(500).json({ message: error.message });
+    }
+
+}
+
 export const setCoatMeasurements = async (req, res) => {
   const { userId } = req.user;
   const { measurements } = req.body;
