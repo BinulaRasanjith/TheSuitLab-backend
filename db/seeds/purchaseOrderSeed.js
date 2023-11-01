@@ -3,7 +3,7 @@ import PurchaseOrderStatus from "../../constants/PurchaseOrderStatus.js";
 
 export default [
     {
-        orderId: "PO000000000000001",
+        orderId: "PO000001000000001",
         quantity: 1,
         paymentMethod: PaymentType.CARD,
         status: PurchaseOrderStatus.PLACED,
@@ -11,7 +11,7 @@ export default [
         collectedDate: null,
     },
     {
-        orderId: "PO000000000000002",
+        orderId: "PO000000010000002",
         quantity: 1,
         paymentMethod: PaymentType.CARD,
         status: PurchaseOrderStatus.COLLECTED,
@@ -19,7 +19,7 @@ export default [
         collectedDate: "2021-09-10",
     },
     {
-        orderId: "PO000000000000003",
+        orderId: "PO000000100000003",
         quantity: 1,
         paymentMethod: PaymentType.CARD,
         status: PurchaseOrderStatus.PLACED,

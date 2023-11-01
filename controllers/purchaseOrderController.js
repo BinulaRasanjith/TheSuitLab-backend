@@ -31,9 +31,36 @@ export const getCustomersPurchaseOrders = async (req, res) => {
         const purchaseOrdersWithItems = await Promise.all(
             purchaseOrders.map(async (purchaseOrder) => {
                 const itemModels = await purchaseOrder.getItemModels();
+
+                // get data for each item
+                for (const itemModel of itemModels) {
+                    switch (itemModel.itemType) {
+                        case ItemType.CUSTOM_SUIT:  // CUSTOM SUIT
+                            const costume = await Costume.findOne({
+                                where: { itemId: itemModel.itemId },
+                            });
+                            itemModel.costume = costume.toJSON();
+                            break;
+                        case ItemType.HIRE_SUIT: // HIRE SUIT
+                            const hireCostume = await HireCostume.findOne({
+                                where: { itemId: itemModel.itemId },
+                            });
+                            itemModel.hireCostume = hireCostume.toJSON();
+                            break;
+                        case ItemType.ACCESSORY: // ACCESSORY
+                            const accessory = await Accessory.findOne({
+                                where: { itemId: itemModel.itemId },
+                            });
+                            itemModel.accessory = accessory.toJSON();
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
                 purchaseOrder = purchaseOrder.toJSON();
                 purchaseOrder.items = itemModels;
-                console.log(purchaseOrder.items);
+                // console.log(purchaseOrder.items);
                 return purchaseOrder;
             })
         );
@@ -74,7 +101,7 @@ export const createPurchaseOrder = async (req, res) => {
 
         const paymentDone = await PaymentDone.findByPk(paymentDoneId);
 
-        if (paymentDone && paymentDone.done) {
+        if (paymentDone) {
             const payment = await Payment.create({
                 customerId,
                 method,
