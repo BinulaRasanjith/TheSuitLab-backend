@@ -1,4 +1,4 @@
-import { HireCostume, ItemModel } from "../models/models.js";
+import { HireCostume, ItemModel, Review } from "../models/models.js";
 
 export const getHireCostumes = async (req, res) => {
   try {
@@ -19,6 +19,19 @@ export const getHireCostumes = async (req, res) => {
               itemId: hireCostume.itemId,
             },
           });
+
+          const reviews = await Review.findAll({
+            where: {
+              itemId: hireCostume.itemId,
+            },
+          });
+
+          const rating =
+            reviews && reviews.length > 0
+              ? reviews.reduce((acc, review) => acc + review.rating, 0) /
+                reviews.length
+              : 0;
+
           const ret = {
             itemId: hireCostume.itemId,
             itemName: hireCostume.name,
@@ -26,6 +39,7 @@ export const getHireCostumes = async (req, res) => {
             color: hireCostume.color,
             price: item.price,
             status: hireCostume.rentStatus,
+            rating,
           };
           return ret;
         })

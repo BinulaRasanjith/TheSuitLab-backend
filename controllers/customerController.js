@@ -1,4 +1,11 @@
-import { Customer, Cart, ItemModel, User, PurchaseOrder, Costume } from "../models/models.js";
+import {
+  Customer,
+  Cart,
+  ItemModel,
+  User,
+  PurchaseOrder,
+  Costume,
+} from "../models/models.js";
 import {
   CoatMeasurements,
   TrouserMeasurements,
@@ -74,6 +81,27 @@ export const getTrouserMeasurements = async (req, res) => {
   }
 };
 
+// export const getAllMeasurements = async (req, res) => {
+
+//   const { userId } = req.params;
+
+//   try {
+//     const customer = await Customer.findOne({ where: { userId } });
+//     if (!customer) {
+//       res.status(404).json({ message: "Customer not found" });
+//     } else {
+//       res.status(200).json({
+//         coatMeasurements: customer.coatMeasurements,
+//         trouserMeasurements: customer.trouserMeasurements,
+//       });
+//     }
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).json({ message: "Internal server error" });
+//   }
+
+// };
+
 // export const setCartItem = async (req, res) => {
 //     try {
 //         const userId = req.user.userId;
@@ -91,7 +119,16 @@ export const getTrouserMeasurements = async (req, res) => {
 
 export const setNewCostumeToItemModel = async (req, res) => {
   try {
-    const { itemType, price, quantity, status, costumeType, measurementType, measurements, customization } = req.body;
+    const {
+      itemType,
+      price,
+      quantity,
+      status,
+      costumeType,
+      measurementType,
+      measurements,
+      customization,
+    } = req.body;
     const item = await ItemModel.create({
       itemType,
       price,
@@ -106,7 +143,7 @@ export const setNewCostumeToItemModel = async (req, res) => {
       measurementType,
       measurements,
       quantity,
-    })
+    });
     res.status(201).json({ itemId: item.itemId });
   } catch (error) {
     console.log(error);

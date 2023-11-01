@@ -12,6 +12,7 @@ import {
   Belt,
   Shoe,
   Tie,
+  Review,
 } from "../models/models.js";
 // import { QueryTypes } from "sequelize";
 
@@ -100,6 +101,19 @@ export const getAccessories = async (req, res) => {
               itemId: accessory.itemId,
             },
           });
+
+          const reviews = await Review.findAll({
+            where: {
+              itemId: accessory.itemId,
+            },
+          });
+
+          const rating =
+            reviews && reviews.length > 0
+              ? reviews.reduce((acc, review) => acc + review.rating, 0) /
+                reviews.length
+              : 0;
+
           const ret = {
             itemId: accessory.itemId,
             itemName: accessory.itemName,
@@ -107,6 +121,7 @@ export const getAccessories = async (req, res) => {
             brand: accessory.brand,
             price: item.price,
             status: item.status,
+            rating,
           };
           return ret;
         })
