@@ -11,7 +11,7 @@ const Tie = sequelize.define(
             unique: true,
             PrimaryKey: true,
         },
-        Pattern: { // 'Plain', 'Striped', 'Checked', 'Dotted'
+        pattern: { // 'Plain', 'Striped', 'Checked', 'Dotted'
             type: DataTypes.STRING,
             allowNull: false,
         },
