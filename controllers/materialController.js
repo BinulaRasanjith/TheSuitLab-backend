@@ -10,16 +10,17 @@ import sequelize from "../db/db.js";
 // VIEW ALL MATERIALS
 export const getMaterials = async (req, res) => {
     try {
-        const { type } = req.body;
+        const { materialType } = req.query;
+        console.log(req.params);
 
-        let materials;
-        if (type) { // IF TYPE IS SPECIFIED
-            materials = await Material.findAll({ where: { materialType: type } });
+        if (materialType) { // IF TYPE IS SPECIFIED
+            const materials = await Material.findAll({ where: { materialType: materialType } });
+            return res.status(200).json({ materials });
         } else { // IF TYPE IS NOT SPECIFIED
-            materials = await Material.findAll();
+            const materials = await Material.findAll();
+            return res.status(200).json({ materials });
         }
 
-        return res.status(200).json({ materials });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error.message });
