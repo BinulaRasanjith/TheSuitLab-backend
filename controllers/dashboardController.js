@@ -168,8 +168,8 @@ const findIncomeTotal = async () => {
         const twoWeekAgo = moment().subtract(14, 'days').toDate();
 
         // CALCULATING WEEKLY INCOME AND PERCENTAGE
-        const thisWeekIncome = await Payment.sum('amountPaid', { where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
-        const lastWeekIncome = await Payment.sum('amountPaid', { where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } });
+        const thisWeekIncome = Number(await Payment.sum('amountPaid', { where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } }));
+        const lastWeekIncome = Number(await Payment.sum('amountPaid', { where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } }));
         const incomePercentage = (thisWeekIncome - lastWeekIncome) / lastWeekIncome * 100;
 
         const result = {
