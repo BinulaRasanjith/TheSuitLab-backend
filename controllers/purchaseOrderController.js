@@ -199,7 +199,6 @@ export const getPurchaseOrder = async (req, res) => {
                             where: { itemId: itemModel.itemId },
                         });
                         itemModel.costume = costume.toJSON();
-                        console.log(costume);
                         break;
                     case ItemType.HIRE_SUIT:
                         const hireCostume = await HireCostume.findOne({
@@ -357,6 +356,7 @@ export const reverseUpdateToCollected = async (req, res) => {
 
 export const assignTailor = async (req, res) => {
     const { itemId, tailor } = req.body;
+    console.log(req.body);
     try {
         const costume = await Costume.findOne({ where: { itemId } });
         if (!costume) {
@@ -386,6 +386,39 @@ export const getAssignedTailorForCostume = async (req, res) => {
         const tailor = await User.findOne({ where: { userId: costume.tailor } });
 
         res.status(200).json({ tailor });
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const getTailorsPurchaseOrders = async (req, res) => {
+    try {
+        const { tailorId } = req.params;
+        const costumes = await Costume.findAll({
+            where: { tailor: tailorId }
+        });
+
+        const items = await Promise.all(
+            costumes.map(async (costume) => {
+                const item = await ItemModel.findOne({
+                    where: { itemId: costume.itemId }
+                });
+                return item;
+            })
+        );
+
+        console.log(items);
+
+        const purchaseOrders = await Promise.all(
+            items.map(async (item) => {
+                const purchaseOrder = await item.getPurchaseOrders()
+                return purchaseOrder[0];
+            })
+        );
+
+        console.log(purchaseOrders);
+
+        res.status(200).json(purchaseOrders);
     } catch (error) {
         console.log(error)
     }

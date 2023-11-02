@@ -5,41 +5,90 @@ import {
   User,
   PurchaseOrder,
   Costume,
+  PreDesignCostume,
+  Review,
 } from "../models/models.js";
 import {
   CoatMeasurements,
   TrouserMeasurements,
 } from "../models/CustomerModel.js";
 
+export const getRecentDesigns = async (req, res) => {
+  try {
+    let preDesignCostumes;
+    let PreDesignCostumesJson;
+
+    preDesignCostumes = await PreDesignCostume.findAll();
+
+    PreDesignCostumesJson = await Promise.all(
+      preDesignCostumes.map(async (costume) => {
+        const item = await ItemModel.findOne({
+          where: {
+            itemId: costume.itemId,
+          },
+        });
+
+        const reviews = await Review.findAll({
+          where: {
+            itemId: costume.itemId,
+          },
+        });
+
+        const rating =
+          reviews && reviews.length > 0
+            ? reviews.reduce((acc, review) => acc + review.rating, 0) /
+              reviews.length
+            : 0;
+
+        const ret = {
+          itemId: costume.itemId,
+          itemName: costume.name,
+          image: costume.images,
+          color: costume.color,
+          price: item.price,
+          status: costume.rentStatus,
+          rating,
+        };
+        return ret;
+      })
+    );
+    // console.log(PreDesignCostumesJson);
+    res.status(200).json(PreDesignCostumesJson);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 export const getCustomers = async (req, res) => {
-    try {
-        const { id } = req.body;
+  try {
+    const { id } = req.body;
 
-        let customers;
-        if (id) { // IF ID IS SPECIFIED
-            customers = await User.findAll({
-                where: {
-                    userId: id,
-                    role: 'customer',
-                },
-                include: Customer,
-            });
-        } else { // IF ID IS NOT SPECIFIED
-            customers = await User.findAll({
-                where: {
-                    role: 'customer',
-                },
-                include: Customer,
-            });
-        }
-        return res.status(200).json({ customers });
-
-    } catch (error) {
-        console.log(error); // TODO: REMOVE AFTER TESTING
-        return res.status(500).json({ message: error.message });
+    let customers;
+    if (id) {
+      // IF ID IS SPECIFIED
+      customers = await User.findAll({
+        where: {
+          userId: id,
+          role: "customer",
+        },
+        include: Customer,
+      });
+    } else {
+      // IF ID IS NOT SPECIFIED
+      customers = await User.findAll({
+        where: {
+          role: "customer",
+        },
+        include: Customer,
+      });
     }
-
-}
+    return res.status(200).json({ customers });
+  } catch (error) {
+    console.log(error); // TODO: REMOVE AFTER TESTING
+    return res.status(500).json({ message: error.message });
+  }
+};
 
 export const setCoatMeasurements = async (req, res) => {
   const { userId } = req.user;
