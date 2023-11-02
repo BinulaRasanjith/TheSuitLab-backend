@@ -18,7 +18,12 @@ export default [
     color: "Black",
     price: 4000,
     rentStatus: AVAILABLE,
-    images: ["1.webp", "3.webp", "4.webp", "5.webp"],
+    images: [
+      "men's_floral_suit_jacket_1.jpg",
+      "men's_floral_suit_jacket_2.jpg",
+      "men's_floral_suit_jacket_3.jpg",
+      "men's_floral_suit_jacket_4.jpg",
+    ],
   },
   {
     itemType: itemType.HIRE_SUIT,
@@ -31,9 +36,15 @@ export default [
       [M]: 1,
       [L]: 3,
     },
-    color: "red",
+    color: "Caremal",
     rentStatus: AVAILABLE,
-    images: ["carmel.webp"],
+    images: [
+      "caremal_color_jacket_1.jpg",
+      "caremal_color_jacket_2.jpg",
+      "caremal_color_jacket_3.jpg",
+      "caremal_color_jacket_4.jpg",
+      "caremal_color_jacket_5.jpg",
+    ],
   },
   {
     itemType: itemType.HIRE_SUIT,
@@ -46,7 +57,7 @@ export default [
       [M]: 1,
       [L]: 3,
     },
-    color: "Black",
+    color: "Red",
     rentStatus: AVAILABLE,
     images: [
       "mens_sport_coat_casual_blazer_1.jpg",
@@ -54,6 +65,21 @@ export default [
       "mens_sport_coat_casual_blazer_3.jpg",
       "mens_sport_coat_casual_blazer_4.jpg",
     ],
+  },
+  {
+    itemType: itemType.HIRE_SUIT,
+    price: 3200,
+    quantity: 1,
+    name: "Formal Dress Daily Business Suit Jacket",
+    costumeType: JACKET,
+    size: {
+      [S]: 3,
+      [M]: 1,
+      [L]: 3,
+    },
+    color: "Yellow",
+    rentStatus: AVAILABLE,
+    images: ["coat-2-1.jpg", "coat-2-2.jpg", "coat-2-3.jpg", "coat-2-4.jpg"],
   },
   {
     itemType: itemType.HIRE_SUIT,

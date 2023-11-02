@@ -143,7 +143,30 @@ export const getHireCostumeById = async (req, res) => {
     });
 
     if (hireCostume) {
-      res.status(200).json({ hireCostume });
+      res.status(200).json(hireCostume);
+    } else {
+      res.status(404).json({ message: "Hire costume not found" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+// TO SHOW THE DETAILS OF A SPECIFIC HIRE COSTUME FOR OPERATION ASSISTANT
+export const retrieveHireCostumeById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const hireCostume = await HireCostume.findOne({
+      where: { itemId: id },
+    });
+
+    const item = await ItemModel.findOne({
+      where: { itemId: id },
+    });
+
+    if (hireCostume && item) {
+      res.status(200).json({ ...hireCostume.toJSON(), ...item.toJSON() });
     } else {
       res.status(404).json({ message: "Hire costume not found" });
     }
