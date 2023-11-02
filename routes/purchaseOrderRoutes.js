@@ -8,6 +8,7 @@ import {
   getCustomersPurchaseOrders,
   assignTailor,
   getAssignedTailorForCostume,
+  getTailorsPurchaseOrders
 } from "../controllers/purchaseOrderController.js";
 
 const router = Router();
@@ -20,5 +21,6 @@ router.post("/", createPurchaseOrder);
 router.post("/get-price", getPrice);
 router.post("/assign-tailor", assignTailor);
 router.get("/get-assigned-tailor/:itemId", getAssignedTailorForCostume);
+router.get("/tailor/:tailorId", getTailorsPurchaseOrders);
 
 export default router;
