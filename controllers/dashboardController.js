@@ -1,5 +1,4 @@
 // import Payment from "../models/PaymentModel.js";
-// import CostumeOrder from "../models/PurchaseOrderModel.js";
 // import PurchaseOrder from "../models/PurchaseOrderModel.js";
 
 // import Button from "../models/ButtonModel.js";
@@ -62,7 +61,7 @@ const calculateProcessingOrderCount = async () => {
         const weekAgo = moment().subtract(7, 'days').toDate();
 
         // CALCULATING THIS WEEK PROCESSING ORDERS AND PERCENTAGE
-        const processingCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, }, status: 'Processing' } });
+        const processingCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, },} });
         // const totalCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         const totalCount = await PurchaseOrder.getItemModels({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         let percentageChange;
@@ -147,8 +146,8 @@ const calculateOrderCount = async () => {
         const twoWeekAgo = moment().subtract(14, 'days').toDate();
 
         // CALCULATING WEEKLY ORDERS AND PERCENTAGE
-        const thisWeekOrderCount = await CostumeOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
-        const lastWeekOrderCount = await CostumeOrder.count({ where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } });
+        const thisWeekOrderCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
+        const lastWeekOrderCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } });
         let orderPresentage;
 
         if(lastWeekOrderCount && thisWeekOrderCount) {
@@ -226,7 +225,7 @@ const findIncomeTotal = async () => {
 const getRecentOrders = async () => {
     try {
         // GET RECENT 5 RECORDS
-        const recentOrders = await CostumeOrder.findAll({
+        const recentOrders = await PurchaseOrder.findAll({
             order: [['createdAt', 'DESC']],
             limit: 5,
         });
@@ -258,10 +257,10 @@ const getWeeklyPerformance = async (req, res) => {
             const lastWeekEndDate = moment().subtract(i + 6, 'days').toDate();
 
             // RETRIEVE RECORDS FOR THE CURRENT DAY'S DATE RANGE
-            const thisWeekCount = await CostumeOrder.count({
+            const thisWeekCount = await PurchaseOrder.count({
                 where: { createdAt: { [Op.gte]: startDate, [Op.lt]: endDate } },
             });
-            const lastWeekCount = await CostumeOrder.count({
+            const lastWeekCount = await PurchaseOrder.count({
                 where: { createdAt: { [Op.gte]: lastWeekStartDate, [Op.lt]: lastWeekEndDate } },
             });
 
