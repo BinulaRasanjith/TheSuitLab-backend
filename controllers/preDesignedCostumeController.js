@@ -50,10 +50,61 @@ export const getPreDesignedCostumes = async (req, res) => {
         })
       );
     } else {
-      PreDesignCostumes = await PreDesignCostume.findAll();
+      preDesignCostumes = await PreDesignCostume.findAll();
     }
 
     res.status(200).json(PreDesignCostumesJson);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const retrievePreDesignedCostumes = async (req, res) => {
+  try {
+    let preDesignCostumes;
+    let PreDesignCostumesJson;
+
+    preDesignCostumes = await PreDesignCostume.findAll();
+
+    if (preDesignCostumes.length > 0) {
+      PreDesignCostumesJson = await Promise.all(
+        preDesignCostumes.map(async (costume) => {
+          const item = await ItemModel.findOne({
+            where: {
+              itemId: costume.itemId,
+            },
+          });
+
+          const reviews = await Review.findAll({
+            where: {
+              itemId: costume.itemId,
+            },
+          });
+
+          const rating =
+            reviews && reviews.length > 0
+              ? reviews.reduce((acc, review) => acc + review.rating, 0) /
+                reviews.length
+              : 0;
+
+          const ret = {
+            itemId: costume.itemId,
+            itemName: costume.name,
+            image: costume.images,
+            color: costume.color,
+            price: item.price,
+            status: costume.rentStatus,
+            rating,
+          };
+          return ret;
+        })
+      );
+      console.log(PreDesignCostumesJson);
+      // res.status(200).json(PreDesignCostumesJson);
+    } else {
+      res.status(404).json({ message: "No pre-designed costumes found" });
+    }
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Internal server error" });
@@ -81,7 +132,7 @@ export const getPreDesignedCostumeById = async (req, res) => {
       res.status(200).json({
         ...costume.toJSON(),
         ...itemModel.toJSON(),
-        ...review.toJSON(),
+        rating: review ? review.rating : 0,
       });
     } else {
       res.status(404).json({ message: "Hire costume not found" });

@@ -16,11 +16,12 @@ import {
   getCustomers,
   getAllCustomersWithOrderCount,
   getCartItemById,
+  getRecentDesigns,
 } from "../controllers/customerController.js";
 
 const router = Router();
 
-
+router.use("/", getRecentDesigns);
 router.get("/details", getCustomers);
 router.post("/set-coat-measurements", authJWT, setCoatMeasurements);
 router.post("/set-trouser-measurements", authJWT, setTrouserMeasurements);
