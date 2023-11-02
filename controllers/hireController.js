@@ -152,26 +152,3 @@ export const updateHire = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 }
-
-
-// export const updateHire = async (req, res) => {
-//     try {
-//         const { referenceNo } = req.params; // Assuming you pass the return ID in the URL
-//         const { reason } = req.body;
-
-//         // Find the return by ID
-//         const returnObj = await Hires.findByPk(referenceNo);
-
-//         if (!returnObj) {
-//             return res.status(404).json({ message: "Return not found" });
-//         }
-
-//         // Update the reason field
-//         returnObj.reason = reason;
-//         await returnObj.save();
-
-//         res.status(200).json(returnObj);
-//     } catch (error) {
-//         res.status(500).json({ message: error.message });
-//     }
-// }

@@ -1,4 +1,4 @@
-import { ItemModel } from "../models/models.js";
+import { Customer, ItemModel, PurchaseOrder, User } from "../models/models.js";
 
 export const removeItem = async (req, res) => {
     try {
@@ -16,3 +16,30 @@ export const removeItem = async (req, res) => {
         return res.status(500).json({ message: error.message });
     }
 }
+
+export const recentOrders = async (req, res) => {
+    try {
+        const recentOrders = await PurchaseOrder.findAll({
+            order: [['createdAt', 'DESC']],
+            limit: 5,
+            include: [
+                {
+                    model: Customer,
+                    required: true,
+                    include: [
+                        {
+                            model: User,
+                            required: true,
+                            attributes: ['firstName', 'lastName'],
+                        },
+                    ],
+                    attributes: ['userId',],
+                },
+            ],
+            attributes: ['quantity', 'totalAmount', 'status'],
+        });
+        return res.status(200).json(recentOrders);
+    } catch (error) {
+        return res.status(500).json({ message: error.message });
+    }
+};

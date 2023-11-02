@@ -1,5 +1,4 @@
 import { HireCostume, ItemModel, Review } from "../models/models.js";
-// import { HireCostume, ItemModel, } from "../models/models.js";
 
 export const getHireCostumes2 = async (req, res) => {
   try {

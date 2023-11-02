@@ -1,6 +1,7 @@
 // TABLE FOR PURCHASE ORDERS
 import { DataTypes } from "sequelize";
 import sequelize from "../db/db.js";
+import PurchaseOrderStatus from "../constants/PurchaseOrderStatus.js";
 
 sequelize.query(`CREATE SEQUENCE IF NOT EXISTS order_code_seq;`);
 
@@ -38,6 +39,7 @@ const PurchaseOrder = sequelize.define(
         status: { // TODO: IS THIS NEEDED?
             type: DataTypes.STRING,
             allowNull: true,
+            defaultValue: PurchaseOrderStatus.PLACED,
         },
         orderedDate: { // DATE WHEN THE ORDER IS PLACED
             type: DataTypes.DATE,

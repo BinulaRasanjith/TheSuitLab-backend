@@ -14,9 +14,11 @@ import smsRoutes from "./smsRoutes.js";
 import hireCostumesRoutes from "./hireCostumeRoutes.js";
 import purchaseOrderRoutes from "./purchaseOrderRoutes.js";
 import paymentRoute from "./paymentRoute.js";
+import rentalRoutes from "./rentalRoutes.js";
 import reviewRoutes from "./reviewRoutes.js";
 import preDesignedItemRoutes from "./preDesignedItemRoutes.js";
 import notificationRoutes from "./notificationRoutes.js"; // for routing to notification endpoints
+import dashBoardRoutes from "./dashboardRoutes.js";
 
 const router = Router(); // for creating router
 
@@ -28,7 +30,8 @@ router.use("/user", userRoutes);
 router.use("/material", materialRoutes);
 router.use("/supplier", supplierRoutes);
 router.use("/returns", returnRoutes);
-router.use("/hiring", handoverRoutes);
+router.use("/hiring", rentalRoutes);
+router.use("/handover", handoverRoutes);
 router.use("/customer", customerRoutes);
 router.use("/notify", smsRoutes);
 router.use("/costume-hiring", hireCostumesRoutes);
@@ -38,5 +41,6 @@ router.use("/accessories", accessoryRoutes);
 router.use("/review", reviewRoutes);
 router.use("/pre-designed-costumes", preDesignedItemRoutes);
 router.use("/notification", notificationRoutes);
+router.use("/dashboard2", dashBoardRoutes);
 
 export default router;

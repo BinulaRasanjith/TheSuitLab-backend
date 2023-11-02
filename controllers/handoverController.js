@@ -1,6 +1,9 @@
-import HireCostumes from "../models/HireCostumesModel.js";
-import Hires from "../models/RentModel.js";
-import Handovers from "../models/HandoverModel.js";
+// import { HireCostume, Handover, Rent, User } from "../model/models.js";
+import Handover from "../models/HandoverModel.js";
+import HireCostume from "../models/HireCostumesModel.js";
+import Rent from "../models/RentModel.js";
+import User from "../models/UserModel.js";
+import Customer from "../models/CustomerModel.js";
 
 import { Op } from "sequelize";
 
@@ -16,7 +19,7 @@ export const handoverCostume = async (req, res) => {
             total,
         } = req.body;
 
-        const requestedCostume = await HireCostumes.findOne({ where: { itemId: costume, } });
+        const requestedCostume = await HireCostume.findOne({ where: { itemId: costume, } });
 
         if (!requestedCostume) {
             return res.status(404).json({ message: "Requested costume could not be found!" });
@@ -26,7 +29,7 @@ export const handoverCostume = async (req, res) => {
             await requestedCostume.save();
 
             // ADDING THE HANDOVER RECORD
-            await Handovers.create({
+            await Handover.create({
                 rentalId: rentalId,
                 costumeId: costume,
                 handoveredTo: req.user.name,
@@ -51,27 +54,26 @@ export const getHiredItems = async (req, res) => {
         const { id } = req.params;
         const today = new Date();
 
-        const notHandovered = await HireCostumes.findAll({
+        const notHandovered = await Rent.findAll({
             where: {
-                rentStatus: 'Hired',
+                willHandover: { [Op.gte]: today },
             },
-            attributes: ['itemId'],
+            include: [
+                {
+                    model: Customer,
+                    include: [
+                        {
+                            model: User,
+                            attributes: ['firstName', 'lastName',],
+                        },
+                    ],
+                    attributes: ['userId', ]
+                },
+            ],
+            attributes: ['rentalId', 'costume', 'rentedDate', 'willHandover', 'mobileNo'],
         });
 
-        const hires = await Hires.findAll({
-            where: {
-                [Op.or]: [
-                    { willHandover: { [Op.gt]: today } },
-                    { itemId: { [Op.in]: notHandovered } },
-                ],
-                [Op.or]: [
-                    { customerId: { [Op.like]: `%${id}%` } },
-                    { costume: { [Op.like]: `%${id}%` } },
-                    { mobileNo: { [Op.like]: `%${id}%` } }
-                ]
-            }
-        });
-        res.status(200).json(hires);
+        res.status(200).json(notHandovered);
     } catch (error) {
         res.status(404).json({ message: error.message });
     }

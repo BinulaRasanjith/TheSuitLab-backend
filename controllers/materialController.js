@@ -11,7 +11,6 @@ import sequelize from "../db/db.js";
 export const getMaterials = async (req, res) => {
     try {
         const { materialType } = req.query;
-        console.log(req.params);
 
         if (materialType) { // IF TYPE IS SPECIFIED
             const materials = await Material.findAll({ where: { materialType: materialType } });

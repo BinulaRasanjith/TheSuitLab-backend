@@ -2,15 +2,15 @@ import { Router } from "express";
 
 // import { authJWT, authUserRole } from "../middlewares/authUser.js";
 // import { OPERATION_ASSISTANT } from "../constants/constants.js";
-import { addReturn, getReturns, removeReturn, updateReturn } from "../controllers/returnController.js";
+import { handoverCostume, getHiredItems, cancelHandover, updateHandover } from "../controllers/handoverController.js";
 
 const router = Router();
 
 // const allowedRoles = [ OPERATION_ASSISTANT ];
 
-router.post("/", addReturn);
-router.get("/", getReturns);
-router.put("/", updateReturn);
-router.delete("/:id", removeReturn);
+router.post("/", handoverCostume);
+router.get("/", getHiredItems);
+router.put("/", updateHandover);
+router.delete("/:id", cancelHandover);
 
 export default router;

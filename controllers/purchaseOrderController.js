@@ -19,6 +19,7 @@ import {
 import ItemType from "../constants/itemType.js";
 
 import { sendNotification } from '../utils/notificationUtil.js';
+import CostumeProgress from "../constants/CostumeProgress.js";
 
 export const getCustomersPurchaseOrders = async (req, res) => {
     try {
@@ -30,42 +31,61 @@ export const getCustomersPurchaseOrders = async (req, res) => {
         // get items for each purchase order
         const purchaseOrdersWithItems = await Promise.all(
             purchaseOrders.map(async (purchaseOrder) => {
-                const itemModels = await purchaseOrder.getItemModels();
+                let itemModels = await purchaseOrder.getItemModels();
 
-                // get data for each item
-                for (const itemModel of itemModels) {
-                    switch (itemModel.itemType) {
-                        case ItemType.CUSTOM_SUIT:  // CUSTOM SUIT
-                            const costume = await Costume.findOne({
-                                where: { itemId: itemModel.itemId },
-                            });
-                            itemModel.costume = costume.toJSON();
-                            break;
-                        case ItemType.HIRE_SUIT: // HIRE SUIT
-                            const hireCostume = await HireCostume.findOne({
-                                where: { itemId: itemModel.itemId },
-                            });
-                            itemModel.hireCostume = hireCostume.toJSON();
-                            break;
-                        case ItemType.ACCESSORY: // ACCESSORY
-                            const accessory = await Accessory.findOne({
-                                where: { itemId: itemModel.itemId },
-                            });
-                            itemModel.accessory = accessory.toJSON();
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                itemModels = await Promise.all(
+                    itemModels.map(async (itemModel) => {
+                        itemModel = itemModel.toJSON();
+                        switch (itemModel.itemType) {
+                            case ItemType.CUSTOM_SUIT:  // CUSTOM SUIT
+                                const costume = await Costume.findOne({
+                                    where: { itemId: itemModel.itemId },
+                                });
+                                itemModel.costume = costume.toJSON();
+                                break;
+                            case ItemType.HIRE_SUIT: // HIRE SUIT
+
+                                const hireCostume = await HireCostume.findOne({
+                                    where: { itemId: itemModel.itemId },
+
+                                });
+                                itemModel.hireCostume = hireCostume.toJSON();
+                                break;
+                            case ItemType.ACCESSORY: // ACCESSORY
+
+                                const accessory = await Accessory.findOne({
+                                    where: { itemId: itemModel.itemId },
+                                });
+                                itemModel.accessory = accessory.toJSON();
+                                break;
+                            default:
+                                break;
+                        }
+                        return itemModel;
+                    })
+                );
 
                 purchaseOrder = purchaseOrder.toJSON();
                 purchaseOrder.items = itemModels;
-                // console.log(purchaseOrder.items);
+
                 return purchaseOrder;
             })
         );
 
-        res.status(200).json(purchaseOrdersWithItems);
+        const cleanArray = []
+
+        purchaseOrdersWithItems.forEach((purchaseOrder) => {
+            const { items, ...order } = purchaseOrder;
+
+            items.forEach((item) => {
+                cleanArray.push({
+                    ...order,
+                    ...item
+                })
+            })
+        });
+
+        res.status(200).json(cleanArray);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
@@ -344,11 +364,28 @@ export const assignTailor = async (req, res) => {
         }
 
         costume.tailor = tailor;
+        costume.progress = CostumeProgress.PROCESSING;
         await costume.save();
 
         sendNotification(tailor, "New Costume", "You have been assigned to a new costume");
 
         res.status(200).json({ message: "Tailor assigned" });
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const getAssignedTailorForCostume = async (req, res) => {
+    const { itemId } = req.params;
+    try {
+        const costume = await Costume.findOne({ where: { itemId } });
+        if (!costume) {
+            return res.status(404).json({ message: "Costume not found" });
+        }
+
+        const tailor = await User.findOne({ where: { userId: costume.tailor } });
+
+        res.status(200).json({ tailor });
     } catch (error) {
         console.log(error)
     }
