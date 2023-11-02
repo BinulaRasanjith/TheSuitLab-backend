@@ -42,7 +42,13 @@ const calculateProcessingOrderCount = async () => {
         const processingCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, }, status: 'Processing' } });
         // const totalCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         const totalCount = await PurchaseOrder.getItemModels({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
-        const percentageChange = processingCount / totalCount * 100;
+        let percentageChange;
+
+        if(processingCount && totalCount) {
+            percentageChange = processingCount / totalCount * 100;
+        } else {
+            percentageChange = 0;
+        }
 
         const result = {
             processingCount: processingCount,
@@ -81,7 +87,13 @@ const calculateLowStockMaterialCount = async () => {
         // CALCULATE TOTAL LOW STOCK MATERIAL COUNT
         const lowStockMaterials = lowStockButtons + lowStockFabrics + lowStockStirngs + lowStockInterlinings + lowStockZippers;
         const totalMaterials = totalButtonStock + totalFabricStock + totalStringsStock + totalInterliningsStock + totalZippersStock;
-        const lowerPresentage = lowStockMaterials / totalMaterials * 100;
+        let lowerPresentage;
+
+        if(lowStockMaterials && totalMaterials) {
+            lowerPresentage = lowStockMaterials / totalMaterials * 100;
+        } else {
+            lowerPresentage = 0;
+        }
 
         const result = {
             lowStockMaterials: lowStockMaterials,
@@ -114,7 +126,17 @@ const calculateOrderCount = async () => {
         // CALCULATING WEEKLY ORDERS AND PERCENTAGE
         const thisWeekOrderCount = await CostumeOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         const lastWeekOrderCount = await CostumeOrder.count({ where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } });
-        const orderPresentage = (thisWeekOrderCount - lastWeekOrderCount) / lastWeekOrderCount * 100;
+        let orderPresentage;
+
+        if(lastWeekOrderCount && thisWeekOrderCount) {
+            orderPresentage = (thisWeekOrderCount - lastWeekOrderCount) / lastWeekOrderCount * 100;
+        } else if (thisWeekOrderCount) {
+            orderPresentage = (thisWeekOrderCount) * 100;
+        } else if (lastWeekOrderCount) {
+            orderPresentage = -(lastWeekOrderCount) * 100;
+        } else {
+            orderPresentage = 0;
+        }
         
         const result = {
             thisWeekOrderCount: thisWeekOrderCount,
@@ -147,7 +169,17 @@ const findIncomeTotal = async () => {
         // CALCULATING WEEKLY INCOME AND PERCENTAGE
         const thisWeekIncome = await Payment.sum( 'amountPaid', { where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         const lastWeekIncome = await Payment.sum( 'amountPaid', { where: { createdAt: { [Op.gte]: twoWeekAgo, [Op.lte]: weekAgo, } } });
-        const incomePercentage = (thisWeekIncome - lastWeekIncome) / lastWeekIncome * 100;
+        let incomePercentage;
+
+        if(lastWeekIncome && thisWeekIncome) {
+            incomePercentage = (thisWeekIncome - lastWeekIncome) / lastWeekIncome * 100;
+        } else if (thisWeekIncome) {
+            incomePercentage = (thisWeekIncome) * 100;
+        } else if (lastWeekIncome) {
+            incomePercentage = -(lastWeekIncome) * 100;
+        } else {
+            incomePercentage = 0;
+        }
         
         const result = {
             thisWeekIncome: thisWeekIncome,
