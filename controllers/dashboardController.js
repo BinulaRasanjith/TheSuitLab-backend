@@ -61,7 +61,7 @@ const calculateProcessingOrderCount = async () => {
         const weekAgo = moment().subtract(7, 'days').toDate();
 
         // CALCULATING THIS WEEK PROCESSING ORDERS AND PERCENTAGE
-        const processingCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, }, status: 'Processing' } });
+        const processingCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, },} });
         // const totalCount = await PurchaseOrder.count({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         const totalCount = await PurchaseOrder.getItemModels({ where: { createdAt: { [Op.gte]: weekAgo, [Op.lte]: today, } } });
         let percentageChange;
