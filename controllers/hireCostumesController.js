@@ -1,263 +1,280 @@
 import { HireCostume, ItemModel, Review } from "../models/models.js";
 
 export const getHireCostumes2 = async (req, res) => {
-  try {
-    const { costumeType, rentStatus } = req.params;
+	try {
+		const { costumeType, rentStatus } = req.params;
 
-    if (costumeType && rentStatus) {
-      const costumeset = await ItemModel.findAll({
-        where: {
-          itemType: "HireCostume",
-        },
-        include: [
-          {
-            model: HireCostume,
-            required: true,
-            where: {
-              costumeType: costumeType,
-              rentStatus: rentStatus,
-            },
-          },
-        ],
-      });
+		if (costumeType && rentStatus) {
+			const costumeset = await ItemModel.findAll({
+				where: {
+					itemType: "HireCostume",
+				},
+				include: [
+					{
+						model: HireCostume,
+						required: true,
+						where: {
+							costumeType: costumeType,
+							rentStatus: rentStatus,
+						},
+					},
+				],
+			});
 
-      res.status(200).json(costumeset);
-    } else if (costumeType) {
-      const costumeset = await ItemModel.findAll({
-        where: {
-          itemType: "HireCostume",
-        },
-        include: [
-          {
-            model: HireCostume,
-            required: true,
-            where: {
-              costumeType: costumeType,
-            },
-          },
-        ],
-      });
+			res.status(200).json(costumeset);
+		} else if (costumeType) {
+			const costumeset = await ItemModel.findAll({
+				where: {
+					itemType: "HireCostume",
+				},
+				include: [
+					{
+						model: HireCostume,
+						required: true,
+						where: {
+							costumeType: costumeType,
+						},
+					},
+				],
+			});
 
-      res.status(200).json(costumeset);
-    } else if (rentStatus) {
-      const costumeset = await ItemModel.findAll({
-        where: {
-          itemType: "HireCostume",
-        },
-        include: [
-          {
-            model: HireCostume,
-            required: true,
-            where: {
-              rentStatus: rentStatus,
-            },
-          },
-        ],
-      });
+			res.status(200).json(costumeset);
+		} else if (rentStatus) {
+			const costumeset = await ItemModel.findAll({
+				where: {
+					itemType: "HireCostume",
+				},
+				include: [
+					{
+						model: HireCostume,
+						required: true,
+						where: {
+							rentStatus: rentStatus,
+						},
+					},
+				],
+			});
 
-      res.status(200).json(costumeset);
-    } else {
-      const costumeset = await ItemModel.findAll({
-        where: {
-          itemType: "HireCostume",
-        },
-        include: [
-          {
-            model: HireCostume,
-            required: true,
-          },
-        ],
-      });
+			res.status(200).json(costumeset);
+		} else {
+			const costumeset = await ItemModel.findAll({
+				where: {
+					itemType: "HireCostume",
+				},
+				include: [
+					{
+						model: HireCostume,
+						required: true,
+					},
+				],
+			});
 
-      res.status(200).json(costumeset);
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+			res.status(200).json(costumeset);
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: "Internal server error" });
+	}
 };
 
 export const getHireCostumes = async (req, res) => {
-  try {
-    const { costumeType } = req.query;
-    let hireCostumes;
-    let hireCostumesJson;
-    if (costumeType) {
-      hireCostumes = await HireCostume.findAll({
-        where: {
-          costumeType,
-        },
-      });
+	try {
+		const { costumeType } = req.query;
+		let hireCostumes;
+		let hireCostumesJson;
+		if (costumeType) {
+			hireCostumes = await HireCostume.findAll({
+				where: {
+					costumeType,
+				},
+			});
 
-      hireCostumesJson = await Promise.all(
-        hireCostumes.map(async (hireCostume) => {
-          const item = await ItemModel.findOne({
-            where: {
-              itemId: hireCostume.itemId,
-            },
-          });
+			hireCostumesJson = await Promise.all(
+				hireCostumes.map(async (hireCostume) => {
+					const item = await ItemModel.findOne({
+						where: {
+							itemId: hireCostume.itemId,
+						},
+					});
 
-          const reviews = await Review.findAll({
-            where: {
-              itemId: hireCostume.itemId,
-            },
-          });
+					const reviews = await Review.findAll({
+						where: {
+							itemId: hireCostume.itemId,
+						},
+					});
 
-          const rating =
-            reviews && reviews.length > 0
-              ? reviews.reduce((acc, review) => acc + review.rating, 0) /
-                reviews.length
-              : 0;
+					const rating =
+						reviews && reviews.length > 0
+							? reviews.reduce((acc, review) => acc + review.rating, 0) /
+							reviews.length
+							: 0;
 
-          const ret = {
-            itemId: hireCostume.itemId,
-            itemName: hireCostume.name,
-            image: hireCostume.images,
-            color: hireCostume.color,
-            price: item.price,
-            status: hireCostume.rentStatus,
-            rating,
-          };
-          return ret;
-        })
-      );
-    } else {
-      hireCostumes = await HireCostume.findAll();
-    }
+					const ret = {
+						itemId: hireCostume.itemId,
+						itemName: hireCostume.name,
+						image: hireCostume.images,
+						color: hireCostume.color,
+						price: item.price,
+						status: hireCostume.rentStatus,
+						rating,
+					};
+					return ret;
+				})
+			);
+		} else {
+			hireCostumes = await HireCostume.findAll();
+		}
 
-    res.status(200).json(hireCostumesJson);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+		res.status(200).json(hireCostumesJson);
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: "Internal server error" });
+	}
 };
 
 // TO SHOW THE DETAILS OF A SPECIFIC HIRE COSTUME FOR CUSTOMER & OPERATION ASSISTANT
 export const getHireCostumeById = async (req, res) => {
-  try {
-    const { id } = req.params;
+	try {
+		const { id } = req.params;
 
-    const hireCostume = await ItemModel.findOne({
-      where: { itemId: id },
-      include: HireCostume,
-    });
+		//     const hireCostume = await ItemModel.findOne({
+		//       where: { itemId: id },
+		//       include: HireCostume,
+		//     });
 
-    if (hireCostume) {
-      res.status(200).json({ hireCostume });
-    } else {
-      res.status(404).json({ message: "Hire costume not found" });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal server error" });
-  }
+		//     if (hireCostume) {
+		//       res.status(200).json({ hireCostume });
+		//     } else {
+		//       res.status(404).json({ message: "Hire costume not found" });
+		//     }
+		//   } catch (error) {
+		//     console.log(error);
+		//     res.status(500).json({ message: "Internal server error" });
+
+		//   }
+
+		const hireCostume = await HireCostume.findOne({
+			where: { itemId: id },
+		});
+
+		const itemModel = await ItemModel.findOne({
+			where: { itemId: id },
+		});
+
+		if (hireCostume && itemModel) {
+			res.status(200).json({ ...hireCostume.toJSON(), ...itemModel.toJSON() });
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: "Internal server error" });
+	}
 };
 
 export const addHireCostume = async (req, res) => {
-  try {
-    const {
-      costumeName,
-      costumeType,
-      size,
-      color,
-      fabric,
-      price,
-      buttons,
-      buttonColor,
+	try {
+		const {
+			costumeName,
+			costumeType,
+			size,
+			color,
+			fabric,
+			price,
+			buttons,
+			buttonColor,
 
-      lapel,
-      pockets,
-      pocketColor,
-      sleeveButton,
+			lapel,
+			pockets,
+			pocketColor,
+			sleeveButton,
 
-      vent,
-      backPocket,
-    } = req.body;
+			vent,
+			backPocket,
+		} = req.body;
 
-    const imageFiles = req.files.map((file) => file.originalname);
+		const imageFiles = req.files.map((file) => file.originalname);
 
-    const returnObj = await HireCostume.create({
-      name: costumeName,
-      costumeType: costumeType,
-      size: size,
-      color: color,
-      fabric: fabric,
-      price: price,
-      lapel: lapel,
-      pockets: pockets,
-      pocketColor: pocketColor,
-      sleeveButton: sleeveButton,
-      buttons: buttons,
-      buttonColor: buttonColor,
-      vent: vent,
-      backPocket: backPocket,
+		const returnObj = await HireCostume.create({
+			name: costumeName,
+			costumeType: costumeType,
+			size: size,
+			color: color,
+			fabric: fabric,
+			price: price,
+			lapel: lapel,
+			pockets: pockets,
+			pocketColor: pocketColor,
+			sleeveButton: sleeveButton,
+			buttons: buttons,
+			buttonColor: buttonColor,
+			vent: vent,
+			backPocket: backPocket,
 
-      images: imageFiles,
-    });
+			images: imageFiles,
+		});
 
-    res.status(201).json(returnObj);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+		res.status(201).json(returnObj);
+	} catch (error) {
+		res.status(500).json({ message: error.message });
+	}
 };
 
 export const updateHireCostume = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const updatedFields = req.body;
-    const hireCostume = await HireCostume.findOne({
-      where: { itemId: id },
-    });
+	try {
+		const { id } = req.params;
+		const updatedFields = req.body;
+		const hireCostume = await HireCostume.findOne({
+			where: { itemId: id },
+		});
 
-    // const itemModel = await ItemModel.findOne({
-    //     where: { itemId: id },
-    // });
+		// const itemModel = await ItemModel.findOne({
+		//     where: { itemId: id },
+		// });
 
-    // if (hireCostume && itemModel) {
-    //     res.status(200).json({ ...hireCostume.toJSON(), ...itemModel.toJSON() });
-    // } else {
-    //     res.status(404).json({ message: "Hire costume not found" });
-    // }
+		// if (hireCostume && itemModel) {
+		//     res.status(200).json({ ...hireCostume.toJSON(), ...itemModel.toJSON() });
+		// } else {
+		//     res.status(404).json({ message: "Hire costume not found" });
+		// }
 
-    if (!hireCostume) {
-      res.status(404).json({ message: "Costume not found!" });
-    }
+		if (!hireCostume) {
+			res.status(404).json({ message: "Costume not found!" });
+		}
 
-    // TRY TO UPDATE THE COSTUME
-    if (await HireCostume.update(updatedFields)) {
-      res
-        .status(200)
-        .json({ message: "Costume details updated successfully!" });
-    } else {
-      res.status(404).json({ message: "Update failed!" });
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: "Internal server error!" });
-  }
+		// TRY TO UPDATE THE COSTUME
+		if (await HireCostume.update(updatedFields)) {
+			res
+				.status(200)
+				.json({ message: "Costume details updated successfully!" });
+		} else {
+			res.status(404).json({ message: "Update failed!" });
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: "Internal server error!" });
+	}
 };
 
 export const removeHireCostume = async (req, res) => {
-  try {
-    const { id } = req.params;
+	try {
+		const { id } = req.params;
 
-    const hireCostume = await HireCostume.findOne({
-      where: { itemId: id },
-    });
-    if (!hireCostume) {
-      res.status(404).json({ message: "Costume not found!" });
-    } else {
-      const deletedRows = await HireCostume.destroy({
-        where: { itemId: id },
-      });
-      if (deletedRows) {
-        res.status(200).json({ message: "Costume data deleted!" });
-      } else {
-        res.status(404).json({ message: "Deletion unsuccessful!" });
-      }
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ message: `Internal server error! Code:${error}` });
-  }
+		const hireCostume = await HireCostume.findOne({
+			where: { itemId: id },
+		});
+		if (!hireCostume) {
+			res.status(404).json({ message: "Costume not found!" });
+		} else {
+			const deletedRows = await HireCostume.destroy({
+				where: { itemId: id },
+			});
+			if (deletedRows) {
+				res.status(200).json({ message: "Costume data deleted!" });
+			} else {
+				res.status(404).json({ message: "Deletion unsuccessful!" });
+			}
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).json({ message: `Internal server error! Code:${error}` });
+	}
 };

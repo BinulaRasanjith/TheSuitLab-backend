@@ -3,6 +3,7 @@ import {
   ItemModel,
   Review,
   PreDesignCostume,
+  Costume
 } from "../models/models.js";
 
 export const getPreDesignedCostumes = async (req, res) => {
@@ -34,7 +35,7 @@ export const getPreDesignedCostumes = async (req, res) => {
           const rating =
             reviews && reviews.length > 0
               ? reviews.reduce((acc, review) => acc + review.rating, 0) /
-                reviews.length
+              reviews.length
               : 0;
 
           const ret = {
@@ -50,7 +51,7 @@ export const getPreDesignedCostumes = async (req, res) => {
         })
       );
     } else {
-      PreDesignCostumes = await PreDesignCostume.findAll();
+      preDesignCostumes = await PreDesignCostume.findAll();
     }
 
     res.status(200).json(PreDesignCostumesJson);
@@ -63,9 +64,11 @@ export const getPreDesignedCostumes = async (req, res) => {
 export const getPreDesignedCostumeById = async (req, res) => {
   try {
     const { id } = req.params;
+    console.log(id);
     const costume = await PreDesignCostume.findOne({
       where: { itemId: id },
     });
+    console.log(costume);
 
     const itemModel = await ItemModel.findOne({
       where: { itemId: id },
@@ -81,7 +84,7 @@ export const getPreDesignedCostumeById = async (req, res) => {
       res.status(200).json({
         ...costume.toJSON(),
         ...itemModel.toJSON(),
-        ...review.toJSON(),
+        rating: review ? review.rating : 0,
       });
     } else {
       res.status(404).json({ message: "Hire costume not found" });
