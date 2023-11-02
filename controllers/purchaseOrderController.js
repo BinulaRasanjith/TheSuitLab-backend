@@ -67,12 +67,25 @@ export const getCustomersPurchaseOrders = async (req, res) => {
 
                 purchaseOrder = purchaseOrder.toJSON();
                 purchaseOrder.items = itemModels;
-                // console.log(purchaseOrder.items);
+
                 return purchaseOrder;
             })
         );
 
-        res.status(200).json(purchaseOrdersWithItems);
+        const cleanArray = []
+
+        purchaseOrdersWithItems.forEach((purchaseOrder) => {
+            const { items, ...order } = purchaseOrder;
+
+            items.forEach((item) => {
+                cleanArray.push({
+                    ...order,
+                    ...item
+                })
+            })
+        });
+
+        res.status(200).json(cleanArray);
     } catch (error) {
         console.log(error);
         res.status(500).json({ message: "Internal server error" });
