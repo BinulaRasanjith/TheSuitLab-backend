@@ -19,6 +19,7 @@ import {
 import ItemType from "../constants/itemType.js";
 
 import { sendNotification } from '../utils/notificationUtil.js';
+import CostumeProgress from "../constants/CostumeProgress.js";
 
 export const getCustomersPurchaseOrders = async (req, res) => {
     try {
@@ -350,11 +351,28 @@ export const assignTailor = async (req, res) => {
         }
 
         costume.tailor = tailor;
+        costume.progress = CostumeProgress.PROCESSING;
         await costume.save();
 
         sendNotification(tailor, "New Costume", "You have been assigned to a new costume");
 
         res.status(200).json({ message: "Tailor assigned" });
+    } catch (error) {
+        console.log(error)
+    }
+};
+
+export const getAssignedTailorForCostume = async (req, res) => {
+    const { itemId } = req.params;
+    try {
+        const costume = await Costume.findOne({ where: { itemId } });
+        if (!costume) {
+            return res.status(404).json({ message: "Costume not found" });
+        }
+
+        const tailor = await User.findOne({ where: { userId: costume.tailor } });
+
+        res.status(200).json({ tailor });
     } catch (error) {
         console.log(error)
     }
