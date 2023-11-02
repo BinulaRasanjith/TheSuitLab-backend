@@ -15,6 +15,25 @@ export const getNotifications = async (req, res) => {
     }
 };
 
+export const getIfUnreadNotifications = async (req, res) => {
+    const { userId } = req.user;
+
+    try {
+        const notifications = await Notification.findAll({
+            where: { userId, isRead: false },
+        });
+
+        if (notifications.length > 0) {
+            res.status(200).json({ unread: true });
+        } else {
+            res.status(200).json({ unread: false });
+        }
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
 export const setNotificationToRead = async (req, res) => {
     const { id } = req.body;
 
